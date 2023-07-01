@@ -242,8 +242,9 @@ li {
   font-weight: bold;
 }
 
-a {
-  color: rgb(19, 19, 161);
+a,
+a:visited {
+  color: black;
   transition: 0.2s;
 }
 
