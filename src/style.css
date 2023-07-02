@@ -85,7 +85,7 @@ body {
 #main-grid {
   display: grid;
   grid-template-areas: "hd cc";
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 300px auto;
   max-width: 1000px;
   gap: 62px;
   align-items: start;
@@ -126,7 +126,8 @@ nav > h1 {
 
 .contact-row {
   display: flex;
-  gap: 16px;
+  justify-content: flex-end;
+  gap: 12px;
   align-items: center;
 }
 
