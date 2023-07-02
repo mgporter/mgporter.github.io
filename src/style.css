@@ -128,11 +128,11 @@ nav > h1 {
   display: flex;
   gap: 16px;
   align-items: center;
+}
 
-  & > img {
-    width: 24px;
-    height: 24px;
-  }
+.contact-row > img {
+  width: 24px;
+  height: 24px;
 }
 
 /* Content Styling */
@@ -182,30 +182,28 @@ main {
   display: flex;
   gap: 16px;
   z-index: 10;
+}
+.project-top > img {
+  width: 160px;
+  height: 90px;
+  border: 1px solid black;
+  border-radius: 0 16px 16px 16px;
+  box-shadow: 2px 2px 1px #000000;
+  cursor: pointer;
+}
+.project-top > img:hover {
+  box-shadow: 2px 2px 1px rgb(85, 85, 255);
+}
 
-  & > img {
-    width: 160px;
-    height: 90px;
-    border: 1px solid black;
-    border-radius: 0 16px 16px 16px;
-    box-shadow: 2px 2px 1px #000000;
-    cursor: pointer;
+.project-top .info-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
-    &:hover {
-      box-shadow: 2px 2px 1px rgb(85, 85, 255);
-    }
-  }
-
-  & .info-box {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  & .info-box > p:first-child {
-    font-weight: bold;
-    font-size: 1.2rem;
-  }
+.project-top .info-box > p:first-child {
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .project-bottom {
@@ -214,26 +212,25 @@ main {
   border-radius: 0 0 24px 24px;
   display: flex;
   flex-direction: column;
+}
+.project-bottom .features-header {
+  padding: 2px 24px 3px 24px;
+  background-color: #135fd9aa;
+  /* background-color: rgba(0, 62, 0, 0.798); */
+  color: white;
+  text-align: center;
+}
 
-  & .features-header {
-    padding: 2px 24px 3px 24px;
-    background-color: #135fd9aa;
-    /* background-color: rgba(0, 62, 0, 0.798); */
-    color: white;
-    text-align: center;
-  }
+.project-bottom .features {
+  padding: 6px 24px 8px 24px;
+  background-color: #ffffff99;
+  border-radius: 0 0 23px 23px;
+}
 
-  & .features {
-    padding: 6px 24px 8px 24px;
-    background-color: #ffffff99;
-    border-radius: 0 0 23px 23px;
-  }
-
-  & ul {
-    margin-left: 16px;
-    list-style-type: disc;
-    list-style-position: outside;
-  }
+.project-bottom ul {
+  margin-left: 16px;
+  list-style-type: disc;
+  list-style-position: outside;
 }
 
 /* Media queries */
