@@ -1,4 +1,5 @@
 import githubLogoUrl from "./github-logo.png";
+import curlyBraceImg from "./curlybrace.png";
 import createEl from "./createElement";
 
 export default function domController() {
@@ -15,7 +16,25 @@ export default function domController() {
   );
 
   function generateStructure() {
-    return createEl("div", null, null, "main-grid");
+    const bgGrid = createEl('div', null, null, "bg-grid");
+    const mainGrid = createEl("div", null, null, "main-grid");
+
+    const nav = generateNav();
+    const main = generateMain();
+    mainGrid.append(nav, main);
+
+    const asideL = createEl('aside', null, null, 'left');
+    const asideR = createEl('aside', null, null, 'right');
+    const braceL = document.createElement('img')
+    braceL.src = curlyBraceImg;
+    const braceR = document.createElement('img')
+    braceR.src = curlyBraceImg;
+    asideL.appendChild(braceL);
+    asideR.appendChild(braceR);
+
+
+    bgGrid.append(asideL, mainGrid, asideR);
+    return bgGrid;
   }
 
   function generateNav() {
@@ -114,10 +133,33 @@ export default function domController() {
     return projectContainer;
   }
 
+  function addBraceMove() {
+    const main = document.querySelector('main');
+    const braceL = document.querySelector('aside#left img');
+    const braceR = document.querySelector('aside#right img');
+
+    main.addEventListener('mouseenter', () => {
+      // const mainRect = main.getBoundingClientRect();
+      braceL.style.translate = '-60px';
+      braceR.style.translate = '60px';
+      braceL.style.opacity = '0.8';
+      braceR.style.opacity = '0.8';
+    })
+
+    main.addEventListener('mouseleave', () => {
+      // const mainRect = main.getBoundingClientRect();
+      braceL.style.translate = '0';
+      braceR.style.translate = '0';
+      braceL.style.opacity = '';
+      braceR.style.opacity = '';
+    })
+  }
+
   return {
     generateStructure,
     generateNav,
     generateMain,
     generateProjectRow,
+    addBraceMove,
   };
 }
