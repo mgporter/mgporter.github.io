@@ -298,6 +298,7 @@ aside > img {
   transform: scale(0.8, 1);
   filter: invert(1);
   opacity: 0;
+  transition: 500ms;
 }
 
 aside#right > img {
