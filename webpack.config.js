@@ -2,7 +2,7 @@ const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const path = require("path");
 
 module.exports = {
-  mode: "development",
+  mode: "production",
   entry: "./src/index.js",
   output: {
     filename: "main.js",
@@ -47,6 +47,9 @@ module.exports = {
                   quality: [0.3, 0.5],
                 },
               ],
+              ["mozjpeg", {
+                quality: 75,
+              }]
             ],
           },
         },
