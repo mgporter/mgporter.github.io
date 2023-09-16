@@ -239,18 +239,50 @@ main {
   gap: 16px;
   z-index: 10;
 }
-.project-top > img {
+
+
+
+.preview-img-wrapper {
+  position:relative;
+  cursor: pointer;
+}
+
+.project-top img {
   width: 160px;
   height: 90px;
   border: 1px solid black;
   border-radius: 0 16px 16px 16px;
-  box-shadow: 2px 2px 1px #000000;
-  cursor: pointer;
+  box-shadow: 2px 2px 1px #000000dd;
+  transition: 300ms;
+  pointer-events: none;
 }
-.project-top > img:hover {
-  box-shadow: 2px 2px 1px rgb(85, 85, 255);
-  filter: brightness(105%) saturate(130%);
+
+.preview-img-overlay {
+  position: absolute;
+  width: 100px;
+  top: 4px;
+  right: 4px;
+  text-align: right;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 4px 9px;
+  border-radius: 8px;
+  background-color: #ffffffaa;
+  transition: 300ms;
+  pointer-events: none;
 }
+
+.project-top .preview-img-wrapper:hover > img {
+  filter: brightness(105%) saturate(120%);
+  translate: -2px -2px;
+  box-shadow: 6px 6px 1px #00000088;
+}
+
+.project-top .preview-img-wrapper:hover > .preview-img-overlay {
+  translate: -2px -2px;
+}
+
+
 
 .project-top .info-box {
   display: flex;

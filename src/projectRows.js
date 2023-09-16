@@ -10,9 +10,13 @@ export default function generateProjectRow(project, number) {
     const bigNumber = createEl("div", number, "big-number");
 
     const projectTop = createEl("div", null, "project-top");
+    const projectImgWrapper = createEl("div", null, "preview-img-wrapper");
     const projectImg = createEl("img", null, "preview-img");
     projectImg.src = screenshots[`./${project.imageUrl}`];
     projectImg.setAttribute("alt", project.name);
+    projectImgWrapper.append(projectImg);
+
+
 
     const infoBox = createEl("div", null, "info-box");
 
@@ -26,11 +30,16 @@ export default function generateProjectRow(project, number) {
     urlP.appendChild(urlLabel);
 
     if (project.livePreview) {
+      // Add Live preview link if there is one
       const urlValue = createEl("a", "Live Preview", "url");
       urlValue.href = project.livePreviewUrl;
       urlValue.target = "_blank";
       const urlSeparator = createEl("span", " | ");
       urlP.append(urlValue, urlSeparator);
+    } else {
+      // Add text on top of the preview image
+      const projectImgOvelay = createEl("div", "Click for Gif\npreview", "preview-img-overlay");
+      projectImgWrapper.append(projectImgOvelay);
     }
 
     const urlSource = createEl("a", "Repository Link", "urlSource");
@@ -48,7 +57,7 @@ export default function generateProjectRow(project, number) {
     descriptionP.append(descriptionLabel, descriptionValue);
 
     infoBox.append(nameP, urlP, descriptionP);
-    projectTop.append(projectImg, infoBox);
+    projectTop.append(projectImgWrapper, infoBox);
 
     const projectBottom = createEl("div", null, "project-bottom");
 

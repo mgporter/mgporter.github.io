@@ -2,7 +2,7 @@ import createEl from "./createElement";
 
 export default function openPreview(e) {
 
-    if (!e.target.matches(".preview-img")) return;
+    if (!e.target.matches(".preview-img-wrapper")) return;
     const projectContainer = e.target.closest('.project-container');
 
     const imagelink = projectContainer.dataset.imagelink;
