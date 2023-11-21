@@ -71,7 +71,7 @@ export default function generateProjectRow(project, number) {
     const features = createEl("div", null, "features");
     const featuresUl = document.createElement("ul");
 
-    const featureList = project.features.split("//");
+    const featureList = project.features.split("||");
 
     featureList.forEach((feature) => {
       const featureLi = createEl("li", feature);
