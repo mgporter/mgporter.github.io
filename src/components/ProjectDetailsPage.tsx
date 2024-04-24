@@ -6,6 +6,7 @@ import ProjectTransition from "./ProjectTransition";
 import { MutableRef, useEffect } from "preact/hooks";
 import { dispatcher } from "./Dispatcher";
 import { SelectedProjectType } from "./Main";
+import { C } from "../constants";
 
 interface ProjectDetailsPageProps {
   projectArray: Project[];
@@ -18,8 +19,6 @@ interface ProjectDetailsPageProps {
 async function preloadImage(url: string): Promise<VNode<HTMLImageElement>> {
   return <img src={url} className="preloaded_img absolute size-0 top-0 left-0 hidden"></img>
 }
-
-const HIDE_ICON_HOLDER = false;
 
 const projectLink = "transition-colors text-xl rounded-sm bg-blue-400/80 hover:bg-blue-700 ml-4 mb-1 px-4 py-1";
 
@@ -44,11 +43,7 @@ export default function ProjectDetailsPage({
 
   useEffect(() => {
     if (isInitialOpening && !useTransition) {
-      const { top: imageTop } = projectImgRef.current.getBoundingClientRect();
-      if (window.scrollY > imageTop) {
-        const { top: mainTop } = containerRef.current.getBoundingClientRect();
-        window.scrollTo({top: mainTop + window.scrollY, left: 0, behavior: "instant"});
-      }
+      dispatcher.dispatch("scrollToMainTop", null);
       isInitialOpening = false;
     }
     
@@ -92,14 +87,17 @@ export default function ProjectDetailsPage({
       containerProps = "", 
       mainImgProps = "",
       startWithControlsEnabled = true;
-      if (HIDE_ICON_HOLDER) selectedProject?.hideIconsAction();
+      if (C.HIDE_ICONS_ON_PROJECT_PAGE) selectedProject?.hideIconsAction();
     }
   }
 
   function onTransitionEnd() {
     projectDetailsContainerRef.current.style.position = "static";
     isInitialOpening = false;
-    if (HIDE_ICON_HOLDER) selectedProject?.hideIconsAction();
+    if (selectedProject) {
+      if (C.HIDE_ICONS_ON_PROJECT_PAGE) selectedProject.hideIconsAction();
+    }
+    dispatcher.dispatch("scrollToMainTop", null);
     dispatcher.dispatch("enableProjectControls", true);
   }
 
@@ -130,14 +128,17 @@ export default function ProjectDetailsPage({
       <div className={`project_details_content z-[110] inset-0
         py-8 px-2 items-stretch ${containerProps}`}
         ref={projectDetailsContainerRef}>
-        
-        <ProjectDetailsControls
-          index={{cur: index, prev: prevIndex, next: nextIndex}}
-          projectArray={projectArray}
-          enableControls={startWithControlsEnabled}
-          pageContentRef={pageContentRef}
-          closeDetails={closeProjectAction}
-        />
+
+        <div className="mb-8">
+          <ProjectDetailsControls
+            index={{cur: index, prev: prevIndex, next: nextIndex}}
+            projectArray={projectArray}
+            enableControls={startWithControlsEnabled}
+            pageContentRef={pageContentRef}
+            closeDetails={closeProjectAction}
+          />
+        </div>
+
 
         <div className="project_details_inner flex flex-col gap-4 items-stretch" ref={pageContentRef}>
 
@@ -174,6 +175,16 @@ export default function ProjectDetailsPage({
             {project.description}
           </div>
 
+        </div>
+
+        <div className="mt-8">
+          <ProjectDetailsControls
+            index={{cur: index, prev: prevIndex, next: nextIndex}}
+            projectArray={projectArray}
+            enableControls={startWithControlsEnabled}
+            pageContentRef={pageContentRef}
+            closeDetails={closeProjectAction}
+          />
         </div>
         
         {/* Add preloaded images */}

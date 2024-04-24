@@ -20,7 +20,6 @@ export default function ProjectIcon({ project, id, selectedIdx }: ProjectIconPro
 
   const loadOpacity = loading ? " opacity-0" : " ";
   const selected = selectedIdx === id;
-  console.log(selected);
 
   return (
     <div data-id={id} 
@@ -29,15 +28,15 @@ export default function ProjectIcon({ project, id, selectedIdx }: ProjectIconPro
         ${project.style === "faded" ? " opacity-60" : " "}
         ${project.style === "emphasized" ? " border-violet-100 scale-105" : " border-transparent"}
         ${loading ? " border-blue-600 bg-white/10" : " "}
-        ${selected ? " pointer-events-none border-yellow-400 scale-105" : " "} `}
+        ${selected ? " pointer-events-none border-yellow-400 scale-105 brightness-50" : " "} `}
       ref={iconRef}>
 
       <p className={`absolute top-1 left-1 z-20 px-[2px] rounded-sm font-semibold text-white
-        group-hover:opacity-100 text-base ${loading ? " opacity-50" : " opacity-0 bg-black/40"}`}>{project.name} {project.featured && "★"}</p>
+        group-hover:opacity-100 text-base ${loading ? " opacity-50" : " opacity-0 bg-black/40"}
+        ${selected ? " opacity-100" : " "}`}>{project.name} {project.featured && "★"}</p>
 
       <div className={`absolute bottom-1 left-1 z-20 text-xs flex gap-2 text-rose-100
-        ${loadOpacity} transition-opacity
-        ${selected ? " brightness-50" : " "}`}>
+        ${loadOpacity} transition-opacity`}>
         {project.types.slice(0, MAX_TYPES).map(type => (
           <p key={type} className="bg-black/40 px-[2px] py-[1px] rounded-sm">{type}</p>
         ))}

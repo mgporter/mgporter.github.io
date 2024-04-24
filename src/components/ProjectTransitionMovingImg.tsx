@@ -47,9 +47,9 @@ export default function ProjectTransitionMovingImg({
     movingImgRef.current.classList.add("movingImg");
     
     // scroll window to top automatically if user is scrolled too far down
-    if (window.scrollY > placeholderCenterY) {
-      window.scrollTo({top: containerRect.top + window.scrollY, left: 0, behavior: "instant"});
-    }
+    // if (window.scrollY > placeholderCenterY) {
+    //   window.scrollTo({top: containerRect.top + window.scrollY, left: 0, behavior: "instant"});
+    // }
 
   }, [])
 

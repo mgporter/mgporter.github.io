@@ -11,7 +11,7 @@ interface ProjectDetailsControlsProps {
 }
 
 const controlDivStyle = "group flex justify-center items-center gap-2 mini:justify-self-stretch \
-  mini:row-start-2 p-2 cursor-pointer rounded-xl text-indigo-50/90 text-2xl transition-colors \
+  mini:row-start-2 p-2 cursor-pointer rounded-xl text-indigo-50/90 text-xl transition-colors \
   border-2 border-indigo-50/30 \
   hover:border-yellow-200/60 hover:text-yellow-300 \
   active:bg-sky-300/30 "
@@ -36,6 +36,7 @@ export default function ProjectDetailsControls({
 
   function swipe(action: "goforward" | "goback") {
     dispatcher.dispatch("enableProjectControls", false);
+    dispatcher.dispatch("scrollToMainTop", null);
 
     let newIndex, enterAction, exitAction;
 
@@ -61,7 +62,7 @@ export default function ProjectDetailsControls({
         }
         pageContentRef.current.classList.add(enterAction);
 
-        dispatcher.dispatch("projectSelected", {idx: newIndex, div: null});
+        dispatcher.dispatch("projectSelected", {idx: newIndex, div: null, scroll: false});
       }
     };
 
@@ -69,7 +70,7 @@ export default function ProjectDetailsControls({
   }
 
   return (
-    <div className={`grid grid-cols-3 gap-8 mb-16 px-8 select-none
+    <div className={`grid grid-cols-3 gap-8 px-8 select-none
       md:gap-0 md:px-0 
       mini:mb-12 mini:gap-y-4 mini:auto-rows-min mini:grid-cols-2 mini:gap-x-4
       ${enabled ? " " : " pointer-events-none"}`}>
@@ -95,8 +96,8 @@ export default function ProjectDetailsControls({
           hover:text-orange-500 hover:border-orange-800
           active:bg-sky-300/30 active:text-orange-500"
         onClick={closeDetails}>
-        <span className="text-2xl">Close</span>
-        <p className="text-5xl pb-2 my-[-6px]">×</p>
+        <span className="text-xl">Close</span>
+        <p className="text-4xl pb-2 my-[-6px]">×</p>
       </div>
 
 

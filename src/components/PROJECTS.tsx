@@ -1,23 +1,24 @@
 import { VNode } from "preact";
 
 type globImport = Record<string, {default: string}>;
-
-const fullImages = import.meta.glob("/src/screenshots/webp_full/*", {eager: true}) as globImport;
-const thumbnailImages = import.meta.glob("/src/screenshots/webp_thumbnails/*", {eager: true}) as globImport;
-
 const images: Record<string, string> = {};
 
+const fullImages = import.meta.glob([
+  "/src/screenshots/webp_full/*",
+  "/src/screenshots/webp_thumbnails/*"
+], {eager: true}) as globImport;
+
 // convert filepaths from "/src/screenshots/webp_full/myimage.webp" to "myimage"
-// Use these new paths are keys to each image path.
+// Use these new paths as keys to each image path.
 for (const path in fullImages) {
   const name = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
   images[name] = fullImages[path].default;
 }
 
-for (const path in thumbnailImages) {
-  const name = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
-  images[name] = thumbnailImages[path].default;
-}
+// for (const path in thumbnailImages) {
+//   const name = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
+//   images[name] = thumbnailImages[path].default;
+// }
 
 export type Dimensions_2d = [number, number];
 
@@ -32,7 +33,7 @@ export type ProjectType = "Javascript"
   | "WebAssembly" 
   | "WebSockets" 
   | "Three.js" 
-  | "Database" 
+  | "MongoDB" 
   | "Open-Source Contributor"
   | "Swing"
   | "Beginner";
@@ -100,7 +101,7 @@ const projects: Project[] = [
     name: "Battleship! Online (PvP)",
     id: 140,
     style: "default",
-    types: ["Javascript", "Three.js", "React", "Java", "Database", "WebSockets"],
+    types: ["Javascript", "Three.js", "React", "Java", "MongoDB", "WebSockets"],
     featured: true,
     imageThumbnailSrc: images["battleship_online_thumbnail"],
     imageSrc: images["battleship_online"],

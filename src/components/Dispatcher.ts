@@ -6,8 +6,8 @@ export interface DispatcherMap {
   projectTypeSelected: ProjectType[];
   selectFeatured: null;
   enableProjectControls: boolean;
-  // showProjectIcons: boolean;
-  projectSelected: {idx: number, div: HTMLElement | null};
+  projectSelected: {idx: number, div: HTMLElement | null, scroll?: boolean};
+  scrollToMainTop: null;
 }
 
 // eslint-disable-next-line
@@ -19,8 +19,8 @@ class Dispatcher {
     projectTypeSelected: [],
     selectFeatured: [],
     enableProjectControls: [],
-    // showProjectIcons: [],
     projectSelected: [],
+    scrollToMainTop: [],
   }
   
   constructor() {}

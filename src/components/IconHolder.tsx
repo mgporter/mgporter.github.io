@@ -32,7 +32,7 @@ export default function IconHolder({iconHolderRef, projectArray, selectedProject
       onClick={dispatchProjectSelectEvent}
       ref={iconHolderRef}
       className="icon_holder w-full mt-24">
-      <h1 className="text-7xl text-slate-200/40 mb-5 vert:text-center">Projects</h1>
+      <h1 className="text-7xl text-slate-200/40 mb-[-0rem] mr-2 text-right vert:text-center">PROJECTS</h1>
       <div className="flex w-full flex-wrap justify-center gap-6">
         {projectArray.map((x, i) => <ProjectIcon key={x.name} project={x} id={i} selectedIdx={selectedIndex} />)}
       </div>
