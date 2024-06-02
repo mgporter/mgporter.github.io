@@ -24,19 +24,24 @@ export type Dimensions_2d = [number, number];
 
 const STANDARD_1080P: Dimensions_2d = [1920, 1080];
 
-export type ProjectType = "Javascript" 
+export type ProjectType = 
+  | "Javascript" 
   | "TypeScript" 
   | "React"
   | "Preact" 
+  | "Angular"
+  | "Three.js" 
   | "Java" 
+  | "Swing"
   | "C++" 
+  | "Python"
+  | "PyQt"
   | "WebAssembly" 
   | "WebSockets" 
-  | "Three.js" 
   | "MongoDB" 
-  | "Open-Source Contributor"
-  | "Swing"
-  | "Beginner";
+  | "SQLite"
+  | "Beginner"
+  | "Open-Source";
 
 export type ProjectStyle = "emphasized" | "faded" | "default";
 
@@ -58,7 +63,7 @@ export interface Project {
 const projects: Project[] = [
   {
     name: "Wasm Image Processor",
-    id: 160,
+    id: 0,
     style: "default",
     types: ["TypeScript", "React", "WebAssembly", "C++"],
     featured: true,
@@ -78,8 +83,48 @@ const projects: Project[] = [
       </>,
   },
   {
+    name: "Oppia",
+    id: 0,
+    style: "default",
+    types: ["TypeScript", "Angular", "Python", "Open-Source"],
+    featured: false,
+    imageThumbnailSrc: images["oppia_thumbnail"],
+    imageSrc: images["oppia"],
+    imageDimensions: [1280, 640],
+    livePreviewUrl: "https://www.oppia.org/",
+    sourceUrl: "https://github.com/oppia/oppia",
+    heading: "Oppia is a web app that allows learners to access free lessons created and shared by contributors.",
+    description: 
+      <>
+        <p>My contributions are currently centered around bug fixes on the Angular frontend and Python Backend.</p>
+        <p>I created a bugfix with the certificate generation system which resolved server errors under certain conditions.</p>
+        <p>Currently, I am resolving an issue with the saving, loading, and publishing of skill data from the frontend.</p>
+      </>,
+  },
+  {
+    name: "Canvas Pages Generator",
+    id: 0,
+    style: "default",
+    types: ["Python", "PyQt", "SQLite"],
+    featured: true,
+    imageThumbnailSrc: images["canvas_pages_generator_thumbnail"],
+    imageSrc: images["canvas_pages_generator"],
+    imageDimensions: [1344, 756],
+    livePreviewUrl: null,
+    sourceUrl: "https://github.com/mgporter/Canvas-Pages-Generator",
+    heading: "A Python application that allows teachers to enter data, generates a page from that data using a template, and finally uploads the page to the teacher's Canvas account.",
+    description: 
+      <>
+        <p>The user can select any year, any month, and any combination of grade levels. The user can enter in goals (and reuse previous months' goals in one click if desired), as well as activities with images or video.</p>
+        <p>Saves information immediately on input; no need to use a save button. Data is saved into a SQLite database and retreived as needed.</p>
+        <p>Once the user decides to upload the page, the program interfaces with the Canvas API to upload all media files, then generate a page and fill it in with the text data and URLs of uploaded media, and finally upload the resulting page to Canvas.</p>
+        <p>Configuration settings are saved in an .ini file so that the program always remembers the most recent settings.</p>
+        <p>The Python source code includes full type definitions for all classes and methods.</p>
+      </>,
+  },
+  {
     name: "Blubble's World Demo",
-    id: 150,
+    id: 0,
     style: "default",
     types: ["TypeScript", "React", "Three.js"],
     featured: true,
@@ -99,7 +144,7 @@ const projects: Project[] = [
   },
   {
     name: "Battleship! Online (PvP)",
-    id: 140,
+    id: 0,
     style: "default",
     types: ["Javascript", "Three.js", "React", "Java", "MongoDB", "WebSockets"],
     featured: true,
@@ -121,9 +166,9 @@ const projects: Project[] = [
   },
   {
     name: "Audiveris",
-    id: 160,
+    id: 0,
     style: "default",
-    types: ["Java", "Swing", "Open-Source Contributor"],
+    types: ["Java", "Swing", "Open-Source"],
     featured: false,
     imageThumbnailSrc: images["audiveris"],
     imageSrc: images["audiveris"],
@@ -139,7 +184,7 @@ const projects: Project[] = [
   },
   {
     name: "Wordle Wrangler",
-    id: 130,
+    id: 0,
     style: "default",
     types: ["Java"],
     featured: false,
@@ -160,7 +205,7 @@ const projects: Project[] = [
   },
   {
     name: "Moana Memory Card Game",
-    id: 120,
+    id: 0,
     style: "default",
     types: ["Javascript", "React"],
     featured: false,
@@ -182,7 +227,7 @@ const projects: Project[] = [
   },
   {
     name: "Knights' Travails",
-    id: 110,
+    id: 0,
     style: "default",
     types: ["Java"],
     featured: false,
@@ -202,7 +247,7 @@ const projects: Project[] = [
   },
   {
     name: "Battleship! Single-player",
-    id: 100,
+    id: 0,
     style: "default",
     types: ["Javascript", "Three.js"],
     featured: false,
@@ -227,7 +272,7 @@ const projects: Project[] = [
   },
   {
     name: "Profile Page Website",
-    id: 160,
+    id: 0,
     style: "default",
     types: ["TypeScript", "Preact"],
     featured: false,
@@ -245,7 +290,7 @@ const projects: Project[] = [
   },
   {
     name: "Visual Linked List",
-    id: 90,
+    id: 0,
     style: "default",
     types: ["Javascript"],
     featured: false,
@@ -266,7 +311,7 @@ const projects: Project[] = [
   },
   {
     name: "Weather App",
-    id: 80,
+    id: 0,
     style: "default",
     types: ["Javascript"],
     featured: false,
@@ -287,7 +332,7 @@ const projects: Project[] = [
   },
   {
     name: "Todo List App",
-    id: 70,
+    id: 0,
     style: "default",
     types: ["Javascript"],
     featured: false,
@@ -310,7 +355,7 @@ const projects: Project[] = [
   },
   {
     name: "Restaurant Page",
-    id: 60,
+    id: 0,
     style: "default",
     types: ["Javascript"],
     featured: false,
@@ -328,107 +373,107 @@ const projects: Project[] = [
         <p>Moving stars background created by generating svg stars with random size and position onto a div. The div is then animated across the screen with random speed and starting position. Only the divs move, not the stars. This creates a nice parallax effect that is more efficient than animating each star individually.</p>
       </>,
   },
-  {
-    name: "Ultimate Tic-Tac-Toe",
-    id: 50,
-    style: "default",
-    types: ["Javascript", "Beginner"],
-    featured: false,
-    imageThumbnailSrc: images["ultimate_tic_tac_toe_thumbnail"],
-    imageSrc: images["ultimate_tic_tac_toe"],
-    imageDimensions: STANDARD_1080P,
-    livePreviewUrl: "https://mgporter.github.io/top05_tic-tac-toe/",
-    sourceUrl: "https://github.com/mgporter/top05_tic-tac-toe",
-    heading: "A tic-tac-toe game that allows for custom grid sizes, number of players, player decals, and even win conditions.",
-    description:
-      <>
-        <p>Customizable number of players, from 2-8. Turn control will automatically switch between each player.</p>
-        <p>Allows customizable grid size, such as 5x5 or even non-square grids like 3x6.</p>
-        <p>Can customize win conditions (how many items in a row that you need to win).</p>
-        <p>Because grid size and win conditions are dynamic, the algorithm loops over each cell in the grid, and if a surrounding cell is the same as the current cell, the alorithm continues to search in that same direction to see how many of the same cells are in a row. For efficiency, the algorithm continues to the next cell (without doing all the calculations) if a win is not possible from the current cell.</p>
-        <p>Uses Javascript module pattern to create separate objects for the cells, the board controller, the dom controller, and so on.</p>
-      </>,
-  },
-  {
-    name: "Bookshelf App",
-    id: 40,
-    style: "default",
-    types: ["Javascript", "Beginner"],
-    featured: false,
-    imageThumbnailSrc: images["bookshelf_app_thumbnail"],
-    imageSrc: images["bookshelf_app"],
-    imageDimensions: [1900, 1069],
-    livePreviewUrl: "https://mgporter.github.io/top04_library/",
-    sourceUrl: "https://github.com/mgporter/top04_library",
-    heading: "A skeuomorphic virtual bookshelf that displays virtual book entries and information like books on a shelf.",
-    description:
-      <>
-        <p>Uses Javascript constructor functions to create and store library information as book objects.</p>
-        <p>CSS background filter, blend, and gradient styling are used to give a realistic bookshelf look complete with spotlights.</p>
-        <p>Uses HTML forms with Javascript handling.</p>
-        <p>Custom drop-down menus are created with Javascript that allow manipulation of the book objects.</p>
-      </>,
-  },
-  {
-    name: "Simple Calculator",
-    id: 30,
-    style: "default",
-    types: ["Javascript", "Beginner"],
-    featured: false,
-    imageThumbnailSrc: images["simple_calculator_thumbnail"],
-    imageSrc: images["simple_calculator"],
-    imageDimensions: STANDARD_1080P,
-    livePreviewUrl: "https://mgporter.github.io/top03_calculator/",
-    sourceUrl: "https://github.com/mgporter/top03_calculator",
-    heading: "A simple Javascript calculator that actually does decimal numbers correctly. Also does repeated operations.",
-    description:
-      <>
-        <p>Creates a calculator class with all relevant calculator functions.</p>
-        <p>Add, subtract, multiply, divide, and use exponents on numbers up to 16 digits. Returns error if number is out of range.</p>
-        <p>Some buttons have different functions based on calculator state, i.e., the equals button executes a previously entered operation, but can also repeat that operation when pressed multiple times.</p>
-        <p>Uses the library Big.js to accurately calculate decimal numbers.</p>
-      </>,
-  },
-  {
-    name: "Etch-a-Sketch",
-    id: 20,
-    style: "default",
-    types: ["Javascript", "Beginner"],
-    featured: false,
-    imageThumbnailSrc: images["etch_a_sketch_thumbnail"],
-    imageSrc: images["etch_a_sketch"],
-    imageDimensions: STANDARD_1080P,
-    livePreviewUrl: "https://mgporter.github.io/top02_etch-a-sketch/",
-    sourceUrl: "https://github.com/mgporter/top02_etch-a-sketch",
-    heading: "Select a color and paint with it by moving the mouse over a grid of custom size. Supports blending of colors.",
-    description:
-      <>
-        <p>Uses CSS grid to create a custom-sized drawing grid.</p>
-        <p>Blends selected colors with existing colors by parsing CSS color values with Regex and adding them.</p>
-        <p>Event listeners are created dynamically based on user input.</p>
-      </>,
-  },
-  {
-    name: "Rock-Paper-Scissors",
-    id: 10,
-    style: "default",
-    types: ["Javascript", "Beginner"],
-    featured: false,
-    imageThumbnailSrc: images["rock_paper_scissors_thumbnail"],
-    imageSrc: images["rock_paper_scissors"],
-    imageDimensions: STANDARD_1080P,
-    livePreviewUrl: "https://mgporter.github.io/top01_rock-paper-scissors/",
-    sourceUrl: "https://github.com/mgporter/top01_rock-paper-scissors",
-    heading: "Play an animated game of Rock-paper-scissors against a computer opponent.",
-    description:
-      <>
-        <p>First Javascript project!</p>
-        <p>Uses CSS animations and keyframes to animate game states.</p>
-        <p>Uses Javascript event listeners to receive user input.</p>
-        <p>DOM manipulating with Javascript.</p>
-        <p>Demonstrates basic program flow.</p>
-      </>,
-  }
+  // {
+  //   name: "Ultimate Tic-Tac-Toe",
+  //   id: 0,
+  //   style: "default",
+  //   types: ["Javascript", "Beginner"],
+  //   featured: false,
+  //   imageThumbnailSrc: images["ultimate_tic_tac_toe_thumbnail"],
+  //   imageSrc: images["ultimate_tic_tac_toe"],
+  //   imageDimensions: STANDARD_1080P,
+  //   livePreviewUrl: "https://mgporter.github.io/top05_tic-tac-toe/",
+  //   sourceUrl: "https://github.com/mgporter/top05_tic-tac-toe",
+  //   heading: "A tic-tac-toe game that allows for custom grid sizes, number of players, player decals, and even win conditions.",
+  //   description:
+  //     <>
+  //       <p>Customizable number of players, from 2-8. Turn control will automatically switch between each player.</p>
+  //       <p>Allows customizable grid size, such as 5x5 or even non-square grids like 3x6.</p>
+  //       <p>Can customize win conditions (how many items in a row that you need to win).</p>
+  //       <p>Because grid size and win conditions are dynamic, the algorithm loops over each cell in the grid, and if a surrounding cell is the same as the current cell, the alorithm continues to search in that same direction to see how many of the same cells are in a row. For efficiency, the algorithm continues to the next cell (without doing all the calculations) if a win is not possible from the current cell.</p>
+  //       <p>Uses Javascript module pattern to create separate objects for the cells, the board controller, the dom controller, and so on.</p>
+  //     </>,
+  // },
+  // {
+  //   name: "Bookshelf App",
+  //   id: 0,
+  //   style: "default",
+  //   types: ["Javascript", "Beginner"],
+  //   featured: false,
+  //   imageThumbnailSrc: images["bookshelf_app_thumbnail"],
+  //   imageSrc: images["bookshelf_app"],
+  //   imageDimensions: [1900, 1069],
+  //   livePreviewUrl: "https://mgporter.github.io/top04_library/",
+  //   sourceUrl: "https://github.com/mgporter/top04_library",
+  //   heading: "A skeuomorphic virtual bookshelf that displays virtual book entries and information like books on a shelf.",
+  //   description:
+  //     <>
+  //       <p>Uses Javascript constructor functions to create and store library information as book objects.</p>
+  //       <p>CSS background filter, blend, and gradient styling are used to give a realistic bookshelf look complete with spotlights.</p>
+  //       <p>Uses HTML forms with Javascript handling.</p>
+  //       <p>Custom drop-down menus are created with Javascript that allow manipulation of the book objects.</p>
+  //     </>,
+  // },
+  // {
+  //   name: "Simple Calculator",
+  //   id: 0,
+  //   style: "default",
+  //   types: ["Javascript", "Beginner"],
+  //   featured: false,
+  //   imageThumbnailSrc: images["simple_calculator_thumbnail"],
+  //   imageSrc: images["simple_calculator"],
+  //   imageDimensions: STANDARD_1080P,
+  //   livePreviewUrl: "https://mgporter.github.io/top03_calculator/",
+  //   sourceUrl: "https://github.com/mgporter/top03_calculator",
+  //   heading: "A simple Javascript calculator that actually does decimal numbers correctly. Also does repeated operations.",
+  //   description:
+  //     <>
+  //       <p>Creates a calculator class with all relevant calculator functions.</p>
+  //       <p>Add, subtract, multiply, divide, and use exponents on numbers up to 16 digits. Returns error if number is out of range.</p>
+  //       <p>Some buttons have different functions based on calculator state, i.e., the equals button executes a previously entered operation, but can also repeat that operation when pressed multiple times.</p>
+  //       <p>Uses the library Big.js to accurately calculate decimal numbers.</p>
+  //     </>,
+  // },
+  // {
+  //   name: "Etch-a-Sketch",
+  //   id: 0,
+  //   style: "default",
+  //   types: ["Javascript", "Beginner"],
+  //   featured: false,
+  //   imageThumbnailSrc: images["etch_a_sketch_thumbnail"],
+  //   imageSrc: images["etch_a_sketch"],
+  //   imageDimensions: STANDARD_1080P,
+  //   livePreviewUrl: "https://mgporter.github.io/top02_etch-a-sketch/",
+  //   sourceUrl: "https://github.com/mgporter/top02_etch-a-sketch",
+  //   heading: "Select a color and paint with it by moving the mouse over a grid of custom size. Supports blending of colors.",
+  //   description:
+  //     <>
+  //       <p>Uses CSS grid to create a custom-sized drawing grid.</p>
+  //       <p>Blends selected colors with existing colors by parsing CSS color values with Regex and adding them.</p>
+  //       <p>Event listeners are created dynamically based on user input.</p>
+  //     </>,
+  // },
+  // {
+  //   name: "Rock-Paper-Scissors",
+  //   id: 0,
+  //   style: "default",
+  //   types: ["Javascript", "Beginner"],
+  //   featured: false,
+  //   imageThumbnailSrc: images["rock_paper_scissors_thumbnail"],
+  //   imageSrc: images["rock_paper_scissors"],
+  //   imageDimensions: STANDARD_1080P,
+  //   livePreviewUrl: "https://mgporter.github.io/top01_rock-paper-scissors/",
+  //   sourceUrl: "https://github.com/mgporter/top01_rock-paper-scissors",
+  //   heading: "Play an animated game of Rock-paper-scissors against a computer opponent.",
+  //   description:
+  //     <>
+  //       <p>First Javascript project!</p>
+  //       <p>Uses CSS animations and keyframes to animate game states.</p>
+  //       <p>Uses Javascript event listeners to receive user input.</p>
+  //       <p>DOM manipulating with Javascript.</p>
+  //       <p>Demonstrates basic program flow.</p>
+  //     </>,
+  // }
 
 ]
 

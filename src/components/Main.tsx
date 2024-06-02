@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "preact/compat";
-import { projects } from "./PROJECTS"
+import { Project, ProjectType, projects } from "./PROJECTS"
 import { dispatcher } from "./Dispatcher";
 import ProjectDetailsPage from "./ProjectDetailsPage";
 import IconHolder from "./IconHolder";
@@ -12,6 +12,28 @@ export type SelectedProjectType = {
   idx: number, 
   hideIconsAction: () => void} 
   | null;
+
+
+function sortProjectsByType(projects: Project[], types: ProjectType[]) {
+
+  projects.sort((a, b) => {
+    let firstValid = a.types.includes(types[0]);  // Sort by first type
+    let secondValid = b.types.includes(types[0]);
+
+    if (types.length >= 2) {
+      firstValid = firstValid || a.types.includes(types[1]);  // If another type was given, check for it too
+      secondValid = secondValid || b.types.includes(types[1]);
+    }
+
+    a.style = firstValid ? "emphasized" : "faded";   // set selected if they are part of the selection
+    b.style = secondValid ? "emphasized" : "faded";
+
+    if (firstValid && !secondValid) return -1;
+    else if (!firstValid && secondValid) return 1;
+    else return 0;
+  });
+
+}
 
 export default function Main() {
 
@@ -27,27 +49,14 @@ export default function Main() {
         closeProjectView();
 
         const projectsCopy = [...projects];
+
         if (types.length === 0) {
           projectsCopy.forEach(x => x.style = "default")
           setProjectArray(projectsCopy);  // Set to default
           return;
         }
-        projectsCopy.sort((a, b) => {
-          let firstValid = a.types.includes(types[0]);  // Sort by first type
-          let secondValid = b.types.includes(types[0]);
-
-          if (types.length === 2) {
-            firstValid = firstValid || a.types.includes(types[1]);  // If another type was given, check for it too
-            secondValid = secondValid || b.types.includes(types[1]);
-          }
-
-          a.style = firstValid ? "emphasized" : "faded";   // set selected if they are part of the selection
-          b.style = secondValid ? "emphasized" : "faded";
-    
-          if (firstValid && !secondValid) return -1;
-          else if (!firstValid && secondValid) return 1;
-          else return 0;
-        });
+        
+        sortProjectsByType(projectsCopy, types);
         setProjectArray(projectsCopy);
 
       });
@@ -61,7 +70,18 @@ export default function Main() {
       closeProjectView();
 
       const projectsCopy = [...projects];
-      projectsCopy.forEach(x => x.featured ? x.style = "emphasized" : x.style = "faded");
+      projectsCopy.sort((a, b) => {
+        let firstValid = a.featured;
+        let secondValid = b.featured;
+    
+        a.style = firstValid ? "emphasized" : "faded";   // set selected if they are part of the selection
+        b.style = secondValid ? "emphasized" : "faded";
+    
+        if (firstValid && !secondValid) return -1;
+        else if (!firstValid && secondValid) return 1;
+        else return 0;
+      })
+      
       setProjectArray(projectsCopy);
     })
     return unsubscribe;

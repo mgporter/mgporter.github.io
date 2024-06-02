@@ -68,10 +68,12 @@ export default function Nav() {
           <li className={project_type_selection + (active === "React" ? activeStyle : "")} onClick={() => selectProject(["React", "Preact"])}>React / Preact</li>
           <li className={project_type_selection + (active === "TypeScript" ? activeStyle : "")} onClick={() => selectProject(["TypeScript"])}>Typescript</li>
           <li className={project_type_selection + (active === "Java" ? activeStyle : "")} onClick={() => selectProject(["Java"])}>Java</li>
+          <li className={project_type_selection + (active === "Python" ? activeStyle : "")} onClick={() => selectProject(["Python"])}>Python</li>
           <li className={project_type_selection + (active === "C++" ? activeStyle : "")} onClick={() => selectProject(["C++"])}>C++</li>
-          <li className={project_type_selection + (active === "MongoDB" ? activeStyle : "")} onClick={() => selectProject(["MongoDB"])}>Database</li>
+          <li className={project_type_selection + (active === "MongoDB" ? activeStyle : "")} onClick={() => selectProject(["MongoDB", "SQLite"])}>Database</li>
           <li className={project_type_selection + (active === "WebAssembly" ? activeStyle : "")} onClick={() => selectProject(["WebAssembly"])}>WebAssembly</li>
           <li className={project_type_selection + (active === "Javascript" ? activeStyle : "")} onClick={() => selectProject(["Javascript"])}>Vanilla JS</li>
+          <li className={project_type_selection + (active === "Open-Source" ? activeStyle : "")} onClick={() => selectProject(["Open-Source"])}>Open-Source Contributions</li>
         </ul>
 
       </div>
