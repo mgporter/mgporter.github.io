@@ -7,6 +7,7 @@ import { MutableRef, useEffect } from "preact/hooks";
 import { dispatcher } from "./Dispatcher";
 import { SelectedProjectType } from "./Main";
 import { C } from "../constants";
+import ProjectPreview from "./ProjectPreview";
 
 interface ProjectDetailsPageProps {
   projectArray: Project[];
@@ -36,7 +37,7 @@ export default function ProjectDetailsPage({
 
   const [startTransition, setStartTransition] = useState(false);
   const pageContentRef = useRef<HTMLDivElement>(null!);
-  const projectImgRef = useRef<HTMLImageElement>(null!);
+  const projectPreviewRef = useRef<HTMLElement>(null!);
   const projectDetailsContainerRef = useRef<HTMLDivElement>(null!);
   const [preloadedImgs, setPreloadedImgs] = 
     useState<[VNode<HTMLImageElement>, VNode<HTMLImageElement>] | null>(null);
@@ -60,9 +61,8 @@ export default function ProjectDetailsPage({
 
   let 
     containerProps = "", 
-    mainImgProps = "",
+    startVisible = true,
     startWithControlsEnabled = true;
-
 
   if (isInitialOpening) {
 
@@ -70,7 +70,7 @@ export default function ProjectDetailsPage({
     // find a ProjectIcon div to transition from
     if (useTransition && selectedProject.div != null) {
       containerProps = "project_delayed_fadein absolute";
-      mainImgProps = "invisible";
+      startVisible = false;
       startWithControlsEnabled = false;
 
       selectedProject.div.onanimationend = (e) => {
@@ -85,7 +85,7 @@ export default function ProjectDetailsPage({
     else {
       useTransition = false;
       containerProps = "", 
-      mainImgProps = "",
+      startVisible = true,
       startWithControlsEnabled = true;
       if (C.HIDE_ICONS_ON_PROJECT_PAGE) selectedProject?.hideIconsAction();
     }
@@ -103,13 +103,12 @@ export default function ProjectDetailsPage({
 
   function onMainImageLoad() {
     if (isInitialOpening && useTransition) setStartTransition(true);
-    const img1 = preloadImage(projectArray[nextIndex].imageSrc);
-    const img2 = preloadImage(projectArray[prevIndex].imageSrc);
+    const img1 = preloadImage(projectArray[nextIndex].preview.source);
+    const img2 = preloadImage(projectArray[prevIndex].preview.source);
     Promise.all([img1, img2]).then(result => {
       setPreloadedImgs([result[0], result[1]]);
     })
   }
-
 
   return (
     <>
@@ -117,10 +116,10 @@ export default function ProjectDetailsPage({
         <ProjectTransition
           thumbnailDiv={selectedProject.div} 
           containerRef={containerRef}
-          projectImgRef={projectImgRef}
+          projectPreviewRef={projectPreviewRef}
           onEffectComplete={onTransitionEnd}
           tempImage={<img 
-            src={projectArray[index].imageSrc} 
+            src={project.preview.type === "image" ? project.preview.source : project.imageThumbnailSrc} 
             alt={projectArray[index].name} 
             className="w-full aspect-auto"></img>}
           />}
@@ -154,14 +153,11 @@ export default function ProjectDetailsPage({
             <a href={project.sourceUrl} target="_blank"><li className={projectLink}>View the source on Github</li></a>
           </ul>
 
-          <img 
-            src={project.imageSrc}
-            ref={projectImgRef} 
-            className={`details_placeholder_image w-3/4 my-8 rounded-md self-center ${mainImgProps}`} 
-            onLoad={onMainImageLoad}
-            width={project.imageDimensions[0] + ""}
-            height={project.imageDimensions[1] + ""}
-            style={{aspectRatio: project.imageDimensions[0] / project.imageDimensions[1]}}></img>
+          <ProjectPreview 
+            project={project} 
+            onLoad={onMainImageLoad} 
+            startVisible={startVisible} 
+            ref={projectPreviewRef} />
 
           <ul className="flex items-center bg-indigo-950 border-t border-indigo-600 
             mx-8 vert:mx-0 flex-wrap mb-4 p-2 gap-4">

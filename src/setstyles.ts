@@ -12,22 +12,26 @@ function colorToRGBA(color: Color): string {
 
 function colorsToThreePartGradient(color1: Color, color2: Color, color3: Color): string {
   const middleColor = colorToRGBA(color2);
-  return `radial-gradient(circle at 0% 0%, ${colorToRGBA(color1)} 20%, ${middleColor} 60%, ${middleColor} 84%, ${colorToRGBA(color3)} 100%)`;
+  return `radial-gradient(circle at 0% 0%, ${colorToRGBA(color1)} 20%, ${middleColor} 50%, ${middleColor} 74%, ${colorToRGBA(color3)} 100%)`;
 }
 
 function setStyles() {
 
   const bgGradient1: Color = [40, 57, 129, 1];
   const bgGradient2: Color = [30, 116, 142, 1];
-  const bgGradient3: Color = [18, 80, 98, 1];
+  const bgGradient3: Color = [18, 80, 98, 0];
   const mainOverlay: Color = [10, 35, 68, 0.6];
 
 
   const root = document.querySelector(":root");
   if (root instanceof HTMLElement) {
+    root.style.setProperty("--background-color", colorToRGBA(bgGradient2))
+
     root.style.setProperty("--main-overlay", colorToRGBA(mainOverlay));
 
-    root.style.setProperty("--bg-gradient", colorsToThreePartGradient(bgGradient1, bgGradient2, bgGradient3));
+    root.style.setProperty(
+      "--bg-gradient", 
+      colorsToThreePartGradient(bgGradient1, bgGradient2, bgGradient3));
     root.style.setProperty("--bg-gradient-with-overlay", 
       colorsToThreePartGradient(
         mixColors(bgGradient1, mainOverlay), 

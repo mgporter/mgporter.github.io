@@ -5,7 +5,7 @@ import ProjectTransitionMovingImg from "./ProjectTransitionMovingImg";
 interface ProjectTransitionProps {
   thumbnailDiv: HTMLElement; 
   containerRef: MutableRef<HTMLDivElement>;
-  projectImgRef: MutableRef<HTMLImageElement>;
+  projectPreviewRef: MutableRef<HTMLElement>;
   onEffectComplete: () => void;
   tempImage: VNode;
 }
@@ -25,7 +25,7 @@ const EMPTY_DOM_RECT: DOMRect = {
 export default function ProjectTransition({
   thumbnailDiv,
   containerRef,
-  projectImgRef,
+  projectPreviewRef,
   onEffectComplete,
   tempImage}: ProjectTransitionProps) {
 
@@ -40,14 +40,12 @@ export default function ProjectTransition({
     
     const mainRect = containerRef.current.getBoundingClientRect();
     const thumbnailDivRect = thumbnailDiv.getBoundingClientRect();
-    const projectImageRect = projectImgRef.current.getBoundingClientRect();
+    const projectImageRect = projectPreviewRef.current.getBoundingClientRect();
 
     setShowMovingImg(true);
 
     // Set height of main element to the content height
     const oldHeight = containerRef.current.style.height;
-    // containerRef.current.style.height = "";
-    // containerRef.current.style.height = containerRef.current.scrollHeight + "px";
 
     setContainerRect(mainRect);
     setThumbnailRect(thumbnailDivRect);
@@ -98,7 +96,7 @@ export default function ProjectTransition({
   }
 
   function effectCompleteCallback() {
-    projectImgRef.current.style.visibility = "visible";
+    projectPreviewRef.current.style.visibility = "visible";
     bubbleRef.current.remove();
     onEffectComplete();
   }
