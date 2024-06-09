@@ -1,5 +1,4 @@
 import { useRef, useState } from "preact/compat"
-import { Project } from "./PROJECTS";
 import ProjectDetailsControls from "./ProjectDetailsControls";
 import { VNode } from "preact";
 import ProjectTransition from "./ProjectTransition";
@@ -8,9 +7,10 @@ import { dispatcher } from "./Dispatcher";
 import { SelectedProjectType } from "./Main";
 import { C } from "../constants";
 import ProjectPreview from "./ProjectPreview";
+import { ProjectContainer } from "./ProjectService";
 
 interface ProjectDetailsPageProps {
-  projectArray: Project[];
+  projectArray: ProjectContainer[];
   selectedProject: SelectedProjectType;
   useTransition: boolean;
   containerRef: MutableRef<HTMLDivElement>;
@@ -55,7 +55,7 @@ export default function ProjectDetailsPage({
 
   const index = selectedProject.idx;
   const limit = projectArray.length;
-  const project = projectArray[index];
+  const project = projectArray[index].project;
   const prevIndex = (index + limit - 1) % limit;
   const nextIndex = (index + 1) % limit;
 
@@ -103,8 +103,8 @@ export default function ProjectDetailsPage({
 
   function onMainImageLoad() {
     if (isInitialOpening && useTransition) setStartTransition(true);
-    const img1 = preloadImage(projectArray[nextIndex].preview.source);
-    const img2 = preloadImage(projectArray[prevIndex].preview.source);
+    const img1 = preloadImage(projectArray[nextIndex].project.preview.source);
+    const img2 = preloadImage(projectArray[prevIndex].project.preview.source);
     Promise.all([img1, img2]).then(result => {
       setPreloadedImgs([result[0], result[1]]);
     })
@@ -120,7 +120,7 @@ export default function ProjectDetailsPage({
           onEffectComplete={onTransitionEnd}
           tempImage={<img 
             src={project.preview.type === "image" ? project.preview.source : project.imageThumbnailSrc} 
-            alt={projectArray[index].name} 
+            alt={project.name} 
             className="w-full aspect-auto"></img>}
           />}
 
@@ -162,7 +162,7 @@ export default function ProjectDetailsPage({
           <ul className="flex items-center bg-indigo-950 border-t border-indigo-600 
             mx-8 vert:mx-0 flex-wrap mb-4 p-2 gap-4">
             <li className="px-2 font-bold">Tech stack:</li>
-            {project.types.map(type => (
+            {Array.from(project.types).map(type => (
               <li className=" bg-slate-300 text-black px-2 py-1 rounded-md font-medium">{type}</li>
             ))}
           </ul>

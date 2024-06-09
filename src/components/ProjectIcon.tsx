@@ -1,18 +1,20 @@
 import { useRef, useState } from "preact/hooks";
-import { Project } from "./PROJECTS"
+import { ProjectContainer } from "./ProjectService";
+import { Link } from "react-router-dom";
 
 interface ProjectIconProps {
-  project: Project;
+  projectContainer: ProjectContainer;
   id: number;
   selectedIdx: number;
 }
 
 const MAX_TYPES = 5;
 
-export default function ProjectIcon({ project, id, selectedIdx }: ProjectIconProps) {
+export default function ProjectIcon({ projectContainer, id, selectedIdx }: ProjectIconProps) {
 
   const iconRef = useRef<HTMLDivElement>(null!);
   const [loading, setLoading] = useState(true);
+  const project = projectContainer.project;
 
   function imageLoaded() {
     setLoading(false);
@@ -22,11 +24,12 @@ export default function ProjectIcon({ project, id, selectedIdx }: ProjectIconPro
   const selected = selectedIdx === id;
 
   return (
+    <Link to={`projects/${projectContainer.url}`}>
     <div data-id={id} 
       className={`project group relative aspect-[2.2] w-64 mini:w-3/4 mini:max-w-96 overflow-hidden 
         cursor-pointer select-none border-2 transition-all
-        ${project.style === "faded" ? " opacity-60" : " "}
-        ${project.style === "emphasized" ? " border-violet-100 scale-105" : " border-transparent"}
+        ${projectContainer.style === "faded" ? " opacity-60" : " "}
+        ${projectContainer.style === "emphasized" ? " border-violet-100 scale-105" : " border-transparent"}
         ${loading ? " border-blue-600 bg-white/10" : " "}
         ${selected ? " pointer-events-none border-yellow-400 scale-105 brightness-50" : " "} `}
       ref={iconRef}>
@@ -37,7 +40,7 @@ export default function ProjectIcon({ project, id, selectedIdx }: ProjectIconPro
 
       <div className={`absolute bottom-1 left-1 z-20 text-xs flex gap-2 text-rose-100
         ${loadOpacity} transition-opacity`}>
-        {project.types.slice(0, MAX_TYPES).map(type => (
+        {Array.from(project.types).slice(0, MAX_TYPES).map(type => (
           <p key={type} className="bg-black/40 px-[2px] py-[1px] rounded-sm">{type}</p>
         ))}
       </div>
@@ -53,6 +56,7 @@ export default function ProjectIcon({ project, id, selectedIdx }: ProjectIconPro
       />
       
     </div>
+    </Link>
   )
 
 }

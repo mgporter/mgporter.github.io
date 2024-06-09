@@ -15,11 +15,6 @@ for (const path in fullImages) {
   images[name] = fullImages[path].default;
 }
 
-// for (const path in thumbnailImages) {
-//   const name = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
-//   images[name] = thumbnailImages[path].default;
-// }
-
 export type Dimensions_2d = [number, number];
 const STANDARD_1080P: Dimensions_2d = [1920, 1080];
 
@@ -28,8 +23,6 @@ export interface Media {
   dimensions: Dimensions_2d,
   type: "image" | "video",
 }
-
-
 
 export type ProjectType = 
   | "Javascript" 
@@ -50,13 +43,9 @@ export type ProjectType =
   | "Beginner"
   | "Open-Source";
 
-export type ProjectStyle = "emphasized" | "faded" | "default";
-
 export interface Project {
   name: string;
-  id: number;
-  style: ProjectStyle;
-  types: ProjectType[];
+  types: Set<ProjectType>;
   featured: boolean;
   imageThumbnailSrc: string;
   preview: Media;
@@ -66,12 +55,11 @@ export interface Project {
   description: VNode;
 }
 
+
 const projects: Project[] = [
   {
     name: "Wasm Image Processor",
-    id: 0,
-    style: "default",
-    types: ["TypeScript", "React", "WebAssembly", "C++"],
+    types: new Set(["TypeScript", "React", "WebAssembly", "C++"]),
     featured: true,
     imageThumbnailSrc: images["image_processor_thumbnail"],
     preview: {
@@ -93,9 +81,7 @@ const projects: Project[] = [
   },
   {
     name: "Oppia",
-    id: 0,
-    style: "default",
-    types: ["TypeScript", "Angular", "Python", "Open-Source"],
+    types: new Set(["TypeScript", "Angular", "Python", "Open-Source"]),
     featured: false,
     imageThumbnailSrc: images["oppia_thumbnail"],
     preview: {
@@ -115,9 +101,7 @@ const projects: Project[] = [
   },
   {
     name: "Canvas Pages Generator",
-    id: 0,
-    style: "default",
-    types: ["Python", "PyQt", "SQLite"],
+    types: new Set(["Python", "PyQt", "SQLite"]),
     featured: true,
     imageThumbnailSrc: images["canvas_pages_generator_thumbnail"],
     preview: {
@@ -139,9 +123,7 @@ const projects: Project[] = [
   },
   {
     name: "Blubble's World Demo",
-    id: 0,
-    style: "default",
-    types: ["TypeScript", "React", "Three.js"],
+    types: new Set(["TypeScript", "React", "Three.js"]),
     featured: true,
     imageThumbnailSrc: images["blubbles_world_thumbnail"],
     preview: {
@@ -162,9 +144,7 @@ const projects: Project[] = [
   },
   {
     name: "Battleship! Online (PvP)",
-    id: 0,
-    style: "default",
-    types: ["Javascript", "Three.js", "React", "Java", "MongoDB", "WebSockets"],
+    types: new Set(["Javascript", "Three.js", "React", "Java", "MongoDB", "WebSockets"]),
     featured: true,
     imageThumbnailSrc: images["battleship_online_thumbnail"],
     preview: {
@@ -187,9 +167,7 @@ const projects: Project[] = [
   },
   {
     name: "Audiveris",
-    id: 0,
-    style: "default",
-    types: ["Java", "Swing", "Open-Source"],
+    types: new Set(["Java", "Swing", "Open-Source"]),
     featured: false,
     imageThumbnailSrc: images["audiveris"],
     preview: {
@@ -208,9 +186,7 @@ const projects: Project[] = [
   },
   {
     name: "Wordle Wrangler",
-    id: 0,
-    style: "default",
-    types: ["Java"],
+    types: new Set(["Java"]),
     featured: false,
     imageThumbnailSrc: images["wordle_wrangler_thumbnail"],
     preview: {
@@ -232,9 +208,7 @@ const projects: Project[] = [
   },
   {
     name: "Moana Memory Card Game",
-    id: 0,
-    style: "default",
-    types: ["Javascript", "React"],
+    types: new Set(["Javascript", "React"]),
     featured: false,
     imageThumbnailSrc: images["moana_memory_cards_thumbnail"],
     preview: {
@@ -257,9 +231,7 @@ const projects: Project[] = [
   },
   {
     name: "Knights' Travails",
-    id: 0,
-    style: "default",
-    types: ["Java"],
+    types: new Set(["Java"]),
     featured: false,
     imageThumbnailSrc: images["knights_travails_thumbnail"],
     preview: {
@@ -280,9 +252,7 @@ const projects: Project[] = [
   },
   {
     name: "Battleship! Single-player",
-    id: 0,
-    style: "default",
-    types: ["Javascript", "Three.js"],
+    types: new Set(["Javascript", "Three.js"]),
     featured: false,
     imageThumbnailSrc: images["battleship_singleplayer_thumbnail"],
     preview: {
@@ -308,9 +278,7 @@ const projects: Project[] = [
   },
   {
     name: "Profile Page Website",
-    id: 0,
-    style: "default",
-    types: ["TypeScript", "Preact"],
+    types: new Set(["TypeScript", "Preact"]),
     featured: false,
     imageThumbnailSrc: images["profile_website_thumbnail"],
     preview: {
@@ -329,9 +297,7 @@ const projects: Project[] = [
   },
   {
     name: "Visual Linked List",
-    id: 0,
-    style: "default",
-    types: ["Javascript"],
+    types: new Set(["Javascript"]),
     featured: false,
     imageThumbnailSrc: images["linked_list_thumbnail"],
     preview: {
@@ -353,9 +319,7 @@ const projects: Project[] = [
   },
   {
     name: "Weather App",
-    id: 0,
-    style: "default",
-    types: ["Javascript"],
+    types: new Set(["Javascript"]),
     featured: false,
     imageThumbnailSrc: images["weather_app_thumbnail"],
     preview: {
@@ -377,9 +341,7 @@ const projects: Project[] = [
   },
   {
     name: "Todo List App",
-    id: 0,
-    style: "default",
-    types: ["Javascript"],
+    types: new Set(["Javascript"]),
     featured: false,
     imageThumbnailSrc: images["todo_list_app_thumbnail"],
     preview: {
@@ -403,9 +365,7 @@ const projects: Project[] = [
   },
   {
     name: "Restaurant Page",
-    id: 0,
-    style: "default",
-    types: ["Javascript"],
+    types: new Set(["Javascript"]),
     featured: false,
     imageThumbnailSrc: images["restaurant_page_thumbnail"],
     preview: {
@@ -532,10 +492,5 @@ const projects: Project[] = [
   // }
 
 ]
-
-// Set every project's id to the index so we can retreive the correct project later
-projects.forEach((x, i) => {
-  x.id = i;
-})
 
 export { projects };

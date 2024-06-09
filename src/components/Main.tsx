@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "preact/compat";
-import { Project, ProjectType, projects } from "./PROJECTS"
 import { dispatcher } from "./Dispatcher";
 import ProjectDetailsPage from "./ProjectDetailsPage";
 import IconHolder from "./IconHolder";
 import { C } from "../constants";
+import { Outlet, Route, Routes, useParams } from "react-router-dom";
+import projectService from "./ProjectService";
 
 const useTransition = !C.IS_VERTICAL_SCREEN && C.IS_QUICK_CONNECTION;
 
@@ -11,79 +12,41 @@ export type SelectedProjectType = {
   div: HTMLElement | null, 
   idx: number, 
   hideIconsAction: () => void} 
-  | null;
-
-
-function sortProjectsByType(projects: Project[], types: ProjectType[]) {
-
-  projects.sort((a, b) => {
-    let firstValid = a.types.includes(types[0]);  // Sort by first type
-    let secondValid = b.types.includes(types[0]);
-
-    if (types.length >= 2) {
-      firstValid = firstValid || a.types.includes(types[1]);  // If another type was given, check for it too
-      secondValid = secondValid || b.types.includes(types[1]);
-    }
-
-    a.style = firstValid ? "emphasized" : "faded";   // set selected if they are part of the selection
-    b.style = secondValid ? "emphasized" : "faded";
-
-    if (firstValid && !secondValid) return -1;
-    else if (!firstValid && secondValid) return 1;
-    else return 0;
-  });
-
-}
+| null;
 
 export default function Main() {
 
-  const [projectArray, setProjectArray] = useState(projects);
+  const [projectArray, setProjectArray] = useState(projectService.getProjectContainers());
+
+  const urlParamName = useParams<{project: string}>();
+  const initialProject = projectService.getProjectByName(urlParamName.project);
+  const initialProjectObj = initialProject != undefined ? 
+    {
+      div: null,
+      idx: initialProject.id,
+      hideIconsAction: () => setShowIconHolder(false)
+    }
+  : null;
+
+  console.log(initialProjectObj)
+
   const mainViewRef = useRef<HTMLDivElement>(null!);
   const iconHolderRef = useRef<HTMLDivElement>(null!);
   const [showIconHolder, setShowIconHolder] = useState(true);
-  const [selectedProject, setSelectedProject] = useState<SelectedProjectType>(null);
+  const [selectedProject, setSelectedProject] = useState<SelectedProjectType>(initialProjectObj);
 
   useEffect(() => {
-    const unsubscribe = dispatcher.subscribe("projectTypeSelected", types => {
-
+    const unsubscribe = dispatcher.subscribe("projectTypeSelected", option => {
         closeProjectView();
-
-        const projectsCopy = [...projects];
-
-        if (types.length === 0) {
-          projectsCopy.forEach(x => x.style = "default")
-          setProjectArray(projectsCopy);  // Set to default
-          return;
+        if (option.optionName === "All") {
+          setProjectArray(projectService.resetAndGetProjectContainers());
+        } else if (option.optionName === "Featured") {
+          setProjectArray(projectService.getProjectContainersSortedByFeatured());
+        } else {
+          setProjectArray(projectService.getProjectContainersSortedByType(option.types));
         }
-        
-        sortProjectsByType(projectsCopy, types);
-        setProjectArray(projectsCopy);
-
       });
     
-    return unsubscribe;
-  }, [])
-
-  useEffect(() => {
-    const unsubscribe = dispatcher.subscribe("selectFeatured", () => {
-
-      closeProjectView();
-
-      const projectsCopy = [...projects];
-      projectsCopy.sort((a, b) => {
-        let firstValid = a.featured;
-        let secondValid = b.featured;
-    
-        a.style = firstValid ? "emphasized" : "faded";   // set selected if they are part of the selection
-        b.style = secondValid ? "emphasized" : "faded";
-    
-        if (firstValid && !secondValid) return -1;
-        else if (!firstValid && secondValid) return 1;
-        else return 0;
-      })
-      
-      setProjectArray(projectsCopy);
-    })
     return unsubscribe;
   }, [])
 
@@ -130,6 +93,8 @@ export default function Main() {
     <main 
       className="relative w-full pb-48 overflow-hidden"
       ref={mainViewRef}>
+
+      {/* <Outlet /> */}
 
       {selectedProject && 
         <ProjectDetailsPage

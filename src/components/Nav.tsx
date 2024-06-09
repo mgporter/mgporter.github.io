@@ -15,26 +15,77 @@ const project_type_selection =
 const activeStyle = 
   "bg-gradient-to-r from-white/50 from-30% to-white/0 text-white font-bold tracking-normal"
 
+export type NavOptionName = "All"
+  | "Featured"
+  | "React / Preact"
+  | "Typescript"
+  | "Java"
+  | "Python"
+  | "C++"
+  | "Database"
+  | "WebAssembly"
+  | "Vanilla JS"
+  | "Open-Source Contribution";
+
+export interface NavOption {
+  optionName: NavOptionName,
+  types: Set<ProjectType>
+}
+
+const navOptions: NavOption[] = [
+  {
+    optionName: "All",
+    types: new Set<ProjectType>()
+  },
+  {
+    optionName: "Featured",
+    types: new Set<ProjectType>()
+  },
+  {
+    optionName: "React / Preact",
+    types: new Set<ProjectType>(["React", "Preact"])
+  },
+  {
+    optionName: "Typescript",
+    types: new Set<ProjectType>(["TypeScript"])
+  },
+  {
+    optionName: "Java",
+    types: new Set<ProjectType>(["Java"])
+  },
+  {
+    optionName: "Python",
+    types: new Set<ProjectType>(["Python"])
+  },
+  {
+    optionName: "C++",
+    types: new Set<ProjectType>(["C++"])
+  },
+  {
+    optionName: "Database",
+    types: new Set<ProjectType>(["MongoDB", "SQLite"])
+  },
+  {
+    optionName: "WebAssembly",
+    types: new Set<ProjectType>(["WebAssembly"])
+  },
+  {
+    optionName: "Vanilla JS",
+    types: new Set<ProjectType>(["Javascript"])
+  },
+  {
+    optionName: "Open-Source Contribution",
+    types: new Set<ProjectType>(["Open-Source"])
+  },
+]
+
 export default function Nav() {
 
-  const [active, setActive] = useState("all");
+  const [active, setActive] = useState<NavOptionName>("All");
 
-  useEffect(() => {
-    // const root = document.documentElement;
-
-    // root.classList.add("dark");
-
-  }, [])
-
-  function selectProject(types: ProjectType[]) {
-    if (types.length > 0) setActive(types[0]);
-    else setActive("all");
-    dispatcher.dispatch("projectTypeSelected", types);
-  }
-
-  function selectFeatured() {
-    setActive("featured");
-    dispatcher.dispatch("selectFeatured", null);
+  function selectProject(option: NavOption) {
+    dispatcher.dispatch("projectTypeSelected", option);
+    setActive(option.optionName)
   }
 
   return (
@@ -63,17 +114,14 @@ export default function Nav() {
         
         <h2 className="text-xl font-bold mb-2 border-b w-full">Filter projects:</h2>
         <ul className="flex flex-col flex-wrap text-base ml-4 w-full sm:h-[10rem]">
-          <li className={project_type_selection + (active === "all" ? activeStyle : "")} onClick={() => selectProject([])}>All</li>
-          <li className={project_type_selection + (active === "featured" ? activeStyle : "")} onClick={() => selectFeatured()}>Featured</li>
-          <li className={project_type_selection + (active === "React" ? activeStyle : "")} onClick={() => selectProject(["React", "Preact"])}>React / Preact</li>
-          <li className={project_type_selection + (active === "TypeScript" ? activeStyle : "")} onClick={() => selectProject(["TypeScript"])}>Typescript</li>
-          <li className={project_type_selection + (active === "Java" ? activeStyle : "")} onClick={() => selectProject(["Java"])}>Java</li>
-          <li className={project_type_selection + (active === "Python" ? activeStyle : "")} onClick={() => selectProject(["Python"])}>Python</li>
-          <li className={project_type_selection + (active === "C++" ? activeStyle : "")} onClick={() => selectProject(["C++"])}>C++</li>
-          <li className={project_type_selection + (active === "MongoDB" ? activeStyle : "")} onClick={() => selectProject(["MongoDB", "SQLite"])}>Database</li>
-          <li className={project_type_selection + (active === "WebAssembly" ? activeStyle : "")} onClick={() => selectProject(["WebAssembly"])}>WebAssembly</li>
-          <li className={project_type_selection + (active === "Javascript" ? activeStyle : "")} onClick={() => selectProject(["Javascript"])}>Vanilla JS</li>
-          <li className={project_type_selection + (active === "Open-Source" ? activeStyle : "")} onClick={() => selectProject(["Open-Source"])}>Open-Source Contributions</li>
+          {navOptions.map((option, i) => {
+            return <li
+              key={option.optionName}
+              className={project_type_selection + (active === option.optionName ? activeStyle : "")}
+              onClick={() => selectProject(option)}>
+              {option.optionName}
+            </li>
+          })}
         </ul>
 
       </div>

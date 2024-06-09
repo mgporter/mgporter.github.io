@@ -1,10 +1,9 @@
-import { ProjectType } from "./PROJECTS";
+import { NavOption } from "./Nav";
 
 export type DispatcherEvent = keyof DispatcherMap;
 
 export interface DispatcherMap {
-  projectTypeSelected: ProjectType[];
-  selectFeatured: null;
+  projectTypeSelected: NavOption;
   enableProjectControls: boolean;
   projectSelected: {idx: number, div: HTMLElement | null, scroll?: boolean};
   scrollToMainTop: null;
@@ -17,7 +16,6 @@ class Dispatcher {
 
   private Events: DispatcherEventObj = {
     projectTypeSelected: [],
-    selectFeatured: [],
     enableProjectControls: [],
     projectSelected: [],
     scrollToMainTop: [],
