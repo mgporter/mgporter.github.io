@@ -19,6 +19,7 @@ export default function Main() {
   const [projectArray, setProjectArray] = useState(projectService.getProjectContainers());
 
   const urlParamName = useParams<{project: string}>();
+
   const initialProject = projectService.getProjectByName(urlParamName.project);
   const initialProjectObj = initialProject != undefined ? 
     {
@@ -32,6 +33,13 @@ export default function Main() {
   const iconHolderRef = useRef<HTMLDivElement>(null!);
   const [showIconHolder, setShowIconHolder] = useState(true);
   const [selectedProject, setSelectedProject] = useState<SelectedProjectType>(initialProjectObj);
+
+  // Needed for use with HashRouter
+  useEffect(() => {
+    if (selectedProject?.idx != initialProjectObj?.idx) {
+      setSelectedProject(initialProjectObj);
+    }
+  })
 
   useEffect(() => {
     const unsubscribe = dispatcher.subscribe("projectTypeSelected", option => {

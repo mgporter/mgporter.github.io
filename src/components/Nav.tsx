@@ -101,7 +101,7 @@ export default function Nav() {
           <div className="absolute z-[9] top-6 left-2 size-60 scale-y-[0.21] scale-x-[1.1] translate-y-[1.2rem] rounded-[100%] bg-black/60"></div>
         </div>
         
-        <h1 className="title relative z-20 text-6xl mb-8 self-center">mgporter2</h1>
+        <h1 className="title relative z-20 text-6xl mb-8 self-center">mgporter3</h1>
 
         <div className="relative z-20 flex flex-col gap-1 mb-12 text-lg ">
           <a className="flex group items-center gap-2 hover:text-white" href="https://github.com/mgporter" target="_blank">
