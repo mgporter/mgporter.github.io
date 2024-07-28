@@ -36,7 +36,7 @@ export default function Main() {
 
   // Needed for use with HashRouter
   useEffect(() => {
-    if (selectedProject?.idx != initialProjectObj?.idx) {
+    if (initialProjectObj && (selectedProject?.idx != initialProjectObj.idx)) {
       setSelectedProject(initialProjectObj);
     }
   })

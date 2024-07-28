@@ -1,6 +1,5 @@
 import { useRef, useState } from "preact/hooks";
 import { ProjectContainer } from "./ProjectService";
-import { Link } from "react-router-dom";
 
 interface ProjectIconProps {
   projectContainer: ProjectContainer;
@@ -23,11 +22,14 @@ export default function ProjectIcon({ projectContainer, id, selectedIdx }: Proje
   const loadOpacity = loading ? " opacity-0" : " ";
   const selected = selectedIdx === id;
 
+  // to={projectContainer.url}
+
   return (
-    <Link to={projectContainer.url} className={`${selected ? "cursor-default pointer-events-none" : "cursor-pointer "}`}>
+    // <a className={`${selected ? "cursor-default pointer-events-none " : "cursor-pointer "}`}>
       <div data-id={id} 
         className={`project group relative aspect-[2.2] w-64 mini:w-3/4 mini:max-w-96 overflow-hidden 
           select-none border-2 transition-all
+          ${selected ? "cursor-default pointer-events-none " : "cursor-pointer "}
           ${projectContainer.style === "faded" ? " opacity-60" : " "}
           ${projectContainer.style === "emphasized" ? " border-violet-100 scale-105" : " border-transparent"}
           ${loading ? " border-blue-600 bg-white/10" : " "}
@@ -56,7 +58,7 @@ export default function ProjectIcon({ projectContainer, id, selectedIdx }: Proje
         />
         
       </div>
-    </Link>
+    // </a>
   )
 
 }

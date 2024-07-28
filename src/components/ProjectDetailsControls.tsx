@@ -1,7 +1,7 @@
 import { MutableRef, useEffect, useState } from "preact/hooks";
 import { dispatcher } from "./Dispatcher";
 import { ProjectContainer } from "./ProjectService";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface ProjectDetailsControlsProps {
   index: {cur: number, prev: number, next: number};
@@ -27,6 +27,7 @@ export default function ProjectDetailsControls({
   closeDetails}: ProjectDetailsControlsProps) {
 
   const [enabled, setEnabled] = useState(enableControls);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = dispatcher.subscribe("enableProjectControls", (val) => {
@@ -64,6 +65,8 @@ export default function ProjectDetailsControls({
         pageContentRef.current.classList.add(enterAction);
 
         dispatcher.dispatch("projectSelected", {idx: newIndex, div: null, scroll: false});
+        navigate(projectArray[newIndex].url);
+
       }
     };
 
@@ -77,7 +80,7 @@ export default function ProjectDetailsControls({
       ${enabled ? " " : " pointer-events-none"}`}>
       
 
-      <Link to={projectArray[index.prev].url} 
+      <a 
         className={controlDivStyle + " mini:flex-col justify-self-start"}
         onClick={() => swipe("goback")}>
         <div className={controlLabelStyle}>
@@ -88,7 +91,7 @@ export default function ProjectDetailsControls({
           src={projectArray[index.prev].project.imageThumbnailSrc} 
           className="h-10 brightness-90 aspect-video object-cover rounded-sm border border-indigo-50/30">
         </img>
-      </Link>
+      </a>
 
       <Link to="." 
         className="group h-full flex items-center justify-center gap-2 cursor-pointer pl-6 pr-3 rounded-xl font-bold 
@@ -101,7 +104,7 @@ export default function ProjectDetailsControls({
           <p className="text-4xl pb-2 my-[-6px]">×</p>
       </Link>
 
-      <Link to={projectArray[index.next].url} 
+      <a
         className={controlDivStyle + " mini:flex-col-reverse justify-self-end"}
         onClick={() => swipe("goforward")}>
         <img 
@@ -112,7 +115,7 @@ export default function ProjectDetailsControls({
           <span>Next</span>
           <span>❯❯</span>
         </div>
-      </Link>
+      </a>
 
       
     </div>

@@ -16,6 +16,7 @@
   --bg-gradient-with-overlay: radial-gradient(circle at 0% 0%, rgb(40, 57, 129) 20%, rgb(30, 116, 142) 60%, rgb(30, 116, 142) 84%, rgb(18, 80, 98) 100%);
 }
 
+
 body {
   margin: 0;
   display: flex;

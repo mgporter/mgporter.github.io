@@ -8,6 +8,7 @@ import { SelectedProjectType } from "./Main";
 import { C } from "../constants";
 import ProjectPreview from "./ProjectPreview";
 import { ProjectContainer } from "./ProjectService";
+import { useNavigate } from "react-router-dom";
 
 interface ProjectDetailsPageProps {
   projectArray: ProjectContainer[];
@@ -41,6 +42,7 @@ export default function ProjectDetailsPage({
   const projectDetailsContainerRef = useRef<HTMLDivElement>(null!);
   const [preloadedImgs, setPreloadedImgs] = 
     useState<[VNode<HTMLImageElement>, VNode<HTMLImageElement>] | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isInitialOpening && !useTransition) {
@@ -99,15 +101,21 @@ export default function ProjectDetailsPage({
     }
     dispatcher.dispatch("scrollToMainTop", null);
     dispatcher.dispatch("enableProjectControls", true);
+    onPageLoaded();
   }
 
   function onMainImageLoad() {
     if (isInitialOpening && useTransition) setStartTransition(true);
+    else if (isInitialOpening && !useTransition) onPageLoaded();
     const img1 = preloadImage(projectArray[nextIndex].project.preview.source);
     const img2 = preloadImage(projectArray[prevIndex].project.preview.source);
     Promise.all([img1, img2]).then(result => {
       setPreloadedImgs([result[0], result[1]]);
     })
+  }
+
+  function onPageLoaded() {
+    navigate(projectArray[index].url);
   }
 
   return (
