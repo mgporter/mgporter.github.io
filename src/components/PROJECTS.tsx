@@ -64,7 +64,7 @@ export interface Project {
 const projects: Project[] = [
   {
     name: "Chinese API and Storybook",
-    types: new Set(["TypeScript", "Angular", "Python", "Java", "PostgreSQL"]),
+    types: new Set(["TypeScript", "Angular", "Java", "PostgreSQL"]),
     featured: true,
     imageThumbnailSrc: images["imj_thumbnail"],
     preview: {
