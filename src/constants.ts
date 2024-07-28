@@ -31,6 +31,7 @@ const C = {
   IS_VERTICAL_SCREEN: window.innerHeight > window.innerWidth,
   IS_QUICK_CONNECTION: isQuickConnection(),
   HIDE_ICONS_ON_PROJECT_PAGE: false,
+  PROJECT_PATH: "projects"
 }
 
 export { C };

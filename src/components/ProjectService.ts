@@ -12,15 +12,17 @@ export interface ProjectContainer {
 class ProjectService {
 
   private readonly projectContainers: ProjectContainer[];
-  readonly projectCount: number
 
   constructor(projects: Project[]) {
     this.projectContainers = this.initProjects(projects);
-    this.projectCount = this.projectContainers.length;
   }
 
   getProjectContainers() {
     return this.projectContainers;
+  }
+
+  getProjectCount() {
+    return this.projectContainers.length;
   }
 
   resetAndGetProjectContainers() {
@@ -39,7 +41,7 @@ class ProjectService {
           }
         }
         x.style = "faded";
-    })
+    });
 
     return this.sortByStyle(copiedArray);
   }
@@ -50,7 +52,7 @@ class ProjectService {
     copiedArray.forEach(x => {
       if (x.project.featured === true) x.style = "emphasized";
       else x.style = "faded";
-    })
+    });
 
     return this.sortByStyle(copiedArray);
   }

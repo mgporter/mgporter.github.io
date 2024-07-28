@@ -1,5 +1,4 @@
 import { MutableRef, useEffect, useState } from "preact/hooks";
-import { Project } from "./PROJECTS";
 import { dispatcher } from "./Dispatcher";
 import { ProjectContainer } from "./ProjectService";
 import { Link } from "react-router-dom";
@@ -78,7 +77,8 @@ export default function ProjectDetailsControls({
       ${enabled ? " " : " pointer-events-none"}`}>
       
 
-      <div className={controlDivStyle + " mini:flex-col justify-self-start"}
+      <Link to={projectArray[index.prev].url} 
+        className={controlDivStyle + " mini:flex-col justify-self-start"}
         onClick={() => swipe("goback")}>
         <div className={controlLabelStyle}>
           <span>❮❮</span>
@@ -88,23 +88,21 @@ export default function ProjectDetailsControls({
           src={projectArray[index.prev].project.imageThumbnailSrc} 
           className="h-10 brightness-90 aspect-video object-cover rounded-sm border border-indigo-50/30">
         </img>
-      </div>
-
-      <Link to="/">
-        <div 
-          className="group h-full flex items-center justify-center gap-2 cursor-pointer pl-6 pr-3 rounded-xl font-bold 
-            justify-self-center mini:row-start-1 mini:col-span-2 mini:w-full
-            transition-colors text-indigo-50 border-2 border-indigo-50/30
-            hover:text-orange-500 hover:border-orange-800
-            active:bg-sky-300/30 active:text-orange-500"
-          >
-          <span className="text-xl">Close</span>
-          <p className="text-4xl pb-2 my-[-6px]">×</p>
-        </div>
       </Link>
 
+      <Link to="." 
+        className="group h-full flex items-center justify-center gap-2 cursor-pointer pl-6 pr-3 rounded-xl font-bold 
+        justify-self-center mini:row-start-1 mini:col-span-2 mini:w-full
+        transition-colors text-indigo-50 border-2 border-indigo-50/30
+        hover:text-orange-500 hover:border-orange-800
+        active:bg-sky-300/30 active:text-orange-500"
+        onClick={closeDetails}>
+          <span className="text-xl">Close</span>
+          <p className="text-4xl pb-2 my-[-6px]">×</p>
+      </Link>
 
-      <div className={controlDivStyle + " mini:flex-col-reverse justify-self-end"}
+      <Link to={projectArray[index.next].url} 
+        className={controlDivStyle + " mini:flex-col-reverse justify-self-end"}
         onClick={() => swipe("goforward")}>
         <img 
           src={projectArray[index.next].project.imageThumbnailSrc} 
@@ -114,7 +112,7 @@ export default function ProjectDetailsControls({
           <span>Next</span>
           <span>❯❯</span>
         </div>
-      </div>
+      </Link>
 
       
     </div>

@@ -3,7 +3,7 @@ import { dispatcher } from "./Dispatcher";
 import ProjectDetailsPage from "./ProjectDetailsPage";
 import IconHolder from "./IconHolder";
 import { C } from "../constants";
-import { Outlet, Route, Routes, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import projectService from "./ProjectService";
 
 const useTransition = !C.IS_VERTICAL_SCREEN && C.IS_QUICK_CONNECTION;
@@ -27,8 +27,6 @@ export default function Main() {
       hideIconsAction: () => setShowIconHolder(false)
     }
   : null;
-
-  console.log(initialProjectObj)
 
   const mainViewRef = useRef<HTMLDivElement>(null!);
   const iconHolderRef = useRef<HTMLDivElement>(null!);
@@ -57,6 +55,12 @@ export default function Main() {
         div = iconHolderRef.current.querySelector(`.project[data-id="${e.idx}"]`);
       }
       openProjectView(div, e.idx);
+      // const projcont = projectService.getProjectById(e.idx);
+      // if (projcont != null) {
+      //   navigate(projcont.url);
+      // }
+      // console.log(projcont)
+
 
       const scroll = e.scroll != undefined ? e.scroll : true;
       if (scroll) doScroll();
@@ -93,8 +97,6 @@ export default function Main() {
     <main 
       className="relative w-full pb-48 overflow-hidden"
       ref={mainViewRef}>
-
-      {/* <Outlet /> */}
 
       {selectedProject && 
         <ProjectDetailsPage

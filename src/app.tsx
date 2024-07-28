@@ -1,19 +1,21 @@
 import Nav from './components/Nav';
-import Main from './components/Main';
-import { Outlet, Route, Routes } from 'react-router-dom';
-import ProjectDetailsPage from './components/ProjectDetailsPage';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'preact/hooks';
+import { C } from './constants';
 
 export function App() {
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/") navigate(C.PROJECT_PATH);
+  }, [])
 
   return (
     <div id="container" className="text-lg text-slate-200">
       <Nav />
-      <Routes>
-        <Route path="/" element={<Main />}>
-          <Route path="projects/:project" element={<ProjectDetailsPage />} />
-        </Route>
-      </Routes>
-      {/* <Main /> */}
+      <Outlet />
     </div>
   )
 }

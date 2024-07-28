@@ -6,23 +6,27 @@ import './stylesheets/swipe.css'
 import { setStyles } from './setstyles.ts'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Main from './components/Main.tsx'
-import ProjectDetailsPage from './components/ProjectDetailsPage.tsx'
 
 const router = createBrowserRouter([
   {
     path: "*",
     element: <App />,
     errorElement: <div>There was an error</div>,
-    // children: [
-    //   {
-    //     path: "projects/:project",
-    //     element: <Main />
-    //   }
-    // ]
+    children: [
+      {
+        path: "projects",
+        element: <Main />,
+        children: [
+          {
+            path: ":project",
+            element: <Main />
+          }
+        ]
+      }
+    ]
   }
 ]);
 
 setStyles();
 
-// render(<App />, document.getElementById('app')!)
 render(<RouterProvider router={router} />, document.getElementById('app')!)

@@ -150,7 +150,7 @@ export default function ProjectDetailsPage({
 
           <ul className="mx-16 vert:mx-8 max-w-[30rem] list-['\21E8\0020\0020']">
             {project.livePreviewUrl && <a href={project.livePreviewUrl} target="_blank"><li className={projectLink}>Go to live preview</li></a>}
-            <a href={project.sourceUrl} target="_blank"><li className={projectLink}>View the source on Github</li></a>
+            {project.sourceUrl && <a href={project.sourceUrl} target="_blank"><li className={projectLink}>View the source on Github</li></a>}
           </ul>
 
           <ProjectPreview 

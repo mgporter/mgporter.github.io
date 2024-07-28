@@ -1,16 +1,18 @@
-import { useEffect, useState } from "preact/hooks";
+import { useState } from "preact/hooks";
 import githubLogo from "../images/github-logo.png";
 import linkedinLogo from "../images/Linkedin_logo.png";
 import { dispatcher } from "./Dispatcher";
 import { ProjectType } from "./PROJECTS";
 import profileColorPic from "../images/profile_picture_color.jpg";
+import { Link } from "react-router-dom";
+import { C } from "../constants";
 
 const project_type_selection = 
   "project_type_selection tracking-wide \
   hover:bg-gradient-to-r hover:from-white/50 hover:to-white/0 hover:text-white \
   active:from-white/70 active:scale-[101%] active:translate-x-[2px] \
   rounded-sm \
-  cursor-pointer px-2 py-1 "
+  cursor-pointer mx-2 "
 
 const activeStyle = 
   "bg-gradient-to-r from-white/50 from-30% to-white/0 text-white font-bold tracking-normal"
@@ -63,7 +65,7 @@ const navOptions: NavOption[] = [
   },
   {
     optionName: "Database",
-    types: new Set<ProjectType>(["MongoDB", "SQLite"])
+    types: new Set<ProjectType>(["MongoDB", "SQLite", "PostgreSQL"])
   },
   {
     optionName: "WebAssembly",
@@ -113,13 +115,15 @@ export default function Nav() {
         </div>
         
         <h2 className="text-xl font-bold mb-2 border-b w-full">Filter projects:</h2>
-        <ul className="flex flex-col flex-wrap text-base ml-4 w-full sm:h-[10rem]">
-          {navOptions.map((option, i) => {
+        <ul className="flex flex-col flex-wrap text-base w-full sm:h-[12rem]">
+          {navOptions.map(option => {
             return <li
               key={option.optionName}
               className={project_type_selection + (active === option.optionName ? activeStyle : "")}
               onClick={() => selectProject(option)}>
-              {option.optionName}
+              <Link to={C.PROJECT_PATH} className="w-full h-full block px-2 py-1">
+                {option.optionName}
+              </Link>
             </li>
           })}
         </ul>
