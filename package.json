@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://mgporter.github.io/",
+  "homepage": "https://mgporter.github.io/#",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
