@@ -4,10 +4,10 @@ import './stylesheets/index.css'
 import './stylesheets/projecttransition.css'
 import './stylesheets/swipe.css'
 import { setStyles } from './setstyles.ts'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, createHashRouter, RouterProvider } from 'react-router-dom'
 import Main from './components/Main.tsx'
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "*",
     element: <App />,
