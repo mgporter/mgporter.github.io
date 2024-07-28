@@ -4,7 +4,7 @@ import './stylesheets/index.css'
 import './stylesheets/projecttransition.css'
 import './stylesheets/swipe.css'
 import { setStyles } from './setstyles.ts'
-import { createBrowserRouter, createHashRouter, RouterProvider } from 'react-router-dom'
+import { createHashRouter, RouterProvider } from 'react-router-dom'
 import Main from './components/Main.tsx'
 
 const router = createHashRouter([
