@@ -106,7 +106,7 @@ export default function ProjectDetailsPage({
   }
 
   function onMainImageLoad() {
-    console.log({isInitialOpening, useTransition})
+    // console.log({isInitialOpening, useTransition})
     if (isInitialOpening && useTransition) setStartTransition(true);
     else if (isInitialOpening && !useTransition) onPageLoaded();
     const img1 = preloadImage(projectArray[nextIndex].project.preview.source);
