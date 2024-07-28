@@ -101,10 +101,12 @@ export default function ProjectDetailsPage({
     }
     dispatcher.dispatch("scrollToMainTop", null);
     dispatcher.dispatch("enableProjectControls", true);
+    setStartTransition(false);
     onPageLoaded();
   }
 
   function onMainImageLoad() {
+    console.log({isInitialOpening, useTransition})
     if (isInitialOpening && useTransition) setStartTransition(true);
     else if (isInitialOpening && !useTransition) onPageLoaded();
     const img1 = preloadImage(projectArray[nextIndex].project.preview.source);

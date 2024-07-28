@@ -28,7 +28,7 @@ export default function ProjectTransition({
   projectPreviewRef,
   onEffectComplete,
   tempImage}: ProjectTransitionProps) {
-
+  console.log("START TRANSITION")
 
   const bubbleRef = useRef<HTMLDivElement>(null!);
   const [containerRect, setContainerRect] = useState(EMPTY_DOM_RECT);
