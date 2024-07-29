@@ -34,6 +34,14 @@ export default function ProjectDetailsPage({
   closeProjectAction,
 }: ProjectDetailsPageProps) {
 
+  // console.log({
+  //   projectArray,
+  //   selectedProject,
+  //   useTransition,
+  //   containerRef,
+  //   isInitialOpening
+  // })
+
   if (selectedProject == null) return <></>;
 
   const [startTransition, setStartTransition] = useState(false);
@@ -60,6 +68,8 @@ export default function ProjectDetailsPage({
   const project = projectArray[index].project;
   const prevIndex = (index + limit - 1) % limit;
   const nextIndex = (index + 1) % limit;
+
+  selectedProject.div = document.querySelector(`.project[data-id="${index}"]`);
 
   let 
     containerProps = "", 

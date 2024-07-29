@@ -1,7 +1,6 @@
 import { MutableRef, useEffect, useState } from "preact/hooks";
 import { dispatcher } from "./Dispatcher";
 import { ProjectContainer } from "./ProjectService";
-import { Link, useNavigate } from "react-router-dom";
 
 interface ProjectDetailsControlsProps {
   index: {cur: number, prev: number, next: number};
@@ -27,7 +26,7 @@ export default function ProjectDetailsControls({
   closeDetails}: ProjectDetailsControlsProps) {
 
   const [enabled, setEnabled] = useState(enableControls);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = dispatcher.subscribe("enableProjectControls", (val) => {
@@ -65,7 +64,7 @@ export default function ProjectDetailsControls({
         pageContentRef.current.classList.add(enterAction);
 
         dispatcher.dispatch("projectSelected", {idx: newIndex, div: null, scroll: false});
-        navigate(projectArray[newIndex].url);
+        // navigate(projectArray[newIndex].url);
 
       }
     };
@@ -93,7 +92,7 @@ export default function ProjectDetailsControls({
         </img>
       </a>
 
-      <Link to="." 
+      <a
         className="group h-full flex items-center justify-center gap-2 cursor-pointer pl-6 pr-3 rounded-xl font-bold 
         justify-self-center mini:row-start-1 mini:col-span-2 mini:w-full
         transition-colors text-indigo-50 border-2 border-indigo-50/30
@@ -102,7 +101,7 @@ export default function ProjectDetailsControls({
         onClick={closeDetails}>
           <span className="text-xl">Close</span>
           <p className="text-4xl pb-2 my-[-6px]">×</p>
-      </Link>
+      </a>
 
       <a
         className={controlDivStyle + " mini:flex-col-reverse justify-self-end"}

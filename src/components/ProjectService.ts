@@ -61,6 +61,10 @@ class ProjectService {
     return this.projectContainers.find(x => x.url === name);
   }
 
+  // getProjectByNameStatic(array: ProjectContainer[], name: string | undefined) {
+  //   return array.find(x => x.url === name);
+  // }
+
   getProjectById(id: number | undefined) {
     return this.projectContainers.find(x => x.id === id);
   }
