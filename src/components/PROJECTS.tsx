@@ -61,6 +61,9 @@ export interface Project {
 }
 
 
+const youtubeStylingProps = "self-center aspect-video w-full px-8";
+
+
 const projects: Project[] = [
   {
     name: "Chinese API and Storybook",
@@ -77,9 +80,9 @@ const projects: Project[] = [
     heading: "A Chinese storybook creator/reader for language learning built on my own Chinese language REST API using Java Hibernate and PostgreSQL.",
     description: 
       <>
-        <h2 class="text-2xl font-bold">Play the video below to get an overview:</h2>
-        <iframe class="self-center aspect-video w-full mx-8" src="https://www.youtube.com/embed/IFShU3xPI4Q?si=sAmrM0T6RS9yhZPV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
-        <h2 class="text-2xl font-bold">Details:</h2>
+        <h5 class="font-bold">Play the video below to get an overview:</h5>
+        <iframe class={youtubeStylingProps} src="https://www.youtube.com/embed/IFShU3xPI4Q?si=sAmrM0T6RS9yhZPV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+        <h5 class="font-bold">Details:</h5>
         <p>The Chinese API and Storybook, or ImmersionJourney, is a hobby application that I wanted to build to make it easier for children to start out learning the language. It is aimed at generating stories (and eventually exercises) with multiple forms of learner support from basic text.</p>
         <p>The system is built on a REST API that I built for the Chinese language. The API functions basically like a dictionary, however, it has several features unique to the Chinese language:</p>
         <img src={imj_api_uml_image} class="self-center max-w-96 m-4 mx-8"></img>
@@ -168,10 +171,12 @@ const projects: Project[] = [
     heading: "Build a town and grow your population in this 3d app. Just a demo currently, but you can generate landscapes and place buildings.",
     description:
       <>
-        <p>Built on React and Three.js with typescript.</p>
-        <p>Object-oriented design: streamlined selection and building placement system allows easy editing and changing of building properties. For example, building max height, what part of the landscape it can be placed at, etc can all be changed with just one variable.</p>
-        <p>Uses Three.js InstancedMesh class to create landscapes that render efficiently and quickly, which is combined with custom objects to hold the state (selected / hovered / etc..) of each instance.</p>
-        <p>Converts mouse coordinates to 3d world coordinates and vice versa in order to properly align elements between the canvas layer and HTML overlay (for example, the marker system and selection system).</p>
+        <h5 className="font-bold">Watch my video about polymorphism, which features this project:</h5>
+        <iframe class={youtubeStylingProps} src="https://www.youtube.com/embed/7M4utWaz0H0?si=rhSXHm7cIWeeo_dK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+        <p>Blubble's world is built with React, Three.js, and Typescript. It allows the player to buy and place buildings down on a cube-like 3d landscape.</p>
+        <p>It makes use of a strongly object-oriented design, and the streamlined selection and building placement system allows easy editing and changing of building properties. For example, building max height, what part of the landscape it can be placed at, etc can all be changed with just one variable.</p>
+        <p>Blubble's world is built with an eye towards performance. It primarily uses the Three.js InstancedMesh class, which is difficult to work with, but allows the creation of large landscapes that render efficiently and quickly. Although the InstancedMesh renders many different objects, it is itself only one object, so it cannot save the state of the terrain that it represents by itself. Because of this, I had to build an entire helper system to hold the state of each instance, so that each terrain cube knows whether it is being hovered, selected, has a building on it, how high that building is, and so on.</p>
+        <p>This app also features a nifty conversion of mouse coordinates to 3d world coordinates and vice versa, allowing it to align HTML Dom elements with the 3D canvas underneath. This is used to create a nice overlay effect that is fully interactive, and is used in the marker system and selection system.</p>
       </>,
   },
   {

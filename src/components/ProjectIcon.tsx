@@ -3,13 +3,13 @@ import { ProjectContainer } from "./ProjectService";
 
 interface ProjectIconProps {
   projectContainer: ProjectContainer;
-  id: number;
-  selectedIdx: number;
+  selected: boolean;
+  onClick: () => void;
 }
 
 const MAX_TYPES = 5;
 
-export default function ProjectIcon({ projectContainer, id, selectedIdx }: ProjectIconProps) {
+export default function ProjectIcon({ projectContainer, selected, onClick }: ProjectIconProps) {
 
   const iconRef = useRef<HTMLDivElement>(null!);
   const [loading, setLoading] = useState(true);
@@ -20,13 +20,10 @@ export default function ProjectIcon({ projectContainer, id, selectedIdx }: Proje
   }
 
   const loadOpacity = loading ? " opacity-0" : " ";
-  const selected = selectedIdx === id;
-
-  // to={projectContainer.url}
 
   return (
     // <a className={`${selected ? "cursor-default pointer-events-none " : "cursor-pointer "}`}>
-      <div data-id={id} 
+      <div data-id={projectContainer.id} onClick={onClick} 
         className={`project group relative aspect-[2.2] w-64 mini:w-3/4 mini:max-w-96 overflow-hidden 
           select-none border-2 transition-all
           ${selected ? "cursor-default pointer-events-none " : "cursor-pointer "}
@@ -43,7 +40,7 @@ export default function ProjectIcon({ projectContainer, id, selectedIdx }: Proje
         <div className={`absolute bottom-1 left-1 z-20 text-xs flex gap-2 text-rose-100
           ${loadOpacity} transition-opacity`}>
           {Array.from(project.types).slice(0, MAX_TYPES).map(type => (
-            <p key={type} className="bg-black/40 px-[2px] py-[1px] rounded-sm">{type}</p>
+            <p key={type} className="bg-black/40 px-[2px] py-[1px] rounded-sm text-xs">{type}</p>
           ))}
         </div>
 

@@ -63,7 +63,7 @@ export default function ProjectDetailsControls({
         }
         pageContentRef.current.classList.add(enterAction);
 
-        dispatcher.dispatch("projectSelected", {idx: newIndex, div: null, scroll: false});
+        dispatcher.dispatch("projectSelected", {idx: newIndex, scroll: false});
         // navigate(projectArray[newIndex].url);
 
       }

@@ -106,11 +106,11 @@ export default function Nav() {
         <div className="relative z-20 flex flex-col gap-1 mb-12 text-lg ">
           <a className="flex group items-center gap-2 hover:text-white" href="https://github.com/mgporter" target="_blank">
             <img src={githubLogo} alt="Github profile" className="size-6 invert-[0.9] group-hover:invert"></img>
-            <h2>https://github.com/mgporter</h2>
+            <p>https://github.com/mgporter</p>
           </a>
           <a className="flex group items-center gap-2 hover:text-white" href="https://linkedin.com/in/mgporter772" target="_blank">
             <img src={linkedinLogo} alt="LinkedIn profile" className="size-6 brightness-90 group-hover:brightness-110"></img>
-            <h2>https://linkedin.com/in/mgporter772</h2>
+            <p>https://linkedin.com/in/mgporter772</p>
           </a>
         </div>
         

@@ -5,7 +5,6 @@ import ProjectTransition from "./ProjectTransition";
 import { MutableRef, useEffect } from "preact/hooks";
 import { dispatcher } from "./Dispatcher";
 import { SelectedProjectType } from "./Main";
-import { C } from "../constants";
 import ProjectPreview from "./ProjectPreview";
 import { ProjectContainer } from "./ProjectService";
 import { useNavigate } from "react-router-dom";
@@ -42,8 +41,6 @@ export default function ProjectDetailsPage({
   //   isInitialOpening
   // })
 
-  if (selectedProject == null) return <></>;
-
   const [startTransition, setStartTransition] = useState(false);
   const pageContentRef = useRef<HTMLDivElement>(null!);
   const projectPreviewRef = useRef<HTMLElement>(null!);
@@ -63,13 +60,14 @@ export default function ProjectDetailsPage({
     }
   }, [])
 
+
   const index = selectedProject.idx;
   const limit = projectArray.length;
   const project = projectArray[index].project;
   const prevIndex = (index + limit - 1) % limit;
   const nextIndex = (index + 1) % limit;
 
-  selectedProject.div = document.querySelector(`.project[data-id="${index}"]`);
+  const selectedProjectIconDiv = document.querySelector(`.project[data-id="${selectedProject.id}"]`) as HTMLElement;
 
   let 
     containerProps = "", 
@@ -80,18 +78,18 @@ export default function ProjectDetailsPage({
 
     // Note: we abandon the transition if we couldn't 
     // find a ProjectIcon div to transition from
-    if (useTransition && selectedProject.div != null) {
+    if (useTransition && selectedProjectIconDiv) {
       containerProps = "project_delayed_fadein absolute";
       startVisible = false;
       startWithControlsEnabled = false;
 
-      selectedProject.div.onanimationend = (e) => {
+      selectedProjectIconDiv.onanimationend = (e) => {
         if (e.target instanceof HTMLElement) {
           e.target.classList.remove("thumbnail_remain_then_remove");
           e.target.onanimationend = null;
         }
       }
-      selectedProject.div.classList.add("thumbnail_remain_then_remove");
+      selectedProjectIconDiv.classList.add("thumbnail_remain_then_remove");
       
     }
     else {
@@ -99,16 +97,16 @@ export default function ProjectDetailsPage({
       containerProps = "", 
       startVisible = true,
       startWithControlsEnabled = true;
-      if (C.HIDE_ICONS_ON_PROJECT_PAGE) selectedProject?.hideIconsAction();
+      // if (C.HIDE_ICONS_ON_PROJECT_PAGE) selectedProject?.hideIconsAction();
     }
   }
 
   function onTransitionEnd() {
     projectDetailsContainerRef.current.style.position = "static";
     isInitialOpening = false;
-    if (selectedProject) {
-      if (C.HIDE_ICONS_ON_PROJECT_PAGE) selectedProject.hideIconsAction();
-    }
+    // if (selectedProject) {
+    //   if (C.HIDE_ICONS_ON_PROJECT_PAGE) selectedProject.hideIconsAction();
+    // }
     dispatcher.dispatch("scrollToMainTop", null);
     dispatcher.dispatch("enableProjectControls", true);
     setStartTransition(false);
@@ -132,9 +130,9 @@ export default function ProjectDetailsPage({
 
   return (
     <>
-      {(startTransition && selectedProject.div) && 
+      {(startTransition && selectedProjectIconDiv) && 
         <ProjectTransition
-          thumbnailDiv={selectedProject.div} 
+          thumbnailDiv={selectedProjectIconDiv} 
           containerRef={containerRef}
           projectPreviewRef={projectPreviewRef}
           onEffectComplete={onTransitionEnd}
@@ -162,10 +160,10 @@ export default function ProjectDetailsPage({
         <div className="project_details_inner flex flex-col gap-4 items-stretch" ref={pageContentRef}>
 
           <div className="flex flex-col mx-4 vert:mx-0 gap-2 w-full px-2">
-            <h1 className="text-4xl font-bold text-blue-200">{project.name} 
+            <h2 className="text-4xl font-bold text-blue-200">{project.name} 
               {project.featured && <span className="text-xl ml-3 text-yellow-200/90">(featured)</span>}
-            </h1>
-            <h2>{project.heading}</h2>
+            </h2>
+            <p>{project.heading}</p>
           </div>
 
           <ul className="mx-16 vert:mx-8 max-w-[30rem] list-['\21E8\0020\0020']">

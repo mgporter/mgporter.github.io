@@ -3,16 +3,15 @@ import { dispatcher } from "./Dispatcher";
 import ProjectDetailsPage from "./ProjectDetailsPage";
 import IconHolder from "./IconHolder";
 import { C } from "../constants";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import projectService from "./ProjectService";
 
 const useTransition = !C.IS_VERTICAL_SCREEN && C.IS_QUICK_CONNECTION;
 
 export type SelectedProjectType = {
-  div: HTMLElement | null, 
-  idx: number, 
-  hideIconsAction: () => void} 
-| null;
+  idx: number,
+  id: number
+};
 
 export default function Main() {
 
@@ -20,34 +19,35 @@ export default function Main() {
 
   const urlParamName = useParams<{project: string}>();
   const navigate = useNavigate();
-
+  const location = useLocation();
 
   const initialProject = projectService.getProjectByName(urlParamName.project);
-  // const initialProject = projectService.getProjectByNameStatic(projectArray, urlParamName.project);
-  const initialProjectObj = initialProject != undefined ? 
-    {
-      div: null,
+  
+  let selectedProject: SelectedProjectType | null;
+
+  if (initialProject) {
+    selectedProject = {
+      id: initialProject.id,
       idx: projectArray.findIndex(x => x.id === initialProject.id),
-      hideIconsAction: () => setShowIconHolder(false)
     }
-  : null;
+  }
+  else {
+    selectedProject = null;
+
+    // If a project is not found for this url, and we are not on
+    // the base PROJECTS url, then redirect to the PROJECTS url
+    if (location.pathname != C.PROJECT_PATH) {
+      navigate(C.PROJECT_PATH);
+    }
+    
+  }
+
 
   const mainViewRef = useRef<HTMLDivElement>(null!);
   const iconHolderRef = useRef<HTMLDivElement>(null!);
   const [showIconHolder, setShowIconHolder] = useState(true);
-  // const [selectedProject, setSelectedProject] = useState<SelectedProjectType>(null);
-  const selectedProject = initialProjectObj;
 
-  // Needed for use with HashRouter
-  // useEffect(() => {
-  //   // console.log(initialProjectObj)
-  //   // console.log(selectedProject)
-  //   // if (initialProjectObj && (selectedProject?.idx != initialProjectObj.idx)) {
-  //   if ((selectedProject?.idx != initialProjectObj?.idx)) {
-  //     console.log(initialProjectObj)
-  //     // setSelectedProject(initialProjectObj);
-  //   }
-  // }, [])
+
 
   useEffect(() => {
     const unsubscribe = dispatcher.subscribe("projectTypeSelected", option => {
@@ -67,15 +67,10 @@ export default function Main() {
   useEffect(() => {
     const unsubscribe = dispatcher.subscribe("projectSelected", (e) => {
 
-      // let div = e.div;
-      // if (!div && iconHolderRef.current != null) {
-      //   div = iconHolderRef.current.querySelector(`.project[data-id="${e.idx}"]`);
-      // }
 
       const scroll = e.scroll != undefined ? e.scroll : true;
       if (scroll) doScroll();
 
-      // openProjectView(div, e.idx);
       navigate(projectArray[e.idx].url);
 
 
@@ -98,16 +93,9 @@ export default function Main() {
 
   function closeProjectView() {
     setShowIconHolder(true);
-    // setSelectedProject(null);
     dispatcher.dispatch("scrollToMainTop", null);
     navigate("");
   }
-
-  // function openProjectView(divOfProject: HTMLElement | null, idx: number) {
-  //   const hideIcons = () => setShowIconHolder(false);
-  //   // setSelectedProject({div: divOfProject, idx: idx, hideIconsAction: hideIcons});
-  //   // navigate(projectArray[idx].url);
-  // }
 
 
   return (
