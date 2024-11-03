@@ -1,0 +1,77 @@
+/* Project Transition effects */
+
+:root {
+  --bubble-pos-x: 0%;
+  --bubble-pos-y: 0%;
+  --moving_img_orig_height: 0;
+  --moving_img_scale: 1;
+  --moving_img_translateX: 0;
+  --moving_img_translateY: 0;
+  --moving_img_height: auto;
+  --moving_img_borderradius: auto;
+}
+
+.bubblegrow {
+  animation: 0.5s linear 0s 1 forwards normal running bubblegrow;
+}
+
+.project_delayed_fadein {
+  animation: 0.4s ease-in-out 0.6s 1 both normal running project_delayed_fadein;
+}
+
+.movingImg {
+  animation: 1s cubic-bezier(0.45, 0, 0.3, 1) 0s 1 forwards normal running movingImgKeyframes;
+}
+
+.thumbnail_remain_then_remove {
+  animation: 0.15s linear 0s 1 forwards normal running thumbnail_remain_then_remove;
+}
+
+@keyframes bubblegrow {
+  0% {
+    clip-path: circle(1% at var(--bubble-pos-x) var(--bubble-pos-y));
+  }
+  100% {
+    clip-path: circle(100% at var(--bubble-pos-x) var(--bubble-pos-y));
+  }
+}
+
+@keyframes project_delayed_fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100;
+  }
+}
+
+@keyframes movingImgKeyframes {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: none;
+    height: var(--moving_img_orig_height);
+  }
+  90% {
+    border-radius: 0;
+  }
+  100% {
+    height: var(--moving_img_height);
+    border-radius: var(--moving_img_borderradius);
+    transform: scale(var(--moving_img_scale)) translate(var(--moving_img_translateX), var(--moving_img_translateY));
+  }
+}
+
+@keyframes thumbnail_remain_then_remove {
+  0% {
+    z-index: 110;
+  }
+  99% {
+    z-index: 110;
+  }
+  100% {
+    z-index: unset;
+  }
+}
