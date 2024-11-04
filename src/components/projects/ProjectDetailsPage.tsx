@@ -13,7 +13,7 @@ const ProjectDetailsPage = forwardRef<HTMLDivElement, ProjectDetailsPageProps>((
   const project = props.project;
 
   return (
-    <div className="project_details_inner flex flex-col gap-4 items-stretch" ref={ref}>
+    <div className="project_details_inner flex flex-col gap-4 items-stretch my-8" ref={ref}>
 
       <div className="flex flex-col mx-4 vert:mx-0 gap-2 w-full px-2">
         <h2 className="text-4xl font-bold text-blue-200">{project.name} 

@@ -38,17 +38,18 @@ const setTwoPhaseTransition = (
   actionOneClass: string,
   actionTwoClass: string,
   halfwayCallback: () => void,
-  finalCallback: () => void
+  finalCallback: () => void,
+  targetClass?: string
 ) => {
   elementRef.current.onanimationend = (e1) => {
 
-    if ((e1.target as HTMLElement).className.includes("project_details_inner")) {
+    if (targetClass && (e1.target as HTMLElement).className.includes(targetClass)) {
       
       elementRef.current.classList.remove(actionOneClass);
       halfwayCallback();
   
       elementRef.current.onanimationend = (e2) => {
-        if ((e2.target as HTMLElement).className.includes("project_details_inner")) {
+        if (targetClass && (e2.target as HTMLElement).className.includes(targetClass)) {
           elementRef.current.classList.remove(actionTwoClass);
           finalCallback();
         }
@@ -105,6 +106,7 @@ export default function ProjectView() {
       "swipe_enter_right",
       () => {navigate(`/projects/${projects[indices.next].url}`); selectNextProject()},
       () => setControlsEnabled(true),
+      "project_details_inner"
     );
   }
 
@@ -115,7 +117,8 @@ export default function ProjectView() {
       "swipe_exit_right",
       "swipe_enter_left",
       () => {navigate(`/projects/${projects[indices.prev].url}`); selectPrevProject()},
-      () => setControlsEnabled(true)
+      () => setControlsEnabled(true),
+      "project_details_inner"
     );
   }
 
