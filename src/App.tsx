@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import './App.css'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { C } from './constants'
 import Nav from './components/Nav'

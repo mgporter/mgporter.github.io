@@ -1,10 +1,10 @@
 import { useRef, useState } from "react"
-import ProjectDetailsControls from "./ProjectDetailsControls";
+import ProjectDetailsControls from "./projects/ProjectDetailsControls";
 import { JSX } from "react";
 import ProjectTransition from "./ProjectTransition";
 import { MutableRefObject, useEffect } from "react";
 import { dispatcher } from "./Dispatcher";
-import { SelectedProjectType } from "./Main";
+import { SelectedProjectType } from "./ProjectSection";
 import ProjectPreview from "./ProjectPreview";
 import { ProjectContainer } from "./ProjectService";
 import { useNavigate } from "react-router-dom";

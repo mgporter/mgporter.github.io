@@ -5,8 +5,8 @@ type globImport = Record<string, {default: string}>;
 const images: Record<string, string> = {};
 
 const fullImages = import.meta.glob([
-  "/src/screenshots/webp_full/*",
-  "/src/screenshots/webp_thumbnails/*"
+  "/public/screenshots/webp_full/*",
+  "/public/screenshots/webp_thumbnails/*"
 ], {eager: true}) as globImport;
 
 /**
@@ -69,9 +69,9 @@ const projects: Project[] = [
     name: "Chinese API and Storybook",
     types: new Set(["TypeScript", "Angular", "Java", "PostgreSQL"]),
     featured: true,
-    imageThumbnailSrc: images["imj_thumbnail"],
+    imageThumbnailSrc: "/screenshots/webp_thumbnails/imj_thumbnail.webp",
     preview: {
-      source: images["imj_thumbnail"],
+      source: "/screenshots/webp_full/imj.webp",
       dimensions: [1874, 1080],
       type: "image",
     },
@@ -96,9 +96,9 @@ const projects: Project[] = [
     name: "Wasm Image Processor",
     types: new Set(["TypeScript", "React", "WebAssembly", "C++"]),
     featured: true,
-    imageThumbnailSrc: images["image_processor_thumbnail"],
+    imageThumbnailSrc: "/screenshots/webp_thumbnails/image_processor_thumbnail.webp",
     preview: {
-      source: images["image_processor"],
+      source: "/screenshots/webp_full/image_processor.webp",
       dimensions: [1874, 1080],
       type: "image",
     },
@@ -118,9 +118,9 @@ const projects: Project[] = [
     name: "Oppia",
     types: new Set(["TypeScript", "Angular", "Python", "Open-Source"]),
     featured: false,
-    imageThumbnailSrc: images["oppia_thumbnail"],
+    imageThumbnailSrc: "/screenshots/webp_thumbnails/oppia_thumbnail.webp",
     preview: {
-      source: images["oppia"],
+      source: "/screenshots/webp_full/oppia.webp",
       dimensions: [1280, 640],
       type: "image",
     },
@@ -138,9 +138,9 @@ const projects: Project[] = [
     name: "Canvas Pages Generator",
     types: new Set(["Python", "PyQt", "SQLite"]),
     featured: true,
-    imageThumbnailSrc: images["canvas_pages_generator_thumbnail"],
+    imageThumbnailSrc: "/screenshots/webp_thumbnails/canvas_pages_generator_thumbnail.webp",
     preview: {
-      source: images["canvas_pages_generator"],
+      source: "/screenshots/webp_full/canvas_pages_generator.mp4",
       dimensions: [1344, 756],
       type: "video",
     },
@@ -160,9 +160,9 @@ const projects: Project[] = [
     name: "Blubble's World Demo",
     types: new Set(["TypeScript", "React", "Three.js"]),
     featured: true,
-    imageThumbnailSrc: images["blubbles_world_thumbnail"],
+    imageThumbnailSrc: "/screenshots/webp_thumbnails/blubbles_world_thumbnail.webp",
     preview: {
-      source: images["blubbles_world"],
+      source: "/screenshots/webp_full/blubbles_world.webp",
       dimensions: STANDARD_1080P,
       type: "image",
     },
@@ -183,9 +183,9 @@ const projects: Project[] = [
     name: "Battleship! Online (PvP)",
     types: new Set(["Javascript", "Three.js", "React", "Java", "MongoDB", "WebSockets"]),
     featured: true,
-    imageThumbnailSrc: images["battleship_online_thumbnail"],
+    imageThumbnailSrc: "/screenshots/webp_thumbnails/battleship_online_thumbnail.webp",
     preview: {
-      source: images["battleship_online"],
+      source: "/screenshots/webp_full/battleship_online.webp",
       dimensions: STANDARD_1080P,
       type: "image",
     },
@@ -206,9 +206,9 @@ const projects: Project[] = [
     name: "Audiveris",
     types: new Set(["Java", "Swing", "Open-Source"]),
     featured: false,
-    imageThumbnailSrc: images["audiveris"],
+    imageThumbnailSrc: "/screenshots/webp_thumbnails/audiveris.webp",
     preview: {
-      source: images["audiveris"],
+      source: "/screenshots/webp_full/audiveris.webp",
       dimensions: [567, 260],
       type: "image",
     },
@@ -225,9 +225,9 @@ const projects: Project[] = [
     name: "Wordle Wrangler",
     types: new Set(["Java"]),
     featured: false,
-    imageThumbnailSrc: images["wordle_wrangler_thumbnail"],
+    imageThumbnailSrc: "/screenshots/webp_thumbnails/wordle_wrangler_thumbnail.webp",
     preview: {
-      source: images["wordle_wrangler"],
+      source: "/screenshots/webp_full/wordle_wrangler.gif",
       dimensions: [1376, 675],
       type: "image",
     },
@@ -247,9 +247,9 @@ const projects: Project[] = [
     name: "Moana Memory Card Game",
     types: new Set(["Javascript", "React"]),
     featured: false,
-    imageThumbnailSrc: images["moana_memory_cards_thumbnail"],
+    imageThumbnailSrc: "/screenshots/webp_thumbnails/moana_memory_cards_thumbnail.webp",
     preview: {
-      source: images["moana_memory_cards"],
+      source: "/screenshots/webp_full/moana_memory_cards.webp",
       dimensions: [1883, 1059],
       type: "image",
     },
@@ -270,9 +270,9 @@ const projects: Project[] = [
     name: "Knights' Travails",
     types: new Set(["Java"]),
     featured: false,
-    imageThumbnailSrc: images["knights_travails_thumbnail"],
+    imageThumbnailSrc: "/screenshots/webp_thumbnails/knights_travails_thumbnail.webp",
     preview: {
-      source: images["knights_travails"],
+      source: "/screenshots/webp_full/knights_travails.gif",
       dimensions: [1107, 651],
       type: "image",
     },
@@ -291,9 +291,9 @@ const projects: Project[] = [
     name: "Battleship! Single-player",
     types: new Set(["Javascript", "Three.js"]),
     featured: false,
-    imageThumbnailSrc: images["battleship_singleplayer_thumbnail"],
+    imageThumbnailSrc: "/screenshots/webp_thumbnails/battleship_singleplayer_thumbnail.webp",
     preview: {
-      source: images["battleship_singleplayer"],
+      source: "/screenshots/webp_full/battleship_singleplayer.webp",
       dimensions: STANDARD_1080P,
       type: "image",
     },
@@ -317,9 +317,9 @@ const projects: Project[] = [
     name: "Profile Page Website",
     types: new Set(["TypeScript", "Preact"]),
     featured: false,
-    imageThumbnailSrc: images["profile_website_thumbnail"],
+    imageThumbnailSrc: "/screenshots/webp_thumbnails/profile_website_thumbnail.webp",
     preview: {
-      source: images["profile_website"],
+      source: "/screenshots/webp_full/profile_website.webp",
       dimensions: [1873, 1054],
       type: "image",
     },
@@ -336,9 +336,9 @@ const projects: Project[] = [
     name: "Visual Linked List",
     types: new Set(["Javascript"]),
     featured: false,
-    imageThumbnailSrc: images["linked_list_thumbnail"],
+    imageThumbnailSrc: "/screenshots/webp_thumbnails/linked_list_thumbnail.webp",
     preview: {
-      source: images["linked_list"],
+      source: "/screenshots/webp_full/linked_list.webp",
       dimensions: STANDARD_1080P,
       type: "image",
     },
@@ -358,9 +358,9 @@ const projects: Project[] = [
     name: "Weather App",
     types: new Set(["Javascript"]),
     featured: false,
-    imageThumbnailSrc: images["weather_app_thumbnail"],
+    imageThumbnailSrc: "/screenshots/webp_thumbnails/weather_app_thumbnail.webp",
     preview: {
-      source: images["weather_app"],
+      source: "/screenshots/webp_full/weather_app.webp",
       dimensions: STANDARD_1080P,
       type: "image",
     },
@@ -380,9 +380,9 @@ const projects: Project[] = [
     name: "Todo List App",
     types: new Set(["Javascript"]),
     featured: false,
-    imageThumbnailSrc: images["todo_list_app_thumbnail"],
+    imageThumbnailSrc: "/screenshots/webp_thumbnails/todo_list_app_thumbnail.webp",
     preview: {
-      source: images["todo_list_app"],
+      source: "/screenshots/webp_full/todo_list_app.webp",
       dimensions: STANDARD_1080P,
       type: "image",
     },
@@ -404,9 +404,9 @@ const projects: Project[] = [
     name: "Restaurant Page",
     types: new Set(["Javascript"]),
     featured: false,
-    imageThumbnailSrc: images["restaurant_page_thumbnail"],
+    imageThumbnailSrc: "/screenshots/webp_thumbnails/restaurant_page_thumbnail.webp",
     preview: {
-      source: images["restaurant_page"],
+      source: "/screenshots/webp_full/restaurant_page.webp",
       dimensions: [1875, 1055],
       type: "image",
     },

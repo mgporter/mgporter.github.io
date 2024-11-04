@@ -1,4 +1,4 @@
-import { Project, ProjectType, projects } from "./PROJECTS";
+import { Project, ProjectType } from "./PROJECTS";
 
 export type ProjectStyle = "emphasized" | "faded" | "default";
 
@@ -97,6 +97,4 @@ class ProjectService {
 
 }
 
-const projectService = new ProjectService(projects);
-
-export default projectService;
+export default ProjectService;

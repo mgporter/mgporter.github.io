@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
-import { ProjectContainer } from "./ProjectService";
+import { ProjectContainer } from "../ProjectService";
+import { Link } from "react-router-dom";
 
 interface ProjectIconProps {
   projectContainer: ProjectContainer;
@@ -22,7 +23,7 @@ export default function ProjectIcon({ projectContainer, selected, onClick }: Pro
   const loadOpacity = loading ? " opacity-0" : " ";
 
   return (
-    // <a className={`${selected ? "cursor-default pointer-events-none " : "cursor-pointer "}`}>
+    <Link to={`/projects/${projectContainer.url}`} className={`${selected ? "cursor-default pointer-events-none " : "cursor-pointer "}`}>
       <div data-id={projectContainer.id} onClick={onClick} 
         className={`project group relative aspect-[2.2] w-64 mini:w-3/4 mini:max-w-96 overflow-hidden 
           select-none border-2 transition-all
@@ -55,7 +56,7 @@ export default function ProjectIcon({ projectContainer, selected, onClick }: Pro
         />
         
       </div>
-    // </a>
+    </Link>
   )
 
 }

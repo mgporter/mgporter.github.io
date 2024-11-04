@@ -1,19 +1,23 @@
+import { RouteObject } from "react-router-dom"
 import App from "./App"
-import Main from "./components/Main"
+import ProjectSection from "./components/ProjectSection"
+import ProjectDetailsPage, { projectLoader } from "./components/projects/ProjectView"
 
-export const routesConfig = [
+
+export const routesConfig: RouteObject[] = [
   {
-    path: "*",
+    path: "/",
     element: <App />,
     errorElement: <div>There was an error</div>,
     children: [
       {
         path: "projects",
-        element: <Main />,
+        element: <ProjectSection />,
         children: [
           {
             path: ":project",
-            element: <Main />
+            element: <ProjectDetailsPage />,
+            loader: projectLoader
           }
         ]
       }
