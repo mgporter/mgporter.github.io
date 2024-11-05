@@ -5,7 +5,7 @@ import ProjectTransition from "../ProjectTransition";
 import { MutableRefObject, useEffect } from "react";
 import { dispatcher } from "../Dispatcher";
 import { SelectedProjectType } from "../ProjectSection";
-import ProjectPreview from "../ProjectPreview";
+import ProjectPreview from "./ProjectPreview";
 import { ProjectContainer } from "../ProjectService";
 import { LoaderFunction, Navigate, Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import projectService from "../ProjectService";
@@ -122,42 +122,6 @@ export default function ProjectView() {
     );
   }
 
-  // function swipe(action: "goforward" | "goback") {
-  //   dispatcher.dispatch("enableProjectControls", false);
-  //   dispatcher.dispatch("scrollToMainTop", null);
-
-  //   let newIndex, enterAction, exitAction;
-
-  //   if (action === "goforward") {
-  //     newIndex = index.next;
-  //     exitAction = "swipe_exit_left";
-  //     enterAction = "swipe_enter_right";
-  //   } else {
-  //     newIndex = index.prev;
-  //     exitAction = "swipe_exit_right";
-  //     enterAction = "swipe_enter_left";
-  //   }
-
-  //   pageContentRef.current.onanimationend = (e) => {
-  //     if ((e.target as HTMLElement).className.includes("project_details_inner")) {
-  //       pageContentRef.current.classList.remove(exitAction);
-
-  //       pageContentRef.current.onanimationend = (e) => {
-  //         if ((e.target as HTMLElement).className.includes("project_details_inner")) {
-  //           pageContentRef.current.classList.remove(enterAction);
-  //           dispatcher.dispatch("enableProjectControls", true);
-  //         }
-  //       }
-  //       pageContentRef.current.classList.add(enterAction);
-
-  //       dispatcher.dispatch("projectSelected", {idx: newIndex, scroll: false});
-  //       // navigate(projectArray[newIndex].url);
-
-  //     }
-  //   };
-
-  //   pageContentRef.current.classList.add(exitAction);
-  // }
 
 
   // let 
@@ -219,7 +183,7 @@ export default function ProjectView() {
   // }
 
   return (
-      <div className={`project_details_content z-[110] inset-0 py-8 px-2 items-stretch`}>
+      <div className={`project_view z-[110] inset-0 py-8 px-2 items-stretch`}>
 
         <ProjectDetailsControls 
           swipeNextAction={swipeToNextProject} 

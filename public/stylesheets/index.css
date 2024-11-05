@@ -68,10 +68,12 @@ body {
   background-repeat: no-repeat;
 }
 
+
 .project_details_bubble {
   background-color: var(--background-color);
   background: var(--bg-gradient-with-overlay);
 }
+
 
 div#container {
   margin: 0 1rem;

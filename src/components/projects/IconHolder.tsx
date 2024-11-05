@@ -1,25 +1,33 @@
-import { MutableRefObject } from "react";
+import { MutableRefObject, useEffect } from "react";
 import ProjectIcon from "./ProjectIcon";
 import { dispatcher } from "../Dispatcher";
 import { SelectedProjectType } from "../ProjectSection";
 import { ProjectContainer } from "../ProjectService";
 import { useProjectStore } from "./ProjectState";
+import { useLocation } from "react-router-dom";
 
 interface IconHolderProps {
   iconHolderRef: MutableRefObject<HTMLDivElement>;
-  selectedProject: SelectedProjectType | null;
+  onProjectSelected: (project: ProjectContainer) => void;
 }
 
-export default function IconHolder({iconHolderRef, selectedProject}: IconHolderProps) {
+export default function IconHolder({ iconHolderRef, onProjectSelected }: IconHolderProps) {
 
-  const { projects, selectProjectByName } = useProjectStore()
+  const { projects, hasSelection, unselectProject, selectProjectByName, indices } = useProjectStore();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/projects") {
+      unselectProject();
+    }
+  }, [location.pathname, unselectProject])
+
+
 
 
   // function dispatchProjectSelectEvent(index: number) {
   //   dispatcher.dispatch("projectSelected", {idx: index});
   // }
-
-  const selectedId = selectedProject ? selectedProject.id : -1;
 
   return (
     <div
@@ -31,8 +39,8 @@ export default function IconHolder({iconHolderRef, selectedProject}: IconHolderP
           <ProjectIcon 
             key={proj.id} 
             projectContainer={proj} 
-            selected={selectedId === proj.id}
-            onClick={() => selectProjectByName(proj.url)} />
+            selected={hasSelection && indices.current === i}
+            onProjectSelected={() => onProjectSelected(proj)} />
           )
         }
       </div>

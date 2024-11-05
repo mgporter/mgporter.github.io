@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 interface ProjectIconProps {
   projectContainer: ProjectContainer;
   selected: boolean;
-  onClick: () => void;
+  onProjectSelected: () => void;
 }
 
 const MAX_TYPES = 5;
 
-export default function ProjectIcon({ projectContainer, selected, onClick }: ProjectIconProps) {
+export default function ProjectIcon({ projectContainer, selected, onProjectSelected }: ProjectIconProps) {
 
   const iconRef = useRef<HTMLDivElement>(null!);
   const [loading, setLoading] = useState(true);
@@ -23,8 +23,9 @@ export default function ProjectIcon({ projectContainer, selected, onClick }: Pro
   const loadOpacity = loading ? " opacity-0" : " ";
 
   return (
-    <Link to={`/projects/${projectContainer.url}`} className={`${selected ? "cursor-default pointer-events-none " : "cursor-pointer "}`}>
-      <div data-id={projectContainer.id} onClick={onClick} 
+    // <Link to={`/projects/${projectContainer.url}`} className={`${selected ? "cursor-default pointer-events-none " : "cursor-pointer "}`}>
+      // <div data-id={projectContainer.id} onClick={onClick} 
+      <div data-id={projectContainer.id} onClick={onProjectSelected} 
         className={`project group relative aspect-[2.2] w-64 mini:w-3/4 mini:max-w-96 overflow-hidden 
           select-none border-2 transition-all
           ${selected ? "cursor-default pointer-events-none " : "cursor-pointer "}
@@ -34,7 +35,7 @@ export default function ProjectIcon({ projectContainer, selected, onClick }: Pro
           ${selected ? " border-yellow-400 scale-105 brightness-50" : " "} `}
         ref={iconRef}>
 
-        <p className={`absolute top-1 left-1 z-20 px-[2px] rounded-sm font-semibold text-white
+        <p className={`icontitle absolute top-1 left-1 z-20 px-[2px] rounded-sm font-semibold text-white
           group-hover:opacity-100 text-base ${loading ? " opacity-50" : " opacity-0 bg-black/40"}
           ${selected ? " opacity-100" : " "}`}>{project.name} {project.featured && "★"}</p>
 
@@ -56,7 +57,7 @@ export default function ProjectIcon({ projectContainer, selected, onClick }: Pro
         />
         
       </div>
-    </Link>
+    // </Link>
   )
 
 }

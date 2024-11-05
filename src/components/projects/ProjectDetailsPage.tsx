@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import ProjectPreview from "../ProjectPreview";
+import ProjectPreview from "./ProjectPreview";
 import { Project } from "../PROJECTS"
 
 interface ProjectDetailsPageProps {

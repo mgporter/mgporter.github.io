@@ -1,8 +1,8 @@
 /* Project Transition effects */
 
 :root {
-  --bubble-pos-x: 0%;
-  --bubble-pos-y: 0%;
+  --bubble-pos-x: 0px;
+  --bubble-pos-y: 0px;
   --moving_img_orig_height: 0;
   --moving_img_scale: 1;
   --moving_img_translateX: 0;
@@ -15,17 +15,22 @@
   animation: 0.5s linear 0s 1 forwards normal running bubblegrow;
 }
 
-.project_delayed_fadein {
-  animation: 0.4s ease-in-out 0.6s 1 both normal running project_delayed_fadein;
+.delayed_fadein {
+  animation: 0.4s ease-in-out 0.1s 1 both normal running project_delayed_fadein;
 }
 
-.movingImg {
+.delayed_fadeout {
+  animation: 0.4s ease-in-out 0.1s 1 both reverse running project_delayed_fadein;
+}
+
+.movingImg_move_animation {
   animation: 1s cubic-bezier(0.45, 0, 0.3, 1) 0s 1 forwards normal running movingImgKeyframes;
 }
 
 .thumbnail_remain_then_remove {
   animation: 0.15s linear 0s 1 forwards normal running thumbnail_remain_then_remove;
 }
+
 
 @keyframes bubblegrow {
   0% {
@@ -41,7 +46,7 @@
     opacity: 0;
   }
   100% {
-    opacity: 100;
+    opacity: 1;
   }
 }
 
@@ -52,7 +57,7 @@
   10% {
     opacity: 1;
     transform: none;
-    height: var(--moving_img_orig_height);
+    height: auto;
   }
   90% {
     border-radius: 0;
@@ -61,6 +66,7 @@
     height: var(--moving_img_height);
     border-radius: var(--moving_img_borderradius);
     transform: scale(var(--moving_img_scale)) translate(var(--moving_img_translateX), var(--moving_img_translateY));
+    opacity: 1;
   }
 }
 

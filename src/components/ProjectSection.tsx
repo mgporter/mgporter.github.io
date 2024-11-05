@@ -3,7 +3,10 @@ import { dispatcher } from "./Dispatcher";
 import IconHolder from "./projects/IconHolder";
 import { C } from "../constants";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
-import projectService from "./ProjectService";
+import projectService, { ProjectContainer } from "./ProjectService";
+import { useProjectStore } from "./projects/ProjectState";
+import { Project } from "./PROJECTS";
+import doBubbleTransition from "./projects/BubbleTransition";
 
 // const useTransition = !C.IS_VERTICAL_SCREEN && C.IS_QUICK_CONNECTION;
 
@@ -14,37 +17,29 @@ export type SelectedProjectType = {
 
 export default function ProjectSection() {
 
-  // const urlParamName = useParams<{project: string}>();
+  const { selectProjectByName } = useProjectStore()
   const navigate = useNavigate();
-  // const location = useLocation();
-
-  // const initialProject = projectService.getProjectByName(urlParamName.project);
-  
-  let selectedProject: SelectedProjectType | null;
-
-  // if (initialProject) {
-  //   selectedProject = {
-  //     id: initialProject.id,
-  //     idx: projectArray.findIndex(x => x.id === initialProject.id),
-  //   }
-  // }
-  // else {
-  //   selectedProject = null;
-
-  //   // If a project is not found for this url, and we are not on
-  //   // the base PROJECTS url, then redirect to the PROJECTS url
-  //   if (location.pathname != C.PROJECT_PATH) {
-  //     navigate(C.PROJECT_PATH);
-  //   }
-    
-  // }
+  const location = useLocation();
 
 
-  const mainViewRef = useRef<HTMLDivElement>(null!);
+  const projectSectionRef = useRef<HTMLDivElement>(null!);
   const iconHolderRef = useRef<HTMLDivElement>(null!);
-  const [showIconHolder, setShowIconHolder] = useState(true);
 
+  function onProjectSelected(project: ProjectContainer) {
 
+    const navigateToPage = () => {
+      selectProjectByName(project.url)
+      navigate(`/projects/${project.url}`)
+    }
+
+    if (location.pathname === "/projects") {
+      doBubbleTransition(project, projectSectionRef, navigateToPage)
+      console.log("start transition")
+    } else {
+      navigateToPage()
+    }
+
+  }
 
   // useEffect(() => {
   //   const unsubscribe = dispatcher.subscribe("projectTypeSelected", option => {
@@ -94,28 +89,17 @@ export default function ProjectSection() {
   //   navigate("");
   // }
 
-
   return (
     <main 
       className="relative w-full pb-48 overflow-hidden"
-      ref={mainViewRef}>
+      ref={projectSectionRef}>
 
       <Outlet />
 
-      {/* {selectedProject && 
-        <ProjectDetailsPage
-          projectArray={projectArray}
-          selectedProject={selectedProject}
-          useTransition={useTransition}
-          containerRef={mainViewRef}
-          closeProjectAction={closeProjectView} />} */}
-
-      {showIconHolder &&
-        <IconHolder 
-          iconHolderRef={iconHolderRef}
-          selectedProject={null}
-        />
-      }
+      <IconHolder
+        onProjectSelected={onProjectSelected}
+        iconHolderRef={iconHolderRef}
+      />
 
     </main>
   )

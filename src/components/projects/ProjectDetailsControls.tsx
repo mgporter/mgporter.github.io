@@ -24,7 +24,7 @@ export default function ProjectDetailsControls({
   enableControls
 }: ProjectDetailsControlsProps) {
 
-  const { projects, indices } = useProjectStore()
+  const { projects, indices, unselectProject } = useProjectStore()
 
   // const [enabled, setEnabled] = useState(enableControls);
   // const navigate = useNavigate();

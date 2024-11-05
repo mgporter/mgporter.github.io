@@ -1,5 +1,5 @@
 import { forwardRef } from "react"
-import { Project } from "./PROJECTS"
+import { Project } from "../PROJECTS"
 
 interface ProjectPreviewProps {
   project: Project;
@@ -10,7 +10,7 @@ interface ProjectPreviewProps {
 const ProjectPreview = forwardRef<HTMLElement, ProjectPreviewProps>((props, ref) => {
 
   const project = props.project;
-  const styles = `details_placeholder_image w-3/4 my-8 rounded-md self-center ${props.startVisible ? "" : "invisible "}`;
+  const styles = `project_preview w-3/4 my-8 rounded-md self-center ${props.startVisible ? "" : "invisible "}`;
   const HTMLWidth = project.preview.dimensions[0] + "";
   const HTMLHeight = project.preview.dimensions[1] + "";
   const aspectRatio = project.preview.dimensions[0] / project.preview.dimensions[1];
@@ -36,7 +36,7 @@ const ProjectPreview = forwardRef<HTMLElement, ProjectPreviewProps>((props, ref)
       <video
         // @ts-expect-error HTMLElement ref assigned to HTMLVideoElement
         ref={ref} 
-        autoplay
+        autoPlay
         muted={true}
         controls
         disablePictureInPicture

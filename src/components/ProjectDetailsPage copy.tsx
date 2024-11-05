@@ -5,7 +5,7 @@ import ProjectTransition from "./ProjectTransition";
 import { MutableRefObject, useEffect } from "react";
 import { dispatcher } from "./Dispatcher";
 import { SelectedProjectType } from "./ProjectSection";
-import ProjectPreview from "./ProjectPreview";
+import ProjectPreview from "./projects/ProjectPreview";
 import { ProjectContainer } from "./ProjectService";
 import { useNavigate } from "react-router-dom";
 

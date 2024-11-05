@@ -100,6 +100,7 @@ const getIndices = function getIndices_fn<T>(arr: ArrayLike<T>, current: number)
 
 type ProjectState = {
   projects: ProjectContainer[],
+  hasSelection: boolean,
   indices: {
     current: number,
     next: number,
@@ -112,13 +113,14 @@ type ProjectActions = {
   sortByType: (types: Set<ProjectType>) => void
   sortByFeatured: () => void
   selectProjectByName: (name: string) => void
-  // selectProjectByIndex: (index: number) => void
   selectNextProject: () => void
   selectPrevProject: () => void
+  unselectProject: () => void
 }
 
 const initialProjects: ProjectState = {
   projects: projectContainers,
+  hasSelection: false,
   indices: {
     current: 0,
     next: 1,
@@ -132,15 +134,16 @@ export const useProjectStore = create<ProjectState & ProjectActions>()(set => ({
   sortByType: (types: Set<ProjectType>) => set({ projects: getProjectContainersSortedByType(types) }),
   sortByFeatured: () => set({ projects: getProjectContainersSortedByFeatured() }),
   selectProjectByName: (name: string) => set(
-    state => ({ indices: getIndices(state.projects, state.projects.findIndex(p => p.url === name))})
+    state => ({ indices: getIndices(state.projects, state.projects.findIndex(p => p.url === name)), hasSelection: true})
   ),
   // selectProjectByIndex: (index: number) => set({ selectedIndex: index })
   selectNextProject: () => set(
-    state => ({ indices: getIndices(state.projects, state.indices.next)})
+    state => ({ indices: getIndices(state.projects, state.indices.next), hasSelection: true})
   ),
   selectPrevProject: () => set(
-    state => ({ indices: getIndices(state.projects, state.indices.prev)})
-  )
+    state => ({ indices: getIndices(state.projects, state.indices.prev), hasSelection: true})
+  ),
+  unselectProject: () => set({ hasSelection: false })
 }))
 
 
