@@ -72,6 +72,7 @@ body {
 .project_details_bubble {
   background-color: var(--background-color);
   background: var(--bg-gradient-with-overlay);
+  will-change: clippath;
 }
 
 

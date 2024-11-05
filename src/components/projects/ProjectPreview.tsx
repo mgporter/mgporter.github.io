@@ -10,7 +10,7 @@ interface ProjectPreviewProps {
 const ProjectPreview = forwardRef<HTMLElement, ProjectPreviewProps>((props, ref) => {
 
   const project = props.project;
-  const styles = `project_preview w-3/4 my-8 rounded-md self-center ${props.startVisible ? "" : "invisible "}`;
+  const styles = `project_preview w-3/4 my-8 rounded-md self-center border-2 border-transparent ${props.startVisible ? "" : "invisible "}`;
   const HTMLWidth = project.preview.dimensions[0] + "";
   const HTMLHeight = project.preview.dimensions[1] + "";
   const aspectRatio = project.preview.dimensions[0] / project.preview.dimensions[1];

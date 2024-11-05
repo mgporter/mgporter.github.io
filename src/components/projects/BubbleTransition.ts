@@ -11,18 +11,30 @@ export default function doBubbleTransition(project: ProjectContainer, projectSec
     const containerRect = projectSectionRef.current.getBoundingClientRect();
 
     // Get the picture from the icon and append it overtop of the real icon
-    const movingImg = document.createElement('img')
-    movingImg.src = project.project.preview.source
+    const movingImg = document.createElement('div')
+    // const movingImg = projectThumbnailDiv.cloneNode(false) as HTMLElement
+    const movingImgInner = document.createElement('img')
+    movingImgInner.src = project.project.preview.type === "image" ? project.project.preview.source : project.project.imageThumbnailSrc;
+    movingImgInner.style.width = '100%'
+    // movingImgInner.style.height = '100%'
+    movingImgInner.style.aspectRatio = (project.project.preview.dimensions[0] / project.project.preview.dimensions[1]) + ""
+    // movingImgInner.style.aspectRatio = 'auto'
+    
+    movingImg.appendChild(movingImgInner);
+
     movingImg.style.position = 'absolute';
     movingImg.style.pointerEvents = 'none';
-    movingImg.style.left = `${projectRect.left - containerRect.left}px`
-    movingImg.style.top = `${projectRect.top - containerRect.top}px`
-    movingImg.style.width = `${projectRect.width}px`
-    movingImg.style.height = `${projectRect.height}px`
+    movingImg.style.left = `${projectRect.left - containerRect.left + 2}px` // add offsets to account for border on icon
+    movingImg.style.top = `${projectRect.top - containerRect.top + 2}px`    // add offsets to account for border on icon
+    movingImg.style.width = `${projectRect.width - 4}px`                    // add offsets to account for border on icon
+    movingImg.style.height = `${projectRect.height - 4}px`                  // add offsets to account for border on icon
     movingImg.style.zIndex = '120'
-    movingImg.style.opacity = '0'
+    movingImg.style.overflow = 'hidden'
+    movingImg.style.transition = '400ms opacity'
+    movingImg.onanimationend = startBubbleAnimation;
     movingImg.classList.add("movingImg");
     projectSectionRef.current.appendChild(movingImg);
+    movingImg.classList.add('fadein')
 
     // Create the bubble by creating a div to cover the screen, then giving
     // it a small circle clippath centered over the icon
@@ -40,66 +52,80 @@ export default function doBubbleTransition(project: ProjectContainer, projectSec
     bubble.style.clipPath = `circle(1% at ${iconCenterX}px ${iconCenterY}px)`
     bubble.style.position = 'absolute';
     bubble.style.zIndex = '100';
-    bubble.onanimationend = () => {
+    bubble.style.transition = "400ms opacity"
+    bubble.onanimationend = renderNewPage;
+    bubble.classList.add("project_details_bubble");
+
+
+    function startBubbleAnimation() {
+      movingImg.onanimationend = null;
+      console.log("start bubble anim")
+      bubble.classList.add("bubblegrow")
+      projectSectionRef.current.appendChild(bubble);
+    }
+
+
+    function renderNewPage() {
+      bubble.onanimationend = null
+      console.log("render")
       navigateToPage()
 
-      setTimeout(() => {
-        const projectPreview = projectSectionRef.current.querySelector('.project_preview')!;
-        const projectPreviewRect = projectPreview.getBoundingClientRect();
-  
-        const scaleFactor = projectPreviewRect.width / projectRect.width;
-  
-        const previewCenterX = projectPreviewRect.left + (projectPreviewRect.width / 2)
-        const previewCenterY = projectPreviewRect.top + (projectPreviewRect.height / 2)
-  
-        const translateX = (previewCenterX - iconCenterX) / scaleFactor
-        const translateY = (previewCenterY - iconCenterY) / scaleFactor
-        
-        const newHeight = projectRect.width * projectPreviewRect.height / projectPreviewRect.width
-        const heightDifference = (newHeight - projectRect.height) / (scaleFactor * 2)
-  
-        root.style.setProperty("--moving_img_scale", scaleFactor + "");
-        root.style.setProperty("--moving_img_translateX", translateX + "px");
-        root.style.setProperty("--moving_img_translateY", (translateY - heightDifference) + "px");
-        root.style.setProperty("--moving_img_orig_height", projectRect.height + "px");
-        root.style.setProperty("--moving_img_height", newHeight + "px");
-        root.style.setProperty("--moving_img_borderradius", "0.15rem");
-  
-        movingImg.onanimationend = () => {
+      // Wait for page to finish rendering before going on
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          startMovingImageAnimation();
+        })
+      })
+    }
 
-          bubble.ontransitionend = () => {
-            bubble.remove()
-            movingImg.remove()
-          }
-          
-          bubble.style.transition = "400ms opacity"
-          bubble.style.opacity = "0"
-        }
-    
-        movingImg.classList.add("movingImg_move_animation");
-      }, 100)
+
+    function startMovingImageAnimation() {
+
+      const projectPreview = projectSectionRef.current.querySelector('.project_preview')!;
+      const projectPreviewRect = projectPreview.getBoundingClientRect();
+
+      const scaleFactor = projectPreviewRect.width / (projectRect.width - 2);
+
+      const previewCenterX = projectPreviewRect.left + (projectPreviewRect.width / 2) + window.scrollX
+      const previewCenterY = projectPreviewRect.top + (projectPreviewRect.height / 2) + window.scrollY
+
+      const translateX = (previewCenterX - iconCenterX) / scaleFactor
+      const translateY = (previewCenterY - iconCenterY) / scaleFactor
+      
+      const newHeight = projectRect.width * projectPreviewRect.height / projectPreviewRect.width
+      const heightDifference = (newHeight - projectRect.height) / (scaleFactor * 2)
+
+      root.style.setProperty("--moving_img_scale", scaleFactor + "");
+      root.style.setProperty("--moving_img_translateX", translateX + "px");
+      root.style.setProperty("--moving_img_translateY", (translateY - heightDifference) + "px");
+      root.style.setProperty("--moving_img_orig_height", projectRect.height + "px");
+      root.style.setProperty("--moving_img_height", newHeight + "px");
+      root.style.setProperty("--moving_img_borderradius", `${0.375 / scaleFactor}rem`);
+
+      movingImg.onanimationend = revealNewPage
+      movingImg.classList.add("movingImg_move_animation");
 
     }
-    bubble.className = "project_details_bubble bubblegrow"
-    projectSectionRef.current.appendChild(bubble);
 
 
-    // Render the page underneath the bubble (which now fills the page)
-    
+    function revealNewPage() {
+      console.log("reveal new page")
+      
+      // bubble.style.opacity = "0"
+      // movingImg.style.opacity = "0.5"
+      // return
 
+      bubble.ontransitionend = () => {
+        bubble.remove()
+        movingImg.ontransitionend = () => {
+          movingImg.remove()
+        }
+        movingImg.style.opacity = "0"
+      }
 
-    // Get the position of the (invisible) preview image and use that
-    // as a destination for the moving image.
-
-
-
-
-
-
-
-    
-
-
+      bubble.style.opacity = "0"
+      
+    }
 
 
   } catch (e) {
@@ -109,22 +135,3 @@ export default function doBubbleTransition(project: ProjectContainer, projectSec
   }
 
 }
-
-// function createMovingImage(containerElement: HTMLElement, project: ProjectContainer): HTMLElement {
-
-//   const containerRect = containerElement.getBoundingClientRect();
-
-//   console.log(rect.left, projectThumbnailDiv.clientLeft, projectThumbnailDiv.scrollLeft)
-
-//   const movingImg = projectThumbnailDiv.cloneNode(true) as HTMLElement;
-//   movingImg.style.position = 'absolute';
-//   movingImg.style.pointerEvents = 'none';
-//   (projectThumbnailDiv.querySelector(".icontitle") as HTMLElement).style.opacity = "100";
-//   movingImg.style.left = `${rect.left - containerRect.left}px`
-//   movingImg.style.top = `${rect.top - containerRect.top}px`
-
-//   containerElement.appendChild(movingImg);
-
-//   return movingImg;
-
-// }

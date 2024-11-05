@@ -27,7 +27,7 @@ export default function ProjectIcon({ projectContainer, selected, onProjectSelec
       // <div data-id={projectContainer.id} onClick={onClick} 
       <div data-id={projectContainer.id} onClick={onProjectSelected} 
         className={`project group relative aspect-[2.2] w-64 mini:w-3/4 mini:max-w-96 overflow-hidden 
-          select-none border-2 transition-all
+          select-none border-2 transition-all active:brightness-150
           ${selected ? "cursor-default pointer-events-none " : "cursor-pointer "}
           ${projectContainer.style === "faded" ? " opacity-60" : " "}
           ${projectContainer.style === "emphasized" ? " border-violet-100 scale-105" : " border-transparent"}
