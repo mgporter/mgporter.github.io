@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
-import { ProjectContainer } from "../ProjectService";
-import { Link } from "react-router-dom";
+import { ProjectContainer } from "./ProjectState";
 
 interface ProjectIconProps {
   projectContainer: ProjectContainer;

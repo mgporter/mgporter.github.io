@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { Project, projects, ProjectType } from "../PROJECTS";
+import { hasSubscribers } from "diagnostics_channel";
 
 export type ProjectStyle = "emphasized" | "faded" | "default";
 
@@ -113,6 +114,7 @@ type ProjectActions = {
   sortByType: (types: Set<ProjectType>) => void
   sortByFeatured: () => void
   selectProjectByName: (name: string) => void
+  selectProjectByIndex: (index: number) => void
   selectNextProject: () => void
   selectPrevProject: () => void
   unselectProject: () => void
@@ -136,7 +138,9 @@ export const useProjectStore = create<ProjectState & ProjectActions>()(set => ({
   selectProjectByName: (name: string) => set(
     state => ({ indices: getIndices(state.projects, state.projects.findIndex(p => p.url === name)), hasSelection: true})
   ),
-  // selectProjectByIndex: (index: number) => set({ selectedIndex: index })
+  selectProjectByIndex: (index: number) => set(
+    state => ({ indices: getIndices(state.projects, index), hasSelection: true })
+  ),
   selectNextProject: () => set(
     state => ({ indices: getIndices(state.projects, state.indices.next), hasSelection: true})
   ),
@@ -145,73 +149,3 @@ export const useProjectStore = create<ProjectState & ProjectActions>()(set => ({
   ),
   unselectProject: () => set({ hasSelection: false })
 }))
-
-
-
-
-
-
-
-
-
-// class ProjectService {
-
-//   private readonly projectContainers: ProjectContainer[];
-
-//   constructor(projects: Project[]) {
-//     this.projectContainers = this.initProjects(projects);
-//   }
-
-//   getProjectContainers() {
-//     return this.projectContainers;
-//   }
-
-//   getProjectCount() {
-//     return this.projectContainers.length;
-//   }
-
-//   resetAndGetProjectContainers() {
-//     this.projectContainers.forEach(x => x.style = "default");
-//     return this.projectContainers;
-//   }
-
-//   getProjectContainersSortedByType(types: Set<ProjectType>) {
-//     const copiedArray = [...this.projectContainers];
-
-//     copiedArray.forEach(x => {
-//         for (const type of types) {
-//           if (x.project.types.has(type)) {
-//             x.style = "emphasized";
-//             return;
-//           }
-//         }
-//         x.style = "faded";
-//     });
-
-//     return this.sortByStyle(copiedArray);
-//   }
-
-//   getProjectContainersSortedByFeatured() {
-//     const copiedArray = [...this.projectContainers];
-
-//     copiedArray.forEach(x => {
-//       if (x.project.featured === true) x.style = "emphasized";
-//       else x.style = "faded";
-//     });
-
-//     return this.sortByStyle(copiedArray);
-//   }
-
-//   getProjectByName(name: string | undefined) {
-//     return this.projectContainers.find(x => x.url === name);
-//   }
-
-//   getProjectById(id: number | undefined) {
-//     return this.projectContainers.find(x => x.id === id);
-//   }
-
-
-
-
-
-// }

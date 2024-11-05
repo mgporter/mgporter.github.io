@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { C } from './constants'
 import Nav from './components/Nav'
@@ -11,7 +11,7 @@ export default function App() {
 
   useEffect(() => {
     if (location.pathname === "/") navigate(C.PROJECT_PATH);
-  }, [])
+  }, [location.pathname, navigate])
 
   return (
     <div id="container" className="text-lg text-slate-200">

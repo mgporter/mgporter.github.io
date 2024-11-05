@@ -3,6 +3,9 @@ import { ProjectContainer } from "./ProjectState";
 
 export default function doBubbleTransition(project: ProjectContainer, projectSectionRef: MutableRefObject<HTMLElement>, navigateToPage: () => void): void {
 
+  const borderoffset = 0
+  const borderoffsethalf = borderoffset / 2
+
   try {
 
     // Get DOMRects
@@ -24,10 +27,11 @@ export default function doBubbleTransition(project: ProjectContainer, projectSec
 
     movingImg.style.position = 'absolute';
     movingImg.style.pointerEvents = 'none';
-    movingImg.style.left = `${projectRect.left - containerRect.left + 2}px` // add offsets to account for border on icon
-    movingImg.style.top = `${projectRect.top - containerRect.top + 2}px`    // add offsets to account for border on icon
-    movingImg.style.width = `${projectRect.width - 4}px`                    // add offsets to account for border on icon
-    movingImg.style.height = `${projectRect.height - 4}px`                  // add offsets to account for border on icon
+    // movingImg.style.border = "1px solid red"
+    movingImg.style.left = `${projectRect.left - containerRect.left + borderoffsethalf}px` // add offsets to account for border on icon
+    movingImg.style.top = `${projectRect.top - containerRect.top + borderoffsethalf}px`    // add offsets to account for border on icon
+    movingImg.style.width = `${projectRect.width - borderoffset}px`                    // add offsets to account for border on icon
+    movingImg.style.height = `${projectRect.height - borderoffset}px`                  // add offsets to account for border on icon
     movingImg.style.zIndex = '120'
     movingImg.style.overflow = 'hidden'
     movingImg.style.transition = '400ms opacity'
@@ -84,7 +88,7 @@ export default function doBubbleTransition(project: ProjectContainer, projectSec
       const projectPreview = projectSectionRef.current.querySelector('.project_preview')!;
       const projectPreviewRect = projectPreview.getBoundingClientRect();
 
-      const scaleFactor = projectPreviewRect.width / (projectRect.width - 2);
+      const scaleFactor = (projectPreviewRect.width) / (projectRect.width - borderoffset);
 
       const previewCenterX = projectPreviewRect.left + (projectPreviewRect.width / 2) + window.scrollX
       const previewCenterY = projectPreviewRect.top + (projectPreviewRect.height / 2) + window.scrollY
@@ -117,6 +121,7 @@ export default function doBubbleTransition(project: ProjectContainer, projectSec
 
       bubble.ontransitionend = () => {
         bubble.remove()
+        // movingImg.remove()
         movingImg.ontransitionend = () => {
           movingImg.remove()
         }
@@ -130,7 +135,6 @@ export default function doBubbleTransition(project: ProjectContainer, projectSec
 
   } catch (e) {
     console.log(e)
-    console.log("Transition error")
     navigateToPage()
   }
 

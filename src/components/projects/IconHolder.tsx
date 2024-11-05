@@ -1,8 +1,6 @@
 import { MutableRefObject, useEffect } from "react";
 import ProjectIcon from "./ProjectIcon";
-import { dispatcher } from "../Dispatcher";
-import { SelectedProjectType } from "../ProjectSection";
-import { ProjectContainer } from "../ProjectService";
+import { ProjectContainer } from "./ProjectState";
 import { useProjectStore } from "./ProjectState";
 import { useLocation } from "react-router-dom";
 
@@ -13,7 +11,7 @@ interface IconHolderProps {
 
 export default function IconHolder({ iconHolderRef, onProjectSelected }: IconHolderProps) {
 
-  const { projects, hasSelection, unselectProject, selectProjectByName, indices } = useProjectStore();
+  const { projects, hasSelection, unselectProject, indices } = useProjectStore();
   const location = useLocation();
 
   useEffect(() => {
@@ -23,11 +21,6 @@ export default function IconHolder({ iconHolderRef, onProjectSelected }: IconHol
   }, [location.pathname, unselectProject])
 
 
-
-
-  // function dispatchProjectSelectEvent(index: number) {
-  //   dispatcher.dispatch("projectSelected", {idx: index});
-  // }
 
   return (
     <div

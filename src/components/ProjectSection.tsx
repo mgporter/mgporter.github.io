@@ -1,11 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { dispatcher } from "./Dispatcher";
+import { useRef } from "react";
 import IconHolder from "./projects/IconHolder";
-import { C } from "../constants";
-import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
-import projectService, { ProjectContainer } from "./ProjectService";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { ProjectContainer } from "./projects/ProjectState";
 import { useProjectStore } from "./projects/ProjectState";
-import { Project } from "./PROJECTS";
 import doBubbleTransition from "./projects/BubbleTransition";
 
 // const useTransition = !C.IS_VERTICAL_SCREEN && C.IS_QUICK_CONNECTION;

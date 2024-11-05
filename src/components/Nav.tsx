@@ -1,7 +1,6 @@
 import { useState } from "react";
 import githubLogo from "../../public/images/github-logo.png";
 import linkedinLogo from "../../public/images/Linkedin_logo.png";
-import { dispatcher } from "./Dispatcher";
 import { ProjectType } from "./PROJECTS";
 import profileColorPic from "../../public/images/profile_picture_color.jpg";
 import { Link } from "react-router-dom";

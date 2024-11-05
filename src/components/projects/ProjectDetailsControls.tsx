@@ -1,7 +1,4 @@
-import { MutableRefObject, useEffect, useState } from "react";
-import { dispatcher } from "../Dispatcher";
-import { ProjectContainer } from "../ProjectService";
-import { getNextIndex, getPrevIndex, useProjectStore } from "./ProjectState";
+import { useProjectStore } from "./ProjectState";
 import { Link } from "react-router-dom";
 
 interface ProjectDetailsControlsProps {
@@ -24,17 +21,7 @@ export default function ProjectDetailsControls({
   enableControls
 }: ProjectDetailsControlsProps) {
 
-  const { projects, indices, unselectProject } = useProjectStore()
-
-  // const [enabled, setEnabled] = useState(enableControls);
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const unsubscribe = dispatcher.subscribe("enableProjectControls", (val) => {
-  //     setEnabled(val);
-  //   });
-  //   return unsubscribe;
-  // }, [])
+  const { projects, indices } = useProjectStore()
 
 
 
