@@ -1,11 +1,9 @@
 import { useState } from "react";
-import githubLogo from "../../public/images/github-logo.png";
-import linkedinLogo from "../../public/images/Linkedin_logo.png";
-import { ProjectType } from "./PROJECTS";
-import profileColorPic from "../../public/images/profile_picture_color.jpg";
+import { ProjectType } from "../data/PROJECTS";
 import { Link } from "react-router-dom";
 import { C } from "../constants";
 import { useProjectStore } from "./projects/ProjectState";
+import { useAppStore } from "./AppState";
 
 const project_type_selection = 
   "project_type_selection tracking-wide \
@@ -85,6 +83,7 @@ export default function Nav() {
 
   const [active, setActive] = useState<NavOptionName>("All");
   const { sortByType, sortByFeatured, reset } = useProjectStore()
+  const { setEnableEffects } = useAppStore()
 
   function selectProject(option: NavOption) {
     if (option.optionName === "Featured") {
@@ -105,7 +104,7 @@ export default function Nav() {
 
         <Link to="/projects" className="w-full flex flex-col items-center">
           <div className="title relative z-10 size-44 mt-8 mb-[-48px] ml-[-4rem]">
-            <img src={profileColorPic} className="relative rounded-full z-20"></img>
+            <img src="/images/profile_picture_color.jpg" className="relative rounded-full z-20"></img>
             <div className="absolute z-10 top-6 left-10 size-52 scale-y-[0.2] scale-x-[1.1] translate-y-[2rem] rounded-[100%] bg-stone-600/60"></div>
             <div className="absolute z-[9] top-6 left-2 size-60 scale-y-[0.21] scale-x-[1.1] translate-y-[1.2rem] rounded-[100%] bg-black/60"></div>
           </div>
@@ -115,11 +114,11 @@ export default function Nav() {
 
         <div className="relative z-20 flex flex-col gap-1 mb-12 text-lg ">
           <a className="flex group items-center gap-2 hover:text-white" href="https://github.com/mgporter" target="_blank">
-            <img src={githubLogo} alt="Github profile" className="size-6 invert-[0.9] group-hover:invert"></img>
+            <img src="/images/github-logo.png" alt="Github profile" className="size-6 invert-[0.9] group-hover:invert"></img>
             <p>https://github.com/mgporter</p>
           </a>
           <a className="flex group items-center gap-2 hover:text-white" href="https://linkedin.com/in/mgporter772" target="_blank">
-            <img src={linkedinLogo} alt="LinkedIn profile" className="size-6 brightness-90 group-hover:brightness-110"></img>
+            <img src="/images/Linkedin_logo.png" alt="LinkedIn profile" className="size-6 brightness-90 group-hover:brightness-110"></img>
             <p>https://linkedin.com/in/mgporter772</p>
           </a>
         </div>
@@ -137,7 +136,11 @@ export default function Nav() {
             </li>
           })}
         </ul>
-
+        
+        <label>Use fancy effects
+          <input type="checkbox" onChange={(e) => setEnableEffects(e.target.checked)} />
+        </label>
+        
       </div>
 
     </nav>

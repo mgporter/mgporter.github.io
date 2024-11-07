@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import ProjectPreview from "./ProjectPreview";
-import { Project } from "../PROJECTS"
+import { Project } from "../../data/PROJECTS"
 
 interface ProjectDetailsPageProps {
   project: Project;

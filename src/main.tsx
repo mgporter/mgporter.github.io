@@ -1,9 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import '../public/stylesheets/index.css'
-import '../public/stylesheets/projecttransition.css'
-import '../public/stylesheets/swipe.css'
-import { setStyles } from './setstyles.ts'
+import './css/index.css'
+import './css/projecttransition.css'
+import './css/swipe.css'
+import { setStyles } from './utils/setstyles.ts'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 import { routesConfig } from './routes.tsx'
 

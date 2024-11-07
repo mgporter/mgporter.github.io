@@ -1,6 +1,5 @@
 import { create } from "zustand";
-import { Project, projects, ProjectType } from "../PROJECTS";
-import { hasSubscribers } from "diagnostics_channel";
+import { Project, projects, ProjectType } from "../../data/PROJECTS";
 
 export type ProjectStyle = "emphasized" | "faded" | "default";
 

@@ -4,6 +4,7 @@ import { MutableRefObject, useEffect } from "react";
 import { LoaderFunction, useLoaderData, useNavigate } from "react-router-dom";
 import { useProjectStore } from "./ProjectState";
 import ProjectDetailsPage from "./ProjectDetailsPage";
+import { Helmet } from "react-helmet";
 
 
 export const projectLoader: LoaderFunction = ({ params }) => {
@@ -117,6 +118,10 @@ export default function ProjectView() {
 
   return (
       <div className={`project_view z-[110] inset-0 py-8 px-2 items-stretch`}>
+
+      <Helmet>
+        <title>{project.name} - mgporter</title>
+      </Helmet>
 
         <ProjectDetailsControls 
           swipeNextAction={swipeToNextProject} 

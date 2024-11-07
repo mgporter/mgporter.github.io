@@ -2,17 +2,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import path from 'path'
-
+import tsconfigPaths from 'vite-tsconfig-paths'
+// resolve: {
+//   alias: {
+//     "@": path.resolve(__dirname, "./src"),
+//     "@screenshots": path.resolve(__dirname, "public", "screenshots"),
+//   }
+// },
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "src"),
-      "@screenshots": path.resolve(__dirname, "public", "screenshots"),
-    }
-  },
+  plugins: [react(), tsconfigPaths()],
   test: {
     globals: true,
     environment: "jsdom"

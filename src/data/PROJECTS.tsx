@@ -1,23 +1,4 @@
 import { JSX } from "react";
-import imj_api_uml_image from "../../public/images/IMJ_API_uml_diagram.webp";
-
-type globImport = Record<string, {default: string}>;
-const images: Record<string, string> = {};
-
-const fullImages = import.meta.glob([
-  "/public/screenshots/webp_full/*",
-  "/public/screenshots/webp_thumbnails/*"
-], {eager: true}) as globImport;
-
-/**
- * convert filepaths from "/src/screenshots/webp_full/myimage.webp" to "myimage"
- * Use these new paths as keys to each image path.
- */
-for (const path in fullImages) {
-  const name = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
-  images[name] = fullImages[path].default;
-}
-
 
 export type Dimensions_2d = [number, number];
 const STANDARD_1080P: Dimensions_2d = [1920, 1080];
@@ -85,7 +66,7 @@ const projects: Project[] = [
         <h5 className="font-bold">Details:</h5>
         <p>The Chinese API and Storybook, or ImmersionJourney, is a hobby application that I wanted to build to make it easier for learnes of Chinese to start out learning the language. It is aimed at generating stories (and eventually exercises) with multiple forms of learner support from basic text.</p>
         <p>The system is built on a REST API that I built for the Chinese language. The API functions basically like a dictionary, however, it has several features unique to the Chinese language:</p>
-        <img src={imj_api_uml_image} className="self-center w-[80%] m-4 mx-8"></img>
+        <img src="/images/IMJ_API_uml_diagram.webp" className="self-center w-[80%] m-4 mx-8"></img>
         <p>By separating out the elements of the language in this way, it is possible to provide fine-grained look-up capabilities. Currently, the API contains about 9000 characters (all the level I and level II characters), built using Python scripts. Work is ongoing to categorize and annotate words, since much it needs to be done by hand.</p>
         <p>The API exists primarily as part of the backend to the Storybook application. The goal is to turn raw text stories into interactive experiences that can be explored by the learner. For example, if a learner is stuck on a word in the story, the learner could find its pronunciation, meaning, a picturial representation, and its meanings by just clicking on it. The learner could also add the word to a personal set of vocab words to study later.</p>
         <p>Stories can be "built" (and edited) in an admin area. They are then uploaded to the server and stored in a PostgreSQL database, along with their media (such as images and audio recordings). After that, the story is available for learners to use!</p>

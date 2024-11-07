@@ -26,7 +26,7 @@ export default function ProjectIcon({ projectContainer, selected, onProjectSelec
       // <div data-id={projectContainer.id} onClick={onClick} 
       <div data-id={projectContainer.id} onClick={onProjectSelected} 
         className={`project group relative aspect-[2.2] w-64 mini:w-3/4 mini:max-w-96 overflow-hidden 
-          select-none border-2 transition-all active:brightness-150
+          select-none border-2 transition-all active:brightness-150 box-content 
           ${selected ? "cursor-default pointer-events-none " : "cursor-pointer "}
           ${projectContainer.style === "faded" ? " opacity-60" : " "}
           ${projectContainer.style === "emphasized" ? " border-violet-100 scale-105" : " border-transparent"}
@@ -46,10 +46,11 @@ export default function ProjectIcon({ projectContainer, selected, onProjectSelec
         </div>
 
         <img 
-          className={`relative z-10 w-full aspect-auto contrast-[90%] brightness-90 
+          className={`relative z-10 w-full contrast-[90%] brightness-90 
             group-hover:contrast-100 group-hover:brightness-100 transition-opacity
             ${loadOpacity}
             ${selected ? " brightness-50" : " "}`}
+          style={{aspectRatio: project.preview.dimensions[0] / project.preview.dimensions[1], verticalAlign: "middle"}}
           src={project.imageThumbnailSrc}
           alt={project.name}
           onLoad={imageLoaded}

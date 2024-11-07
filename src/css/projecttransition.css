@@ -35,9 +35,9 @@
   animation: 1s cubic-bezier(0.45, 0, 0.3, 1) 0s 1 forwards normal running movingImgKeyframes;
 }
 
-.thumbnail_remain_then_remove {
+/* .thumbnail_remain_then_remove {
   animation: 0.15s linear 0s 1 forwards normal running thumbnail_remain_then_remove;
-}
+} */
 
 @keyframes fadein {
   from {

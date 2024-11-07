@@ -1,5 +1,5 @@
 import { RouteObject } from "react-router-dom"
-import App from "./App"
+import App from "./components/App"
 import ProjectSection from "./components/ProjectSection"
 import ProjectDetailsPage, { projectLoader } from "./components/projects/ProjectView"
 
