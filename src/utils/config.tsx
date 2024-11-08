@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { useLocalStorage, useScreen, useWindowSize } from "usehooks-ts";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { useAppStore } from "../components/AppState";
-import { C } from "../constants";
 
 interface NetworkInformation {
   downlink: number;
@@ -38,7 +37,7 @@ export function useClientSettings() {
   const [narrowWindow, setNarrowWindow] = useState<boolean>(false);
   const [slowConnection, setSlowConnection] = useState<boolean>(false);
   const { enableEffects, setEnableEffects } = useAppStore()
-  const [value, setValue, removeValue] = useLocalStorage("enableEffects", true);
+  const [value] = useLocalStorage("enableEffects", true);
 
 
   useEffect(() => {

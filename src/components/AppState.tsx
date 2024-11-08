@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { create } from "zustand";
 
@@ -21,13 +20,13 @@ export const useAppStore = create<ProjectState & ProjectActions>()(set => ({
   setEnableEffects: (val: boolean) => set({ enableEffects: val })
 }))
 
-export function useAppStoreHook() {
+export function useAppState() {
   const appStore = useAppStore()
-  const [value, setValue, removeValue] = useLocalStorage("enableEffects", true);
+  const effectStorage = useLocalStorage("enableEffects", true);
 
   function setEnableEffects(val: boolean) {
     appStore.setEnableEffects(val);
-    setValue(val);
+    effectStorage[1](val);
   }
 
   return {

@@ -3,7 +3,7 @@ import { ProjectType } from "../data/PROJECTS";
 import { Link } from "react-router-dom";
 // import { C } from "../constants";
 import { useProjectStore } from "./projects/ProjectState";
-import { useAppStore, useAppStoreHook } from "./AppState";
+import { useAppState } from "./AppState";
 import { Button, Field, Label, Switch } from "@headlessui/react";
 import { useClientSettings } from "../utils/config";
 
@@ -75,7 +75,7 @@ export default function Nav() {
 
   const [activeOption, setActiveOption] = useState<NavOptionName>("All");
   const { sortByType, sortByFeatured, reset } = useProjectStore()
-  const { enableEffects, setEnableEffects } = useAppStoreHook()
+  const { enableEffects, setEnableEffects } = useAppState()
   const { narrowWindow } = useClientSettings()
 
   function selectProject(option: NavOption) {
