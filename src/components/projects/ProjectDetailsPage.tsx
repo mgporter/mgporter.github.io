@@ -17,7 +17,8 @@ const ProjectDetailsPage = forwardRef<HTMLDivElement, ProjectDetailsPageProps>((
 
       <div className="flex flex-col mx-4 vert:mx-0 gap-2 w-full px-2">
         <h2 className="text-4xl font-bold text-blue-200">{project.name} 
-          {project.featured && <span className="text-xl ml-3 text-yellow-200/90">(featured)</span>}
+          {project.status === "featured" && <span className="text-xl ml-3 text-yellow-200/90">(featured)</span>}
+          {project.status === "old" && <span className="text-xl ml-3 text-yellow-200/90">(old project)</span>}
         </h2>
         <p>{project.heading}</p>
       </div>
@@ -41,7 +42,7 @@ const ProjectDetailsPage = forwardRef<HTMLDivElement, ProjectDetailsPageProps>((
       </ul>
       
       <div className="flex flex-col gap-4 bg-blue-950 rounded-lg p-4">
-        {project.description}
+        {project.description()}
       </div>
 
     </div>

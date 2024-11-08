@@ -63,7 +63,7 @@ const getProjectContainersSortedByType = (types: Set<ProjectType>) => {
 
 const getProjectContainersSortedByFeatured = () => {
   const copiedArray = projectContainers.map(x => {
-    if (x.project.featured === true) x.style = "emphasized";
+    if (x.project.status === "featured") x.style = "emphasized";
     else x.style = "faded";
     return x;
   });

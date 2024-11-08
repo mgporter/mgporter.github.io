@@ -39,7 +39,7 @@ export default function ProjectIcon({ projectContainer, selected, onProjectSelec
 
       <p className={`icontitle absolute top-1 left-1 z-20 px-[2px] rounded-sm font-semibold text-white
         group-hover:opacity-100 text-base ${loading ? " opacity-50" : " opacity-0 bg-black/40"}
-        ${selected ? " opacity-100" : " "}`}>{project.name} {project.featured && "★"}</p>
+        ${selected ? " opacity-100" : " "}`}>{project.name} {project.status === "featured" && "★"} {project.status === "old" && "(old)"}</p>
 
       <div className={`absolute bottom-1 left-1 z-20 text-xs flex gap-2 text-rose-100
         ${loadOpacity} transition-opacity`}>
@@ -49,10 +49,11 @@ export default function ProjectIcon({ projectContainer, selected, onProjectSelec
       </div>
 
       <img 
-        className={`relative z-10 w-full contrast-[90%] brightness-90 
+        className={`relative z-10 w-full contrast-[90%] brightness-[0.9] 
           group-hover:contrast-100 group-hover:brightness-100 transition-opacity
           ${loadOpacity}
-          ${selected ? " brightness-50" : " "}`}
+          ${selected ? " brightness-50 " : " "}
+          ${project.status === "old" ? "contrast-[70%] brightness-[0.6]" : " "}`}
         style={{aspectRatio: project.preview.dimensions[0] / project.preview.dimensions[1], verticalAlign: "middle"}}
         src={project.imageThumbnailSrc}
         alt={project.name}
