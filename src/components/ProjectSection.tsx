@@ -3,7 +3,7 @@ import IconHolder from "./projects/IconHolder";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ProjectContainer } from "./projects/ProjectState";
 import { useProjectStore } from "./projects/ProjectState";
-import doBubbleTransition from "./projects/BubbleTransition";
+import doBubbleTransition from "../utils/BubbleTransition";
 import { Helmet } from "react-helmet";
 import { useAppStore } from "./AppState";
 

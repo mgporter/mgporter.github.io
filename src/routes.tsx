@@ -1,7 +1,8 @@
 import { RouteObject } from "react-router-dom"
 import App from "./components/App"
 import ProjectSection from "./components/ProjectSection"
-import ProjectDetailsPage, { projectLoader } from "./components/projects/ProjectView"
+import ProjectDetailsPage from "./components/projects/ProjectView"
+import { projectLoader } from "./utils/loaders"
 
 
 export const routesConfig: RouteObject[] = [

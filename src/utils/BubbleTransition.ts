@@ -1,15 +1,30 @@
 import { MutableRefObject } from "react";
-import { ProjectContainer } from "./ProjectState";
+import { ProjectContainer } from "../components/projects/ProjectState";
 
-export default function doBubbleTransition(project: ProjectContainer, projectSectionRef: MutableRefObject<HTMLElement>, navigateToPage: () => void): void {
+export default function doBubbleTransition(
+  project: ProjectContainer, 
+  projectSectionRef: MutableRefObject<HTMLElement>, 
+  navigateToPage: () => void
+): void {
 
   const borderoffset = 4
   const borderoffsethalf = borderoffset / 2
 
   let projectPreview: HTMLElement;
+  let movingImg: HTMLElement;
+  let bubble: HTMLElement;
+  let containerRect: DOMRect;
 
+  function updateBubbleDimensions() {
+    containerRect = projectSectionRef.current.getBoundingClientRect();
+    bubble.style.left = `${-containerRect.left - window.scrollX}px`;
+    bubble.style.top = `${-containerRect.top - window.scrollY}px`;
+    bubble.style.width = `${document.body.scrollWidth}px`;
+    bubble.style.height = `${document.body.scrollHeight}px`;
+  }
 
   try {
+
 
     // Get DOMRects
     const projectThumbnailDiv = document.querySelector(`div.project[data-id='${project.id}']`)!;
@@ -20,17 +35,18 @@ export default function doBubbleTransition(project: ProjectContainer, projectSec
       top: projectRectRaw.top + borderoffsethalf,
       height: projectRectRaw.height - borderoffset,
     }
-    let containerRect = projectSectionRef.current.getBoundingClientRect();
+    containerRect = projectSectionRef.current.getBoundingClientRect();
+
 
     // Get the picture/container from the icon and append it overtop of the real icon
-    const movingImg = document.createElement('div')
+    movingImg = document.createElement('div')
     const movingImgInner = document.createElement('img')
     movingImgInner.src = project.project.preview.type === "image" ? project.project.preview.source : project.project.imageThumbnailSrc;
     movingImgInner.style.width = '100%'
     movingImgInner.style.aspectRatio = (project.project.preview.dimensions[0] / project.project.preview.dimensions[1]) + ""
     movingImgInner.style.height = 'auto'
     movingImgInner.style.verticalAlign = 'middle'
-    
+    movingImg.appendChild(movingImgInner);
 
     movingImg.style.position = 'absolute';
     movingImg.style.pointerEvents = 'none';
@@ -43,13 +59,9 @@ export default function doBubbleTransition(project: ProjectContainer, projectSec
     movingImg.style.zIndex = '120'
     movingImg.style.overflow = 'hidden'
     movingImg.style.transition = '200ms opacity'
-    // movingImg.onanimationend = startBubbleAnimation;
     movingImg.classList.add("movingImg");
-
-    movingImg.appendChild(movingImgInner);
-
     projectSectionRef.current.appendChild(movingImg);
-    // movingImg.classList.add('fadein')
+
 
     // Create the bubble by creating a div to cover the screen, then giving
     // it a small circle clippath centered over the icon
@@ -59,7 +71,7 @@ export default function doBubbleTransition(project: ProjectContainer, projectSec
     root.style.setProperty("--bubble-pos-x", iconCenterX + "px");
     root.style.setProperty("--bubble-pos-y", iconCenterY + "px");
 
-    const bubble = document.createElement('div')
+    bubble = document.createElement('div')
     bubble.style.left = `${-containerRect.left - window.scrollX}px`
     bubble.style.top = `${-containerRect.top - window.scrollY}px`
     bubble.style.width = `${document.body.scrollWidth}px`;
@@ -68,27 +80,21 @@ export default function doBubbleTransition(project: ProjectContainer, projectSec
     bubble.style.position = 'absolute';
     bubble.style.zIndex = '100';
     bubble.style.transition = "600ms opacity"
-    bubble.onanimationend = renderNewPage;
     bubble.classList.add("project_details_bubble");
 
 
+    // Start the bubble animation
     startBubbleAnimation()
 
 
-    function updateBubbleDimensions() {
-      containerRect = projectSectionRef.current.getBoundingClientRect();
-      bubble.style.left = `${-containerRect.left - window.scrollX}px`;
-      bubble.style.top = `${-containerRect.top - window.scrollY}px`;
-      bubble.style.width = `${document.body.scrollWidth}px`;
-      bubble.style.height = `${document.body.scrollHeight}px`;
-    }
-
-
     function startBubbleAnimation() {
-      // Start the bubblegrow animation
+      // Start the bubblegrow animation. When it is finished,
+      // render the new page underneath
 
       // uncomment to stop after movingImg creation
       // return
+      
+      bubble.onanimationend = renderNewPage;
 
       // Make sure that the movingImg is rendered before appending the bubble
       requestAnimationFrame(() => {
@@ -105,6 +111,8 @@ export default function doBubbleTransition(project: ProjectContainer, projectSec
 
     function renderNewPage() {
       // Render the new page underneath the full-sized bubble
+      // When rendering is complete, start moving the movingImg
+      // to its destination
 
       bubble.onanimationend = null
       navigateToPage()
@@ -119,6 +127,7 @@ export default function doBubbleTransition(project: ProjectContainer, projectSec
 
 
     function startMovingImageAnimation() {
+      // Move the movingImg to its destination. 
 
       projectPreview = projectSectionRef.current.querySelector('.project_preview')! as HTMLElement;
       projectPreview.style.opacity = "0"
@@ -126,7 +135,6 @@ export default function doBubbleTransition(project: ProjectContainer, projectSec
       const projectPreviewRect = projectPreview.getBoundingClientRect();
 
       const scaleFactor = (projectPreviewRect.width) / (projectRect.width);
-      // const scaleFactor = 1;
 
       const previewCenterX = projectPreviewRect.left + (projectPreviewRect.width / 2) + window.scrollX
       const previewCenterY = projectPreviewRect.top + (projectPreviewRect.height / 2) + window.scrollY
@@ -188,8 +196,10 @@ export default function doBubbleTransition(project: ProjectContainer, projectSec
 
 
   } catch (e) {
-    console.log(e)
+    console.error(e)
     navigateToPage()
+    if (movingImg!) movingImg.remove()
+    if (bubble!) bubble.remove()
   }
 
 }

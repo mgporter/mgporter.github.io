@@ -1,19 +1,16 @@
 import { useRef, useState } from "react"
 import ProjectDetailsControls from "./ProjectDetailsControls";
 import { MutableRefObject, useEffect } from "react";
-import { LoaderFunction, useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { useProjectStore } from "./ProjectState";
 import ProjectDetailsPage from "./ProjectDetailsPage";
 import { Helmet } from "react-helmet";
-
-
-export const projectLoader: LoaderFunction = ({ params }) => {
-  return params.project || ""
-}
+import { useAppStore } from "../AppState";
+import useImagePreload from "../../utils/ImagePreload";
 
 
 // async function preloadImage(url: string): Promise<JSX.Element> {
-//   return <img src={url} className="preloaded_img absolute size-0 top-0 left-0 hidden"></img>
+//   return <img src={url} className="absolute size-0 top-0 left-0 hidden"></img>
 // }
 
 // Promise.all([img1, img2]).then(result => {
@@ -63,6 +60,8 @@ export default function ProjectView() {
   const navigate = useNavigate();
   const pageDetailsRef = useRef<HTMLDivElement>(null!);
   const [controlsEnabled, setControlsEnabled] = useState(true);
+  const { enableEffects } = useAppStore()
+  const { preload } = useImagePreload()
 
   const projectIndex = projects.findIndex(p => p.url === projectName)
 
@@ -81,6 +80,12 @@ export default function ProjectView() {
     }
   }, [indices, selectProjectByIndex, projectIndex])
 
+  // Preload next and prev images
+  useEffect(() => {
+    preload(projects[indices.next].project.preview.source)
+    preload(projects[indices.prev].project.preview.source)
+  }, [projects, indices, preload])
+
 
   if (projectIndex === -1) {
     return
@@ -91,27 +96,45 @@ export default function ProjectView() {
   
 
   function swipeToNextProject() {
-    setControlsEnabled(false);
-    setTwoPhaseTransition(
-      pageDetailsRef,
-      "swipe_exit_left",
-      "swipe_enter_right",
-      () => {navigate(`/projects/${projects[indices.next].url}`); selectNextProject()},
-      () => setControlsEnabled(true),
-      "project_details_inner"
-    );
+    const goToNext = () => {
+      navigate(`/projects/${projects[indices.next].url}`);
+      selectNextProject()
+    }
+
+    if (enableEffects) {
+      setControlsEnabled(false);
+      setTwoPhaseTransition(
+        pageDetailsRef,
+        "swipe_exit_left",
+        "swipe_enter_right",
+        goToNext,
+        () => setControlsEnabled(true),
+        "project_details_inner"
+      );
+    } else {
+      goToNext()
+    }
   }
 
   function swipeToPrevProject() {
-    setControlsEnabled(false);
-    setTwoPhaseTransition(
-      pageDetailsRef,
-      "swipe_exit_right",
-      "swipe_enter_left",
-      () => {navigate(`/projects/${projects[indices.prev].url}`); selectPrevProject()},
-      () => setControlsEnabled(true),
-      "project_details_inner"
-    );
+    const goToPrev = () => {
+      navigate(`/projects/${projects[indices.prev].url}`);
+      selectPrevProject()
+    }
+
+    if (enableEffects) {
+      setControlsEnabled(false);
+      setTwoPhaseTransition(
+        pageDetailsRef,
+        "swipe_exit_right",
+        "swipe_enter_left",
+        goToPrev,
+        () => setControlsEnabled(true),
+        "project_details_inner"
+      );
+    } else {
+      goToPrev()
+    }
   }
 
 

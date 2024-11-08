@@ -4,16 +4,7 @@ import { Link } from "react-router-dom";
 import { C } from "../constants";
 import { useProjectStore } from "./projects/ProjectState";
 import { useAppStore } from "./AppState";
-
-const project_type_selection = 
-  "project_type_selection tracking-wide \
-  hover:bg-gradient-to-r hover:from-white/50 hover:to-white/0 hover:text-white \
-  active:from-white/70 active:scale-[101%] active:translate-x-[2px] \
-  rounded-sm \
-  cursor-pointer mx-2 "
-
-const activeStyle = 
-  "bg-gradient-to-r from-white/50 from-30% to-white/0 text-white font-bold tracking-normal"
+import { Button, Field, Label, Switch } from "@headlessui/react";
 
 export type NavOptionName = "All"
   | "Featured"
@@ -81,9 +72,9 @@ const navOptions: NavOption[] = [
 
 export default function Nav() {
 
-  const [active, setActive] = useState<NavOptionName>("All");
+  const [activeOption, setActiveOption] = useState<NavOptionName>("All");
   const { sortByType, sortByFeatured, reset } = useProjectStore()
-  const { setEnableEffects } = useAppStore()
+  const { enableEffects, setEnableEffects } = useAppStore()
 
   function selectProject(option: NavOption) {
     if (option.optionName === "Featured") {
@@ -93,14 +84,13 @@ export default function Nav() {
     } else {
       sortByType(option.types)
     }
-    // dispatcher.dispatch("projectTypeSelected", option);
-    setActive(option.optionName)
+    setActiveOption(option.optionName)
   }
 
   return (
     <nav className="flex flex-col items-center justify-start">
 
-      <div className="navcontainer flex flex-col items-start fixed sm:static sm:max-w-[30rem]">
+      <div className="navcontainer flex flex-col items-start fixed sm:static sm:max-w-[30rem] gap-6">
 
         <Link to="/projects" className="w-full flex flex-col items-center">
           <div className="title relative z-10 size-44 mt-8 mb-[-48px] ml-[-4rem]">
@@ -109,10 +99,10 @@ export default function Nav() {
             <div className="absolute z-[9] top-6 left-2 size-60 scale-y-[0.21] scale-x-[1.1] translate-y-[1.2rem] rounded-[100%] bg-black/60"></div>
           </div>
           
-          <h1 className="title relative z-20 text-6xl mb-8">mgporter</h1>
+          <h1 className="title relative z-20 text-6xl">mgporter</h1>
         </Link>
 
-        <div className="relative z-20 flex flex-col gap-1 mb-12 text-lg ">
+        <div className="relative z-20 flex flex-col gap-1 text-lg ">
           <a className="flex group items-center gap-2 hover:text-white" href="https://github.com/mgporter" target="_blank">
             <img src="/images/github-logo.png" alt="Github profile" className="size-6 invert-[0.9] group-hover:invert"></img>
             <p>https://github.com/mgporter</p>
@@ -123,24 +113,39 @@ export default function Nav() {
           </a>
         </div>
         
-        <h2 className="text-xl font-bold mb-2 border-b w-full">Filter projects:</h2>
-        <ul className="flex flex-col flex-wrap text-base w-full sm:h-[12rem]">
-          {navOptions.map(option => {
-            return <li
-              key={option.optionName}
-              className={project_type_selection + (active === option.optionName ? activeStyle : "")}
-              onClick={() => selectProject(option)}>
-              <Link to={C.PROJECT_PATH} className="w-full h-full block px-2 py-1">
-                {option.optionName}
-              </Link>
-            </li>
-          })}
-        </ul>
-        
-        <label>Use fancy effects
-          <input type="checkbox" onChange={(e) => setEnableEffects(e.target.checked)} />
-        </label>
-        
+        <div className="w-full">
+          <h2 className="text-xl font-bold mb-2 border-b">Filter projects:</h2>
+          <ul className="flex flex-col flex-wrap text-base sm:h-[12rem]">
+            {navOptions.map(option => {
+              const selected = activeOption === option.optionName
+              return (
+                  <Button
+                    key={option.optionName}
+                    onClick={() => selectProject(option)}
+                    className={`project_type_selection tracking-wide py-[2px] px-4 w-full text-left
+                      border-l-2 border-transparent data-[hover]:border-white
+                      bg-gradient-to-r data-[hover]:from-blue-300/20 data-[hover]:to-transparent data-[hover]:text-white
+                      ${selected ? "from-blue-300/40 to-transparent text-white font-bold border-white" : ""}
+                    `}>
+                      {option.optionName}
+                  </Button>
+              )
+            })}
+          </ul>
+        </div>
+
+        <Field className="flex items-center gap-2">
+          <Switch 
+            checked={enableEffects}
+            onChange={(enabled) => setEnableEffects(enabled)}
+            className="group inline-flex h-5 w-10 items-center bg-white/20 rounded-full transition data-[checked]:bg-blue-400/60"
+          >
+            <span className="size-4 translate-x-1 rounded-full bg-gray-200 transition group-data-[checked]:translate-x-5"></span>
+          </Switch>
+          <Label className={`text-sm ${enableEffects ? "text-white/70" : "text-white/40"}`}>Enable fancy effects</Label>
+        </Field>
+
+
       </div>
 
     </nav>
