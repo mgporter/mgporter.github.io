@@ -3,8 +3,9 @@ import { ProjectType } from "../data/PROJECTS";
 import { Link } from "react-router-dom";
 // import { C } from "../constants";
 import { useProjectStore } from "./projects/ProjectState";
-import { useAppStore } from "./AppState";
+import { useAppStore, useAppStoreHook } from "./AppState";
 import { Button, Field, Label, Switch } from "@headlessui/react";
+import { useClientSettings } from "../utils/config";
 
 export type NavOptionName = "All"
   | "Featured"
@@ -74,7 +75,8 @@ export default function Nav() {
 
   const [activeOption, setActiveOption] = useState<NavOptionName>("All");
   const { sortByType, sortByFeatured, reset } = useProjectStore()
-  const { enableEffects, setEnableEffects } = useAppStore()
+  const { enableEffects, setEnableEffects } = useAppStoreHook()
+  const { narrowWindow } = useClientSettings()
 
   function selectProject(option: NavOption) {
     if (option.optionName === "Featured") {
@@ -90,7 +92,7 @@ export default function Nav() {
   return (
     <nav className="flex flex-col items-center justify-start">
 
-      <div className="navcontainer flex flex-col items-start fixed sm:static sm:max-w-[30rem] gap-6">
+      <div className="navcontainer flex flex-col items-start fixed sm:static gap-6">
 
         <Link to="/projects" className="w-full flex flex-col items-center">
           <div className="title relative z-10 size-44 mt-8 mb-[-48px] ml-[-4rem]">
@@ -115,7 +117,7 @@ export default function Nav() {
         
         <div className="w-full">
           <h2 className="text-xl font-bold mb-2 border-b">Filter projects:</h2>
-          <ul className="flex flex-col flex-wrap text-base sm:h-[12rem]">
+          <ul className="flex flex-col text-base">
             {navOptions.map(option => {
               const selected = activeOption === option.optionName
               return (
@@ -134,7 +136,7 @@ export default function Nav() {
           </ul>
         </div>
 
-        <Field className="flex items-center gap-2">
+        <Field className={`flex items-center gap-2 ${narrowWindow ? "hidden " : " "}`}>
           <Switch 
             checked={enableEffects}
             onChange={(enabled) => setEnableEffects(enabled)}

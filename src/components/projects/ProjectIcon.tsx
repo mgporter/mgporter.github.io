@@ -49,11 +49,11 @@ export default function ProjectIcon({ projectContainer, selected, onProjectSelec
       </div>
 
       <img 
-        className={`relative z-10 w-full contrast-[90%] brightness-[0.9] 
+        className={`relative z-10 w-full 
           group-hover:contrast-100 group-hover:brightness-100 transition-opacity
           ${loadOpacity}
           ${selected ? " brightness-50 " : " "}
-          ${project.status === "old" ? "contrast-[70%] brightness-[0.6]" : " "}`}
+          ${project.status === "old" ? "contrast-[70%] brightness-[0.6]" : "contrast-[90%] brightness-[0.9] "}`}
         style={{aspectRatio: project.preview.dimensions[0] / project.preview.dimensions[1], verticalAlign: "middle"}}
         src={project.imageThumbnailSrc}
         alt={project.name}
