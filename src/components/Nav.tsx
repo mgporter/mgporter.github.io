@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ProjectType } from "../data/PROJECTS";
 import { Link } from "react-router-dom";
-import { C } from "../constants";
+// import { C } from "../constants";
 import { useProjectStore } from "./projects/ProjectState";
 import { useAppStore } from "./AppState";
 import { Button, Field, Label, Switch } from "@headlessui/react";
