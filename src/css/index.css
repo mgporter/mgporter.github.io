@@ -47,6 +47,7 @@ h6 {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --background-color: rgba(30, 116, 142, 1);
+  --background-height: 1400px;
   
   /* CHANGES HERE WILL NOT BE SAVED. THESE WILL BE SET IN setstyles.ts */
   --main-overlay: rgba(10, 35, 68, 0.6);
@@ -64,7 +65,7 @@ body {
   min-height: 100vh;
   background-color: var(--background-color);
   background-image: var(--bg-gradient);
-  background-size: 100% 140vh;
+  background-size: 100% var(--background-height);
   background-repeat: no-repeat;
 }
 

@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { ProjectContainer } from "./ProjectState";
 import useImagePreload from "../../utils/ImagePreload";
+import { touchscreenOnly } from "../../utils/config";
+import clsx from "clsx";
 
 interface ProjectIconProps {
   projectContainer: ProjectContainer;
@@ -28,7 +30,7 @@ export default function ProjectIcon({ projectContainer, selected, onProjectSelec
       data-id={projectContainer.id} 
       onClick={onProjectSelected} 
       onMouseEnter={() => preload(project.preview.source)}
-      className={`project group relative aspect-[2.2] w-64 mini:w-3/4 mini:max-w-96 overflow-hidden 
+      className={`project group relative aspect-[2.2] w-64 mini:w-full mini:mx-1 mini:max-w-96 overflow-hidden 
         select-none border-2 transition-all active:brightness-150 box-content 
         ${selected ? "cursor-default pointer-events-none " : "cursor-pointer "}
         ${projectContainer.style === "faded" ? " opacity-60" : " "}
@@ -37,9 +39,14 @@ export default function ProjectIcon({ projectContainer, selected, onProjectSelec
         ${selected ? " border-yellow-400 scale-105 brightness-50" : " "} `}
       ref={iconRef}>
 
-      <p className={`icontitle absolute top-1 left-1 z-20 px-[2px] rounded-sm font-semibold text-white
-        group-hover:opacity-100 text-base ${loading ? " opacity-50" : " opacity-0 bg-black/40"}
-        ${selected ? " opacity-100" : " "}`}>{project.name} {project.status === "featured" && "★"} {project.status === "old" && "(old)"}</p>
+      <p className={clsx(
+        "icontitle absolute top-1 left-1 z-20 px-[2px] rounded-sm",
+        "group-hover:opacity-100 text-base font-semibold text-white bg-black/40",
+        {
+          "opacity-0": !touchscreenOnly && !loading && !selected,
+          "opacity-50": loading
+        }
+      )}>{project.name} {project.status === "featured" && "★"} {project.status === "old" && "(old)"}</p>
 
       <div className={`absolute bottom-1 left-1 z-20 text-xs flex gap-2 text-rose-100
         ${loadOpacity} transition-opacity`}>

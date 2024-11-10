@@ -140,7 +140,7 @@ export default function ProjectView() {
 
 
   return (
-      <div className={`project_view z-[110] inset-0 py-8 px-2 items-stretch`}>
+      <div className={`project_view z-[110] inset-0 py-8 px-2 mini:px-0 items-stretch`}>
 
       <Helmet>
         <title>{project.name} - mgporter</title>

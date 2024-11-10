@@ -16,7 +16,7 @@ export const routesConfig: RouteObject[] = [
         element: <ProjectSection />,
         children: [
           {
-            path: ":project",
+            path: ":project/",
             element: <ProjectDetailsPage />,
             loader: projectLoader
           }

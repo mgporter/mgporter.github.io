@@ -1,7 +1,3 @@
-import { useEffect, useState } from "react";
-import { useLocalStorage, useWindowSize } from "usehooks-ts";
-import { useAppStore } from "../components/AppState";
-
 interface NetworkInformation {
   downlink: number;
   downlinkMax?: number;
@@ -18,7 +14,7 @@ interface MyNavigator extends Navigator {
 /** Returns true is the connection is quick (3g or above). If
  * the NetworkInformation API is not available, it defaults to true.
  */
-function isQuickConnection() {
+export function isQuickConnection() {
 
   if (testNavigator(navigator)) {
     return navigator.connection.effectiveType != "2g" && 
@@ -31,32 +27,37 @@ function testNavigator(obj: Navigator): obj is MyNavigator {
   return (obj as MyNavigator).connection != undefined;
 }
 
-export function useClientSettings() {
+// if the device does not have a cursor, count it as a mobile touchscreen device
+export const touchscreenOnly = !window.matchMedia('(pointer:fine)').matches
+
+// export function useClientSettings() {
   
-  const { height, width } = useWindowSize()
-  const [narrowWindow, setNarrowWindow] = useState<boolean>(false);
-  const [slowConnection, setSlowConnection] = useState<boolean>(false);
-  const { enableEffects, setEnableEffects } = useAppStore()
-  const [value] = useLocalStorage("enableEffects", true);
+//   const { height, width } = useWindowSize()
+//   const [narrowWindow, setNarrowWindow] = useState<boolean>(false);
+//   const [slowConnection, setSlowConnection] = useState<boolean>(false);
+//   const { enableEffects, setEnableEffects } = useAppStore()
+//   const [enableEffectsLS, setEnableEffectsLS, removeEnableEffectsLS] = useLocalStorage("enableEffects", true);
 
 
-  useEffect(() => {
-    if (height > (width * 1.2) || width <= 896) {
-      setNarrowWindow(true);
-      setEnableEffects(false);
-    } else {
-      setNarrowWindow(false);
-      setEnableEffects(value);
-    }
-  }, [height, width, setEnableEffects, enableEffects, value]);
+//   useEffect(() => {
+//     console.log("run")
+//     if (height > (width * 1.2) || width <= 896) {
+//       setNarrowWindow(true);
+//       setEnableEffectsLS(enableEffects);
+//       setEnableEffects(false);
+//     } else {
+//       setNarrowWindow(false);
+//       setEnableEffects(enableEffectsLS);
+//     }
+//   }, [height, width, setEnableEffects, enableEffects, enableEffectsLS, setEnableEffectsLS]);
 
-  useEffect(() => {
-    setSlowConnection(isQuickConnection() ? false : true);
-  }, [])
+//   useEffect(() => {
+//     setSlowConnection(isQuickConnection() ? false : true);
+//   }, [])
 
-  return {
-    narrowWindow,
-    slowConnection
-  }
+//   return {
+//     narrowWindow,
+//     slowConnection
+//   }
 
-}
+// }

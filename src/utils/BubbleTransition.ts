@@ -20,11 +20,10 @@ export default function doBubbleTransition(
     bubble.style.left = `${-containerRect.left - window.scrollX}px`;
     bubble.style.top = `${-containerRect.top - window.scrollY}px`;
     bubble.style.width = `${document.body.scrollWidth}px`;
-    bubble.style.height = `${document.body.scrollHeight}px`;
+    // bubble.style.height = `${document.body.scrollHeight}px`;
   }
 
   try {
-
 
     // Get DOMRects
     const projectThumbnailDiv = document.querySelector(`div.project[data-id='${project.id}']`)!;
@@ -67,6 +66,7 @@ export default function doBubbleTransition(
     // it a small circle clippath centered over the icon
     const iconCenterX = (projectRect.left + (projectRect.width / 2) + window.scrollX)
     const iconCenterY = (projectRect.top + (projectRect.height / 2) + window.scrollY)
+
     const root = (document.querySelector(':root') as HTMLElement);
     root.style.setProperty("--bubble-pos-x", iconCenterX + "px");
     root.style.setProperty("--bubble-pos-y", iconCenterY + "px");
@@ -75,7 +75,7 @@ export default function doBubbleTransition(
     bubble.style.left = `${-containerRect.left - window.scrollX}px`
     bubble.style.top = `${-containerRect.top - window.scrollY}px`
     bubble.style.width = `${document.body.scrollWidth}px`;
-    bubble.style.height = `${document.body.scrollHeight}px`;
+    bubble.style.height = getComputedStyle(root).getPropertyValue("--background-height");
     bubble.style.clipPath = `circle(1% at ${iconCenterX}px ${iconCenterY}px)`
     bubble.style.position = 'absolute';
     bubble.style.zIndex = '100';

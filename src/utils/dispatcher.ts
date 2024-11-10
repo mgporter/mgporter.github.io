@@ -1,7 +1,7 @@
 export type DispatcherEvent = keyof DispatcherMap;
 
 export interface DispatcherMap {
-  scrollToMainTop: null;
+  scrollToMainTop: ScrollBehavior;
 }
 
 // eslint-disable-next-line

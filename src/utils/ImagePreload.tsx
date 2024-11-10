@@ -1,9 +1,9 @@
 import { useCallback } from "react"
-import { useClientSettings } from "./config"
+import { useAppStore } from "../components/AppState";
 
 export default function useImagePreload() {
 
-  const { slowConnection } = useClientSettings()
+  const { slowConnection } = useAppStore()
 
   const preload = useCallback((url: string) => {
     if (slowConnection) return;

@@ -3,9 +3,9 @@ import { ProjectType } from "../data/PROJECTS";
 import { Link } from "react-router-dom";
 // import { C } from "../constants";
 import { useProjectStore } from "./projects/ProjectState";
-import { useAppState } from "./AppState";
+import { useAppStore } from "./AppState";
 import { Button, Field, Label, Switch } from "@headlessui/react";
-import { useClientSettings } from "../utils/config";
+import { useLocalStorage } from "usehooks-ts";
 
 export type NavOptionName = "All"
   | "Featured"
@@ -75,8 +75,9 @@ export default function Nav() {
 
   const [activeOption, setActiveOption] = useState<NavOptionName>("All");
   const { sortByType, sortByFeatured, reset } = useProjectStore()
-  const { enableEffects, setEnableEffects } = useAppState()
-  const { narrowWindow } = useClientSettings()
+  // const { enableEffects, setEnableEffects } = useAppStore()
+  const { narrowWindow } = useAppStore()
+  const [enableEffectsLS, setEnableEffectsLS] = useLocalStorage("enableEffects", true);
 
   function selectProject(option: NavOption) {
     if (option.optionName === "Featured") {
@@ -125,8 +126,9 @@ export default function Nav() {
                     key={option.optionName}
                     onClick={() => selectProject(option)}
                     className={`project_type_selection tracking-wide py-[2px] px-4 w-full text-left
-                      border-l-2 border-transparent data-[hover]:border-white
-                      bg-gradient-to-r data-[hover]:from-blue-300/20 data-[hover]:to-transparent data-[hover]:text-white
+                      border-l-2 border-transparent bg-gradient-to-r to-transparent
+                      data-[hover]:from-blue-300/20 data-[hover]:text-white data-[hover]:border-white
+                      data-[active]:from-blue-200/50 data-[active]:text-green-500
                       ${selected ? "from-blue-300/40 to-transparent text-white font-bold border-white" : ""}
                     `}>
                       {option.optionName}
@@ -138,13 +140,13 @@ export default function Nav() {
 
         <Field className={`flex items-center gap-2 ${narrowWindow ? "hidden " : " "}`}>
           <Switch 
-            checked={enableEffects}
-            onChange={(enabled) => setEnableEffects(enabled)}
+            checked={enableEffectsLS}
+            onChange={(enabled) => setEnableEffectsLS(enabled)}
             className="group inline-flex h-5 w-10 items-center bg-white/20 rounded-full transition data-[checked]:bg-blue-400/60"
           >
             <span className="size-4 translate-x-1 rounded-full bg-gray-200 transition group-data-[checked]:translate-x-5"></span>
           </Switch>
-          <Label className={`text-sm ${enableEffects ? "text-white/70" : "text-white/40"}`}>Enable fancy effects</Label>
+          <Label className={`text-sm ${enableEffectsLS ? "text-white/70" : "text-white/40"}`}>Enable fancy effects</Label>
         </Field>
 
 

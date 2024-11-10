@@ -25,9 +25,10 @@ export default function IconHolder({ iconHolderRef, onProjectSelected }: IconHol
   return (
     <div
       ref={iconHolderRef}
-      className="icon_holder w-full mt-24">
+      className="icon_holder w-full mt-24"
+    >
       <h1 className="text-7xl text-slate-200/40 vert:mb-8 mr-2 text-right vert:text-center select-none">PROJECTS</h1>
-      <div className="flex w-full flex-wrap justify-center gap-6">
+      <div className="flex w-full flex-wrap justify-center gap-6 mini:gap-1">
         {projects.map((proj, i) => 
           <ProjectIcon 
             key={proj.id} 

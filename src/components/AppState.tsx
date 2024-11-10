@@ -1,36 +1,28 @@
-import { useLocalStorage } from "usehooks-ts";
 import { create } from "zustand";
 
 /* Create Project Store */
 
 type ProjectState = {
-  enableEffects: boolean
+  enableEffects: boolean,
+  narrowWindow: boolean,
+  slowConnection: boolean,
 }
 
 type ProjectActions = {
   setEnableEffects: (val: boolean) => void
+  setNarrowWindow: (val: boolean) => void
+  setSlowConnection: (val: boolean) => void
 }
 
 const initialSettings: ProjectState = {
-  enableEffects: true
+  enableEffects: true,
+  narrowWindow: false,
+  slowConnection: false,
 }
 
 export const useAppStore = create<ProjectState & ProjectActions>()(set => ({
   ...initialSettings,
-  setEnableEffects: (val: boolean) => set({ enableEffects: val })
+  setEnableEffects: (val: boolean) => set({ enableEffects: val }),
+  setNarrowWindow: (val: boolean) => set({ narrowWindow: val }),
+  setSlowConnection: (val: boolean) => set({ slowConnection: val }),
 }))
-
-export function useAppState() {
-  const appStore = useAppStore()
-  const effectStorage = useLocalStorage("enableEffects", true);
-
-  function setEnableEffects(val: boolean) {
-    appStore.setEnableEffects(val);
-    effectStorage[1](val);
-  }
-
-  return {
-    enableEffects: appStore.enableEffects,
-    setEnableEffects
-  }
-}

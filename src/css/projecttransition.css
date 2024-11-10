@@ -60,15 +60,9 @@
 @keyframes bubblegrow {
   0% {
     clip-path: circle(3% at var(--bubble-pos-x) var(--bubble-pos-y));
-    /* opacity: 0.2; */
-  }
-  50% {
-    /* clip-path: circle(15% at var(--bubble-pos-x) var(--bubble-pos-y)); */
-    /* opacity: 1; */
   }
   100% {
     clip-path: circle(100% at var(--bubble-pos-x) var(--bubble-pos-y));
-    /* opacity: auto; */
   }
 }
 

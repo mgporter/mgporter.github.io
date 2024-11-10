@@ -29,18 +29,22 @@ export default function ProjectSection() {
     const navigateToPage = () => {
       selectProjectByName(project.url)
       navigate(`/projects/${project.url}`)
+      // executeWhenIdle(() => dispatcher.dispatch("scrollToMainTop", "instant"));
     }
 
     if (location.pathname === "/projects" && enableEffects) {
       doBubbleTransition(project, projectSectionRef, navigateToPage)
+      
     } else {
-      navigateToPage()
+      navigateToPage();
+      // executeWhenIdle(() => dispatcher.dispatch("scrollToMainTop", "instant"));
     }
 
   }
 
   return (
-    <main 
+    <main
+      id="main_content"
       className="relative w-full pb-48 overflow-hidden"
       ref={projectSectionRef}>
       <Helmet>

@@ -41,7 +41,7 @@ export interface Project {
 }
 
 
-const youtubeStylingProps = "self-center aspect-video w-full px-8";
+const youtubeStylingProps = "self-center aspect-video w-full px-8 mini:px-0";
 
 
 const projects: Project[] = [
