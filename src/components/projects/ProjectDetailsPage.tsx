@@ -1,7 +1,6 @@
-import { forwardRef, useLayoutEffect } from "react";
+import { forwardRef } from "react";
 import ProjectPreview from "./ProjectPreview";
 import { Project } from "../../data/PROJECTS"
-import { useAppStore } from "../AppState";
 
 interface ProjectDetailsPageProps {
   project: Project;
@@ -11,24 +10,12 @@ const projectLink = "transition-colors text-xl rounded-sm bg-blue-400/80 hover:b
 
 const ProjectDetailsPage = forwardRef<HTMLDivElement, ProjectDetailsPageProps>((props, ref) => {
 
-  const { enableEffects } = useAppStore()
-
-  useLayoutEffect(() => {
-    const pageRect = document.querySelector(".project_view")?.getBoundingClientRect();
-    const pageTop = pageRect?.top || 0;
-
-    // Only scroll if we are about one window height below the top of main
-    if (window.scrollY > (pageTop + window.innerHeight)) {
-      window.scrollTo({ top: pageTop + window.scrollY, behavior: enableEffects ? "smooth" : "instant" });
-    }
-  })
-
   const project = props.project;
 
   return (
     <div className="project_details_inner flex flex-col gap-4 mini:gap-0 items-stretch py-4" ref={ref}>
 
-      <div className="flex flex-col mx-4 vert:mx-0 gap-2 w-full px-2">
+      <div className="flex flex-col mx-4 vert:mx-0 gap-2 w-full px-2 text-left vert:text-center">
         <h2 className="text-4xl font-bold text-blue-200">{project.name} 
           {project.status === "featured" && <span className="text-xl ml-3 text-yellow-200/90">(featured)</span>}
           {project.status === "old" && <span className="text-xl ml-3 text-yellow-200/90">(old project)</span>}

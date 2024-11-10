@@ -128,7 +128,7 @@ export default function Nav() {
                     className={`project_type_selection tracking-wide py-[2px] px-4 w-full text-left
                       border-l-2 border-transparent bg-gradient-to-r to-transparent
                       data-[hover]:from-blue-300/20 data-[hover]:text-white data-[hover]:border-white
-                      data-[active]:from-blue-200/50 data-[active]:text-green-500
+                      data-[active]:from-blue-200/50
                       ${selected ? "from-blue-300/40 to-transparent text-white font-bold border-white" : ""}
                     `}>
                       {option.optionName}

@@ -86,6 +86,19 @@ export default function ProjectView() {
     preload(projects[indices.prev].project.preview.source)
   }, [projects, indices, preload])
 
+  useEffect(() => {
+    // console.log("try scroll")
+    // if (projectIndex === indices.current) return;
+    // console.log("scroll")
+    const pageRect = document.querySelector(".project_view")?.getBoundingClientRect();
+    const pageTop = pageRect?.top || 0;
+
+    // Only scroll if we are about one window height below the top of main
+    if (window.scrollY > (pageTop + window.innerHeight)) {
+      window.scrollTo({ top: pageTop + window.scrollY, behavior: enableEffects ? "smooth" : "instant" });
+    }
+  }, [enableEffects, projectIndex, indices])
+
 
   if (projectIndex === -1) {
     return

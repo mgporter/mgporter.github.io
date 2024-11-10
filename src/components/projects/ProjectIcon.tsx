@@ -36,7 +36,7 @@ export default function ProjectIcon({ projectContainer, selected, onProjectSelec
         ${projectContainer.style === "faded" ? " opacity-60" : " "}
         ${projectContainer.style === "emphasized" ? " border-violet-100 scale-105" : " border-transparent"}
         ${loading ? " border-blue-600 bg-white/10" : " "}
-        ${selected ? " border-yellow-400 scale-105 brightness-50" : " "} `}
+        ${selected ? " border-yellow-400 brightness-50" : " "} `}
       ref={iconRef}>
 
       <p className={clsx(
