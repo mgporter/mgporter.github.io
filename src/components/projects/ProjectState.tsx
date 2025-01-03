@@ -13,26 +13,25 @@ export interface ProjectContainer {
 
 /* Create initial project containers object */
 
-const projectContainers: ProjectContainer[] = ((projects: Project[]) => {
-
-  const createUrlFromProjectName = (name: string) => {
-    return name
-      .trim()
-      .replace(/ /g, "-")
-      .replace(/[^(-|\w)]/g, "")
-      .toLowerCase();
+export function createProjectContainer(project: Project, i: number): ProjectContainer {
+  return {
+    project: project,
+    id: i,
+    style: "default",
+    url: createUrlFromProjectName(project.name)
   }
+}
 
-  return projects.map((p, i) => {
-      return {
-        project: p,
-        id: i,
-        style: "default",
-        url: createUrlFromProjectName(p.name)
-      }
-    })
+function createUrlFromProjectName(name: string) {
+  return name
+    .trim()
+    .replace(/ /g, "-")
+    .replace(/[^(-|\w)]/g, "")
+    .toLowerCase();
+}
 
-})(projects)
+export const projectContainers: ProjectContainer[] = projects
+  .map((p, i) => createProjectContainer(p, i));
 
 
 
@@ -119,7 +118,7 @@ type ProjectActions = {
   unselectProject: () => void
 }
 
-const initialProjects: ProjectState = {
+export const initialProjects: ProjectState = {
   projects: projectContainers,
   hasSelection: false,
   indices: {

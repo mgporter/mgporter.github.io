@@ -3,6 +3,7 @@ import { ProjectContainer } from "./ProjectState";
 import useImagePreload from "../../utils/ImagePreload";
 import { touchscreenOnly } from "../../utils/config";
 import clsx from "clsx";
+import { Button } from "@headlessui/react";
 
 interface ProjectIconProps {
   projectContainer: ProjectContainer;
@@ -26,9 +27,12 @@ export default function ProjectIcon({ projectContainer, selected, onProjectSelec
   const loadOpacity = loading ? " opacity-0" : " ";
 
   return (
-    <div 
-      data-id={projectContainer.id} 
-      onClick={onProjectSelected} 
+    <Button
+      data-id={projectContainer.id}
+      onClick={onProjectSelected}
+      aria-selected={selected}
+      aria-label={project.name}
+      aria-busy={loading}
       onMouseEnter={() => preload(project.preview.source)}
       className={`project group relative aspect-[2.2] w-64 mini:w-full mini:mx-1 mini:max-w-96 overflow-hidden 
         select-none border-2 transition-all active:brightness-150 box-content 
@@ -67,7 +71,7 @@ export default function ProjectIcon({ projectContainer, selected, onProjectSelec
         onLoad={imageLoaded}
       />
       
-    </div>
+    </Button>
   )
 
 }

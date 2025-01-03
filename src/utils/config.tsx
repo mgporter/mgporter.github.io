@@ -28,7 +28,7 @@ function testNavigator(obj: Navigator): obj is MyNavigator {
 }
 
 // if the device does not have a cursor, count it as a mobile touchscreen device
-export const touchscreenOnly = !window.matchMedia('(pointer:fine)').matches
+export const touchscreenOnly = window.matchMedia ? !window.matchMedia('(pointer:fine)').matches : false;
 
 // export function useClientSettings() {
   

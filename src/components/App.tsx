@@ -9,6 +9,9 @@ import { isQuickConnection } from '../utils/config'
 
 export default function App() {
 
+  // console.log(import.meta.env.MODE + " this is added text")
+  // console.log(import.meta.env.MYVAR)
+
   const navigate = useNavigate();
   const location = useLocation();
   const {

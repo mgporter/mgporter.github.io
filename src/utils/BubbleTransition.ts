@@ -26,7 +26,7 @@ export default function doBubbleTransition(
   try {
 
     // Get DOMRects
-    const projectThumbnailDiv = document.querySelector(`div.project[data-id='${project.id}']`)!;
+    const projectThumbnailDiv = document.querySelector(`.project[data-id='${project.id}']`)!;
     const projectRectRaw = projectThumbnailDiv.getBoundingClientRect();
     const projectRect = {
       left: projectRectRaw.left + borderoffsethalf, 

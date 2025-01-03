@@ -1,16 +1,22 @@
-import { describe, test } from 'vitest'
-import { render, screen } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import App from './App'
+import { renderWithRouter } from '../testutils/testutils'
 
 describe("App", () => {
 
-  test("App renders", () => {
+  test("forwards to /projects on load", async () => {
 
-    render(<App />)
+    renderWithRouter(
+      <App />,
+      "/",
+      [{
+        element: <p>test projects page</p>,
+        path: "/projects"
+      }]
+    )
 
-    screen.debug()
+    expect(await screen.findByText("test projects page")).toBeDefined();
 
   })
-
 
 })

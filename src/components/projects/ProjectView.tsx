@@ -9,15 +9,6 @@ import { useAppStore } from "../AppState";
 import useImagePreload from "../../utils/ImagePreload";
 
 
-// async function preloadImage(url: string): Promise<JSX.Element> {
-//   return <img src={url} className="absolute size-0 top-0 left-0 hidden"></img>
-// }
-
-// Promise.all([img1, img2]).then(result => {
-//   setPreloadedImgs([result[0], result[1]]);
-// })
-
-
 const setTwoPhaseTransition = (
   elementRef: MutableRefObject<HTMLElement>,
   actionOneClass: string,
@@ -86,10 +77,8 @@ export default function ProjectView() {
     preload(projects[indices.prev].project.preview.source)
   }, [projects, indices, preload])
 
+  // Scroll to the top on project selection
   useEffect(() => {
-    // console.log("try scroll")
-    // if (projectIndex === indices.current) return;
-    // console.log("scroll")
     const pageRect = document.querySelector(".project_view")?.getBoundingClientRect();
     const pageTop = pageRect?.top || 0;
 

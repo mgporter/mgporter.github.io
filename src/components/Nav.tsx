@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { ProjectType } from "../data/PROJECTS";
 import { Link } from "react-router-dom";
-// import { C } from "../constants";
 import { useProjectStore } from "./projects/ProjectState";
 import { useAppStore } from "./AppState";
-import { Button, Field, Label, Switch } from "@headlessui/react";
+import { Field, Label, Switch } from "@headlessui/react";
 import { useLocalStorage } from "usehooks-ts";
+import NavButton from "./NavButton";
 
 export type NavOptionName = "All"
   | "Featured"
@@ -24,7 +24,7 @@ export interface NavOption {
   types: Set<ProjectType>
 }
 
-const navOptions: NavOption[] = [
+export const navOptions: NavOption[] = [
   {
     optionName: "All",
     types: new Set<ProjectType>()
@@ -75,7 +75,6 @@ export default function Nav() {
 
   const [activeOption, setActiveOption] = useState<NavOptionName>("All");
   const { sortByType, sortByFeatured, reset } = useProjectStore()
-  // const { enableEffects, setEnableEffects } = useAppStore()
   const { narrowWindow } = useAppStore()
   const [enableEffectsLS, setEnableEffectsLS] = useLocalStorage("enableEffects", true);
 
@@ -119,34 +118,34 @@ export default function Nav() {
         <div className="w-full">
           <h2 className="text-xl font-bold mb-2 border-b">Filter projects:</h2>
           <ul className="flex flex-col text-base">
-            {navOptions.map(option => {
-              const selected = activeOption === option.optionName
-              return (
-                  <Button
-                    key={option.optionName}
-                    onClick={() => selectProject(option)}
-                    className={`project_type_selection tracking-wide py-[2px] px-4 w-full text-left
-                      border-l-2 border-transparent bg-gradient-to-r to-transparent
-                      data-[hover]:from-blue-300/20 data-[hover]:text-white data-[hover]:border-white
-                      data-[active]:from-blue-200/50
-                      ${selected ? "from-blue-300/40 to-transparent text-white font-bold border-white" : ""}
-                    `}>
-                      {option.optionName}
-                  </Button>
+            {navOptions.map(option => (
+              <NavButton 
+                key={option.optionName}
+                isSelected={activeOption === option.optionName}
+                option={option}
+                handler={() => selectProject(option)} />
               )
-            })}
+            )}
           </ul>
         </div>
 
-        <Field className={`flex items-center gap-2 ${narrowWindow ? "hidden " : " "}`}>
+        <Field className={`flex items-center gap-2 ${narrowWindow ? "hidden " : " "}`} aria-hidden={narrowWindow}>
           <Switch 
+            id="enableEffectsButton"
             checked={enableEffectsLS}
+            aria-selected={enableEffectsLS}
+            aria-label="enableEffectsButton"
             onChange={(enabled) => setEnableEffectsLS(enabled)}
             className="group inline-flex h-5 w-10 items-center bg-white/20 rounded-full transition data-[checked]:bg-blue-400/60"
           >
             <span className="size-4 translate-x-1 rounded-full bg-gray-200 transition group-data-[checked]:translate-x-5"></span>
           </Switch>
-          <Label className={`text-sm ${enableEffectsLS ? "text-white/70" : "text-white/40"}`}>Enable fancy effects</Label>
+          <Label 
+            htmlFor="enableEffectsButton" 
+            className={`text-sm ${enableEffectsLS ? "text-white/70" : "text-white/40"}`}
+          >
+            Enable fancy effects
+          </Label>
         </Field>
 
 
