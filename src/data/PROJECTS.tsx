@@ -180,11 +180,12 @@ const projects: Project[] = [
       dimensions: STANDARD_1080P,
       type: "image",
     },
-    livePreviewUrl: "https://mgporter.github.io/top10b_battleship_online_client/",
+    livePreviewUrl: null, // "https://mgporter.github.io/top10b_battleship_online_client/",
     sourceUrl: "https://github.com/mgporter/top10b_battleship_online_client",
     heading: "Create a game room and play against other players in this Battleship app backed by a Java Spring Boot backend.",
     description: () => {
       return (<>
+        <p>Update: I took the battleship online server offline.</p>
         <p>Uses React.js with websockets on the frontend, with Java Spring Boot and MongoDB on the backend.</p>
         <p>Players are provided with constant feedback on their opponent and his/her actions, improving the UI/UX experience.</p>
         <p>The frontend utilizes most of the hooks in React, including useCallback and useMemo for efficiency. I also created custom hooks and a simple event emitter to streamline the code.</p>
